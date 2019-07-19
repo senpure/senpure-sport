@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-7-4 17:47:02
+ * @time 2019-7-15 18:15:14
  */
 public class SCLoginMessage extends  Message {
 

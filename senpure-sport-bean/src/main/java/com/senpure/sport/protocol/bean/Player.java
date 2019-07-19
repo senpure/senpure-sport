@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 运动员
  * 
  * @author senpure
- * @time 2019-7-4 17:47:02
+ * @time 2019-7-15 18:15:14
  */
 public class Player extends  Bean {
     private long id;

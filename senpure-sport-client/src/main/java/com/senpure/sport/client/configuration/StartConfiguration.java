@@ -1,9 +1,12 @@
 package com.senpure.sport.client.configuration;
 
 import com.senpure.base.util.Spring;
+import com.senpure.io.bean.IdName;
 import com.senpure.io.consumer.ConsumerMessageExecutor;
 import com.senpure.io.consumer.RemoteServerManager;
-import com.senpure.io.consumer.remoting.ResponseResult;
+import com.senpure.io.consumer.remoting.Response;
+import com.senpure.io.consumer.remoting.ResponseCallback;
+import com.senpure.io.support.MessageScanner;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,12 +56,23 @@ public class StartConfiguration implements ApplicationRunner {
                 value++;
                 logger.debug("发送一个消息");
                 try {
-                    ResponseResult result = remoteServerManager.sendSyncMessage(message,560);
-                    if (result.isSuccess()) {
-                        logger.debug(result.getValue().toString());
+                    Response responseResult66 = remoteServerManager.sendSyncMessage(message, 560);
+                    if (responseResult66.isSuccess()) {
+                        logger.debug(responseResult66.getValue().toString());
                     } else {
-                        logger.debug(result.getError().toString());
+                        logger.debug(responseResult66.getError().toString());
                     }
+
+                    remoteServerManager.sendMessage(message, new ResponseCallback() {
+                                @Override
+                                public void execute(Response response) {
+
+                                    if (response.isSuccess()) {
+
+                                    }
+                                }
+                            }
+                    );
 
                     //  remoteServerManager.sendMessage(message);
 
@@ -70,5 +85,14 @@ public class StartConfiguration implements ApplicationRunner {
         }, 2000, TimeUnit.MILLISECONDS);
 
 
+    }
+
+    public static void main(String[] args) {
+
+        List<IdName> idNames = MessageScanner.scan("com.senpure.sport");
+
+        for (IdName idName : idNames) {
+            System.out.println(idName);
+        }
     }
 }
