@@ -17,6 +17,7 @@
         <module>senpure-sport-data</module>
         <module>senpure-sport-gateway</module>
         <module>senpure-sport-client</module>
+        <module>senpure-sport-football</module>
     </modules>
     <dependencyManagement>
         <dependencies>

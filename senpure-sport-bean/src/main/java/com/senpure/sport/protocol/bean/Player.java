@@ -7,13 +7,13 @@ import io.netty.buffer.ByteBuf;
  * 运动员
  * 
  * @author senpure
- * @time 2019-7-15 18:15:14
+ * @time 2019-7-26 17:16:03
  */
 public class Player extends  Bean {
     private long id;
     private int age;
     private String nick;
-    private Gender gender;
+    private Gender gender = Gender.MALE;
     /**
      * 写入字节缓存
      */

@@ -1,4 +1,4 @@
-namespace com.senpure.sport.protocol;
+namespace com.senpure.sport;
 javaPack  com.senpure.sport.protocol;
 
 //性别
@@ -24,11 +24,6 @@ bean Player {
 bean Chat {
     ChatType type;
     String   value;
-}
-
-message SC Chat 100102 {
-    long sendId;                        //发送者id
-    Chat chat;
 }
 
 //错误信息类型

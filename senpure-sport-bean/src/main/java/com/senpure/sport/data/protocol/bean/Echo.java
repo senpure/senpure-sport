@@ -1,5 +1,6 @@
 package com.senpure.sport.data.protocol.bean;
 
+import com.senpure.sport.protocol.bean.ChatType;
 import com.senpure.io.protocol.Bean;
 import io.netty.buffer.ByteBuf;
 
@@ -8,12 +9,13 @@ import java.util.ArrayList;
 
 /**
  * @author senpure
- * @time 2019-7-15 18:15:14
+ * @time 2019-7-26 17:16:03
  */
 public class Echo extends  Bean {
     private int value;
     private List<String> strs = new ArrayList(16);
     private List<Long> nums = new ArrayList(16);
+    private List<ChatType> chatTypes = new ArrayList(16);
     /**
      * 写入字节缓存
      */
@@ -29,6 +31,13 @@ public class Echo extends  Bean {
             writeVar32(buf,numsSerializedSize);
             for (int i= 0;i< nums.size();i++){
                 writeVar64(buf,nums.get(i));
+            }
+        }
+        if (chatTypes.size() > 0){
+            writeVar32(buf,35);
+            writeVar32(buf,chatTypesSerializedSize);
+            for (int i= 0;i< chatTypes.size();i++){
+                writeVar32(buf,chatTypes.get(i).getValue());
             }
         }
     }
@@ -59,6 +68,16 @@ public class Echo extends  Bean {
                     }
                     while(receiveNumsDataSize < numsDataSize );
                     break;
+                case 35:// 4 << 3 | 3
+                    int chatTypesDataSize = readVar32(buf);
+                    int receiveChatTypesDataSize = 0;
+                    do {
+                        int tempChatTypes = readVar32(buf);
+                        receiveChatTypesDataSize += computeVar32SizeNoTag(tempChatTypes);
+                        chatTypes.add(ChatType.getChatType(tempChatTypes));
+                    }
+                    while(receiveChatTypesDataSize < chatTypesDataSize );
+                    break;
                 default://skip
                     skip(buf, tag);
                     break;
@@ -68,6 +87,7 @@ public class Echo extends  Bean {
 
     private int serializedSize = -1;
     private int numsSerializedSize = 0;
+    private int chatTypesSerializedSize = 0;
 
     @Override
     public int getSerializedSize(){
@@ -90,6 +110,17 @@ public class Echo extends  Bean {
             size += 1;
             size += numsSerializedSize;
             size += computeVar32SizeNoTag(numsSerializedSize);
+        }
+        int chatTypesDataSize = 0;
+        for(int i=0;i< chatTypes.size();i++){
+            chatTypesDataSize += computeVar32SizeNoTag(chatTypes.get(i).getValue());
+        }
+        chatTypesSerializedSize = chatTypesDataSize;
+        if(chatTypesDataSize > 0 ){
+            //tag size 35
+            size += 1;
+            size += chatTypesSerializedSize;
+            size += computeVar32SizeNoTag(chatTypesSerializedSize);
         }
         serializedSize = size ;
         return size ;
@@ -127,6 +158,18 @@ public class Echo extends  Bean {
         return this;
     }
 
+    public List<ChatType> getChatTypes(){
+        return chatTypes;
+    }
+    public Echo setChatTypes (List<ChatType> chatTypes){
+        if(chatTypes == null){
+        this.chatTypes = new ArrayList(16);
+            return this;
+        }
+        this.chatTypes=chatTypes;
+        return this;
+    }
+
 
     @Override
     public String toString() {
@@ -134,16 +177,17 @@ public class Echo extends  Bean {
                 +"value=" + value
                 +",strs=" + strs
                 +",nums=" + nums
+                +",chatTypes=" + chatTypes
                 + "}";
    }
 
 
     @Override
     public String toString(String indent) {
-        //5 + 3 = 8 个空格
-        String nextIndent ="        ";
-        //最长字段长度 5
-        int filedPad = 5;
+        //9 + 3 = 12 个空格
+        String nextIndent ="            ";
+        //最长字段长度 9
+        int filedPad = 9;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("Echo").append("{");
@@ -175,6 +219,23 @@ public class Echo extends  Bean {
                 sb.append("\n");
                 sb.append(nextIndent);
                 sb.append(indent).append(nums.get(i));
+            }
+            sb.append("\n");
+            sb.append(nextIndent);
+            sb.append(indent).append("]");
+        }else {
+            sb.append("null");
+        }
+
+        sb.append("\n");
+        sb.append(indent).append(rightPad("chatTypes", filedPad)).append(" = ");
+        int chatTypesSize = chatTypes.size();
+        if (chatTypesSize > 0) {
+            sb.append("[");
+            for (int i = 0; i<chatTypesSize;i++) {
+                sb.append("\n");
+                sb.append(nextIndent);
+                sb.append(indent).append(chatTypes.get(i));
             }
             sb.append("\n");
             sb.append(nextIndent);

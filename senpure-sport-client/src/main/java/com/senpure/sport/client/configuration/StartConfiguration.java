@@ -5,10 +5,12 @@ import com.senpure.io.bean.IdName;
 import com.senpure.io.consumer.ConsumerMessageExecutor;
 import com.senpure.io.consumer.RemoteServerManager;
 import com.senpure.io.consumer.remoting.Response;
-import com.senpure.io.consumer.remoting.ResponseCallback;
+import com.senpure.io.consumer.remoting.SuccessCallback;
 import com.senpure.io.support.MessageScanner;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
+import com.senpure.sport.data.protocol.message.SCEchoMessage;
+import com.senpure.sport.protocol.bean.ChatType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,36 +49,40 @@ public class StartConfiguration implements ApplicationRunner {
                 CSEchoMessage message = new CSEchoMessage();
 
                 Echo echo = new Echo();
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < 5; j++) {
                     echo.getNums().add(value * j * 1L);
                     echo.getStrs().add("str-" + value + "_" + j);
                 }
+                echo.getChatTypes().add(ChatType.STR);
+                echo.getChatTypes().add(ChatType.VOICE);
+                echo.getChatTypes().add(ChatType.STR);
                 echo.setValue(value);
                 message.setEcho(echo);
                 value++;
                 logger.debug("发送一个消息");
                 try {
+                    long now = System.currentTimeMillis();
                     Response responseResult66 = remoteServerManager.sendSyncMessage(message, 560);
+                   logger.debug("用时 {}",System.currentTimeMillis()-now);
                     if (responseResult66.isSuccess()) {
-                        logger.debug(responseResult66.getValue().toString());
+                        logger.debug("同步接收 {}", responseResult66.getValue().toString());
                     } else {
-                        logger.debug(responseResult66.getError().toString());
+                        logger.debug("同步接收 {}", responseResult66.getError().toString());
                     }
 
-                    remoteServerManager.sendMessage(message, new ResponseCallback() {
+                    long finalNow = System.currentTimeMillis();
+                    remoteServerManager.sendMessage(message, new SuccessCallback<SCEchoMessage>() {
                                 @Override
-                                public void execute(Response response) {
-
-                                    if (response.isSuccess()) {
-
-                                    }
+                                public void success(SCEchoMessage message) {
+                                    logger.debug("用时 {}",System.currentTimeMillis()- finalNow);
+                                    logger.debug("异步接收 {}", message.toString());
                                 }
                             }
                     );
-
+                    remoteServerManager.sendMessage(message);
                     //  remoteServerManager.sendMessage(message);
 
-                    Thread.sleep(1000);
+                    Thread.sleep(1);
                 } catch (Exception e) {
                     logger.error("", e);
                 }

@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-7-15 18:15:14
+ * @time 2019-7-26 17:16:03
  */
 public class CSLoginMessage extends  Message {
 

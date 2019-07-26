@@ -1,5 +1,5 @@
 import    sport-bean.io;
-namespace com.senpure.sport.data.protocol;
+namespace com.senpure.sport.data;
 javaPack  com.senpure.sport.data.protocol;
 
 message CS Login 1000101 {
@@ -11,11 +11,26 @@ message SC Login 1000102 {
     Player player;
 }
 
-bean Echo {
-    int       value;
-    String [] strs;
-    long   [] nums;
+
+
+//获取运动员信息
+message CS Player 1000105 {
+    long playerId;
 }
+
+message SC Player 1000106 {
+    Player player;                      //运动员
+}
+
+
+bean Echo {
+    int         value;
+    String   [] strs;
+    long     [] nums;
+    ChatType [] chatTypes;              //
+}
+
+
 
 message CS Echo 1000103 {
     Echo echo;
