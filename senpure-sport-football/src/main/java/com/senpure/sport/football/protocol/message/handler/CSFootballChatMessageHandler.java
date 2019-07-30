@@ -1,8 +1,8 @@
 package com.senpure.sport.football.protocol.message.handler;
 
+import com.senpure.sport.football.logic.FootBallPlayer;
+import com.senpure.sport.football.logic.FootballRoom;
 import com.senpure.sport.football.protocol.message.CSFootballChatMessage;
-import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
-import io.netty.channel.Channel;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
  * @time 2019-7-26 11:20:08
  */
 @Component
-public class CSFootballChatMessageHandler extends AbstractProducerMessageHandler<CSFootballChatMessage> {
+public class CSFootballChatMessageHandler extends AbstractRoomMessageHandler<CSFootballChatMessage> {
+
+
 
     @Override
-    public void execute(Channel channel, long token, long userId, CSFootballChatMessage message) {
-        //TODO 请在这里写下你的代码
+    public void execute(FootBallPlayer player, FootballRoom room,CSFootballChatMessage message) {
+        room.playerChat(player,message.getChat());
 
     }
 
@@ -30,4 +32,5 @@ public class CSFootballChatMessageHandler extends AbstractProducerMessageHandler
     public CSFootballChatMessage getEmptyMessage() {
         return new CSFootballChatMessage();
     }
+
 }

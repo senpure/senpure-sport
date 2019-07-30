@@ -4,7 +4,7 @@ package com.senpure.sport.protocol.bean;
  * 性别
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
 public enum Gender {
     MALE(1),//男

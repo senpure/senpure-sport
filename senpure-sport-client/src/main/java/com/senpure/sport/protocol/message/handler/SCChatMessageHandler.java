@@ -1,8 +1,10 @@
 package com.senpure.sport.protocol.message.handler;
 
+import com.senpure.sport.client.ui.ClientController;
 import com.senpure.sport.protocol.message.SCChatMessage;
 import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
 import io.netty.channel.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,9 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SCChatMessageHandler extends AbstractConsumerMessageHandler<SCChatMessage> {
 
+@Autowired
+private ClientController clientController;
     @Override
     public void execute(Channel channel, SCChatMessage message) {
-        //TODO 请在这里写下你的代码
+
+        clientController.receiveChatMessage(message);
 
     }
 

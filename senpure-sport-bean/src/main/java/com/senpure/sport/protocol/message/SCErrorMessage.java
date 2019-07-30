@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 /**
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class SCErrorMessage extends  Message {
+public class SCErrorMessage extends Message {
 
     public static final int MESSAGE_ID = 1000500;
     private ErrorType type = ErrorType.NORMAL;
@@ -19,22 +19,30 @@ public class SCErrorMessage extends  Message {
     private String value;
     //参数
     private List<String> args = new ArrayList(16);
+
+    public void copy(SCErrorMessage from) {
+        this.type = from.getType();
+        this.value = from.getValue();
+        this.args.clear();
+        this.args.addAll(from.getArgs());
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (type!= null){
-            writeVar32(buf,11,type.getValue());
+        if (type != null) {
+            writeVar32(buf, 11, type.getValue());
         }
         //提示字符串
-        if (value != null){
-            writeString(buf,19,value);
+        if (value != null) {
+            writeString(buf, 19, value);
         }
         //参数
-        for (int i= 0;i< args.size();i++){
-            writeString(buf,27,args.get(i));
+        for (int i = 0; i < args.size(); i++) {
+            writeString(buf, 27, args.get(i));
         }
     }
 
@@ -42,15 +50,14 @@ public class SCErrorMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
-                    type = ErrorType.getErrorType( readVar32(buf)) ;
-
+                    type = ErrorType.getErrorType(readVar32(buf)) ;
                     break;
                 //提示字符串
                 case 19:// 2 << 3 | 3
@@ -70,22 +77,22 @@ public class SCErrorMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (type != null){
-            size += computeVar32Size(1,type.getValue());
+        size = 0;
+        if (type != null) {
+            size += computeVar32Size(1, type.getValue());
         }
         //提示字符串
-        if (value != null){
-            size += computeStringSize(1,value);
+        if (value != null) {
+            size += computeStringSize(1, value);
         }
         //参数
-        for(int i=0;i< args.size();i++){
-            size += computeStringSize(1,args.get(i));
+        for(int i = 0; i < args.size(); i++) {
+            size += computeStringSize(1, args.get(i));
         }
         serializedSize = size ;
         return size ;
@@ -96,7 +103,7 @@ public class SCErrorMessage extends  Message {
     }
 
     public SCErrorMessage setType(ErrorType type) {
-        this.type=type;
+        this.type = type;
         return this;
     }
     /**
@@ -111,25 +118,25 @@ public class SCErrorMessage extends  Message {
      * set 提示字符串
      */
     public SCErrorMessage setValue(String value) {
-        this.value=value;
+        this.value = value;
         return this;
     }
      /**
       * get 参数
       * @return
       */
-    public List<String> getArgs(){
+    public List<String> getArgs() {
         return args;
     }
      /**
       * set 参数
       */
-    public SCErrorMessage setArgs (List<String> args){
-        if(args == null){
+    public SCErrorMessage setArgs (List<String> args) {
+        if(args == null) {
         this.args = new ArrayList(16);
             return this;
         }
-        this.args=args;
+        this.args = args;
         return this;
     }
 
@@ -148,7 +155,6 @@ public class SCErrorMessage extends  Message {
                 + "}";
    }
 
-
     @Override
     public String toString(String indent) {
         //5 + 3 = 8 个空格
@@ -160,7 +166,7 @@ public class SCErrorMessage extends  Message {
         sb.append("SCErrorMessage").append("[1000500]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("type", filedPad)).append(" = ");
-        if(type!=null){
+        if (type != null){
             sb.append(type);
         } else {
             sb.append("null");
@@ -174,7 +180,7 @@ public class SCErrorMessage extends  Message {
         int argsSize = args.size();
         if (argsSize > 0) {
             sb.append("[");
-            for (int i = 0; i<argsSize;i++) {
+            for (int i = 0; i < argsSize; i++) {
                 sb.append("\n");
                 sb.append(nextIndent);
                 sb.append(indent).append(args.get(i));

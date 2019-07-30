@@ -7,26 +7,34 @@ import io.netty.buffer.ByteBuf;
  * 运动员
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class Player extends  Bean {
+public class Player extends Bean {
     private long id;
     private int age;
     private String nick;
     private Gender gender = Gender.MALE;
+
+    public void copy(Player from) {
+        this.id = from.getId();
+        this.age = from.getAge();
+        this.nick = from.getNick();
+        this.gender = from.getGender();
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        writeVar64(buf,8,id);
-        writeVar32(buf,16,age);
-        if (nick != null){
-            writeString(buf,27,nick);
+        writeVar64(buf, 8, id);
+        writeVar32(buf, 16, age);
+        if (nick != null) {
+            writeString(buf, 27, nick);
         }
-        if (gender!= null){
-            writeVar32(buf,35,gender.getValue());
+        if (gender != null) {
+            writeVar32(buf, 35, gender.getValue());
         }
     }
 
@@ -34,12 +42,12 @@ public class Player extends  Bean {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 8:// 1 << 3 | 0
                     id = readVar64(buf);
                     break;
@@ -50,8 +58,7 @@ public class Player extends  Bean {
                     nick = readString(buf);
                     break;
                 case 35:// 4 << 3 | 3
-                    gender = Gender.getGender( readVar32(buf)) ;
-
+                    gender = Gender.getGender(readVar32(buf)) ;
                     break;
                 default://skip
                     skip(buf, tag);
@@ -63,19 +70,19 @@ public class Player extends  Bean {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        size += computeVar64Size(1,id);
+        size = 0;
+        size += computeVar64Size(1, id);
         size += computeVar32Size(1,age);
-        if (nick != null){
-            size += computeStringSize(1,nick);
+        if (nick != null) {
+            size += computeStringSize(1, nick);
         }
-        if (gender != null){
-            size += computeVar32Size(1,gender.getValue());
+        if (gender != null) {
+            size += computeVar32Size(1, gender.getValue());
         }
         serializedSize = size ;
         return size ;
@@ -86,7 +93,7 @@ public class Player extends  Bean {
     }
 
     public Player setId(long id) {
-        this.id=id;
+        this.id = id;
         return this;
     }
     public  int getAge() {
@@ -94,7 +101,7 @@ public class Player extends  Bean {
     }
 
     public Player setAge(int age) {
-        this.age=age;
+        this.age = age;
         return this;
     }
     public  String getNick() {
@@ -102,7 +109,7 @@ public class Player extends  Bean {
     }
 
     public Player setNick(String nick) {
-        this.nick=nick;
+        this.nick = nick;
         return this;
     }
     public  Gender getGender() {
@@ -110,7 +117,7 @@ public class Player extends  Bean {
     }
 
     public Player setGender(Gender gender) {
-        this.gender=gender;
+        this.gender = gender;
         return this;
     }
 
@@ -123,7 +130,6 @@ public class Player extends  Bean {
                 +",gender=" + gender
                 + "}";
    }
-
 
     @Override
     public String toString(String indent) {
@@ -140,7 +146,7 @@ public class Player extends  Bean {
         sb.append(indent).append(rightPad("nick", filedPad)).append(" = ").append(nick);
         sb.append("\n");
         sb.append(indent).append(rightPad("gender", filedPad)).append(" = ");
-        if(gender!=null){
+        if (gender != null){
             sb.append(gender);
         } else {
             sb.append("null");

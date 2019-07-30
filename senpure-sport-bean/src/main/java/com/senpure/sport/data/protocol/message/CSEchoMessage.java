@@ -6,20 +6,27 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class CSEchoMessage extends  Message {
+public class CSEchoMessage extends Message {
 
     public static final int MESSAGE_ID = 1000103;
     private Echo echo;
+
+    public void copy(CSEchoMessage from) {
+        Echo tempEcho = new Echo();
+        tempEcho.copy(from.getEcho());
+        this.echo = tempEcho;
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (echo!= null){
-            writeBean(buf,11,echo);
+        if (echo != null) {
+            writeBean(buf, 11, echo);
         }
     }
 
@@ -27,16 +34,15 @@ public class CSEchoMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
                     echo = new Echo();
                     readBean(buf,echo);
-
                     break;
                 default://skip
                     skip(buf, tag);
@@ -48,14 +54,14 @@ public class CSEchoMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (echo != null){
-            size += computeBeanSize(1,echo);
+        size = 0;
+        if (echo != null) {
+            size += computeBeanSize(1, echo);
         }
         serializedSize = size ;
         return size ;
@@ -66,7 +72,7 @@ public class CSEchoMessage extends  Message {
     }
 
     public CSEchoMessage setEcho(Echo echo) {
-        this.echo=echo;
+        this.echo = echo;
         return this;
     }
 
@@ -82,7 +88,6 @@ public class CSEchoMessage extends  Message {
                 + "}";
    }
 
-
     @Override
     public String toString(String indent) {
         //4 + 3 = 7 个空格
@@ -94,7 +99,7 @@ public class CSEchoMessage extends  Message {
         sb.append("CSEchoMessage").append("[1000103]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("echo", filedPad)).append(" = ");
-        if(echo!=null){
+        if (echo != null){
             sb.append(echo.toString(indent+nextIndent));
         } else {
             sb.append("null");

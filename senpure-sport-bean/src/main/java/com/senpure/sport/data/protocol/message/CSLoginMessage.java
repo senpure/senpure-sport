@@ -5,24 +5,30 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class CSLoginMessage extends  Message {
+public class CSLoginMessage extends Message {
 
     public static final int MESSAGE_ID = 1000101;
     private String id;
     private String nick;
+
+    public void copy(CSLoginMessage from) {
+        this.id = from.getId();
+        this.nick = from.getNick();
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (id != null){
-            writeString(buf,11,id);
+        if (id != null) {
+            writeString(buf, 11, id);
         }
-        if (nick != null){
-            writeString(buf,19,nick);
+        if (nick != null) {
+            writeString(buf, 19, nick);
         }
     }
 
@@ -30,12 +36,12 @@ public class CSLoginMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
                     id = readString(buf);
                     break;
@@ -52,17 +58,17 @@ public class CSLoginMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (id != null){
-            size += computeStringSize(1,id);
+        size = 0;
+        if (id != null) {
+            size += computeStringSize(1, id);
         }
-        if (nick != null){
-            size += computeStringSize(1,nick);
+        if (nick != null) {
+            size += computeStringSize(1, nick);
         }
         serializedSize = size ;
         return size ;
@@ -73,7 +79,7 @@ public class CSLoginMessage extends  Message {
     }
 
     public CSLoginMessage setId(String id) {
-        this.id=id;
+        this.id = id;
         return this;
     }
     public  String getNick() {
@@ -81,7 +87,7 @@ public class CSLoginMessage extends  Message {
     }
 
     public CSLoginMessage setNick(String nick) {
-        this.nick=nick;
+        this.nick = nick;
         return this;
     }
 
@@ -97,7 +103,6 @@ public class CSLoginMessage extends  Message {
                 +",nick=" + nick
                 + "}";
    }
-
 
     @Override
     public String toString(String indent) {

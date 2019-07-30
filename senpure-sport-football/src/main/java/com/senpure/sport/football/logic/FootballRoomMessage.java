@@ -1,8 +1,12 @@
 package com.senpure.sport.football.logic;
 
 import com.senpure.io.producer.GatewayManager;
-import com.senpure.sport.football.protocol.message.SCEnterFootballlMessage;
+import com.senpure.io.protocol.Message;
+import com.senpure.sport.football.protocol.message.SCEnterFootballMessage;
+import com.senpure.sport.football.protocol.message.SCExitFootBallMessage;
 import com.senpure.sport.football.service.FootballService;
+import com.senpure.sport.protocol.bean.Chat;
+import com.senpure.sport.protocol.message.SCChatMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +26,34 @@ public class FootballRoomMessage {
         this.gatewayManager = gatewayManager;
     }
 
-    public void sendPlayerEntryRoomMessage(FootBallPlayer player) {
-
-        SCEnterFootballlMessage message = new SCEnterFootballlMessage();
-        message.setRoomId(room.getRoomId());
-        message.setPlayer(FootballService.convert(player));
-
+    private void sendMessage(Message message) {
         List<Long> userIds = new ArrayList<>(room.getPlayers().keySet());
 
         gatewayManager.sendMessage2Gateway(userIds, message);
+    }
 
+    public void sendPlayerEntryRoomMessage(FootBallPlayer player) {
+
+        SCEnterFootballMessage message = new SCEnterFootballMessage();
+        message.setRoomId(room.getRoomId());
+        message.setPlayer(FootballService.convert(player));
+
+        sendMessage(message);
+
+    }
+
+    public void sendPlayerExitRoomMessage(FootBallPlayer player) {
+        SCExitFootBallMessage message = new SCExitFootBallMessage();
+        message.setPlayer(FootballService.convert(player));
+        message.setRoomId(room.getRoomId());
+        sendMessage(message);
+    }
+
+    public void sendPlayerChatMessage(FootBallPlayer player, Chat chat) {
+        SCChatMessage message = new SCChatMessage();
+        message.setTitle(player.getNick());
+        message.setSendId(player.getId());
+        message.setChat(chat);
+        sendMessage(message);
     }
 }

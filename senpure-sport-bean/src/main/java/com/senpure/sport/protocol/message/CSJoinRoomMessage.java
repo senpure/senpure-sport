@@ -7,22 +7,27 @@ import io.netty.buffer.ByteBuf;
  * 加入房间
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class CSJoinRoomMessage extends  Message {
+public class CSJoinRoomMessage extends Message {
 
     public static final int MESSAGE_ID = 1000801;
     //房间编号
     private String roomId;
+
+    public void copy(CSJoinRoomMessage from) {
+        this.roomId = from.getRoomId();
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
         //房间编号
-        if (roomId != null){
-            writeString(buf,11,roomId);
+        if (roomId != null) {
+            writeString(buf, 11, roomId);
         }
     }
 
@@ -30,12 +35,12 @@ public class CSJoinRoomMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 //房间编号
                 case 11:// 1 << 3 | 3
                     roomId = readString(buf);
@@ -50,15 +55,15 @@ public class CSJoinRoomMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
+        size = 0;
         //房间编号
-        if (roomId != null){
-            size += computeStringSize(1,roomId);
+        if (roomId != null) {
+            size += computeStringSize(1, roomId);
         }
         serializedSize = size ;
         return size ;
@@ -76,7 +81,7 @@ public class CSJoinRoomMessage extends  Message {
      * set 房间编号
      */
     public CSJoinRoomMessage setRoomId(String roomId) {
-        this.roomId=roomId;
+        this.roomId = roomId;
         return this;
     }
 
@@ -91,7 +96,6 @@ public class CSJoinRoomMessage extends  Message {
                 +"roomId=" + roomId
                 + "}";
    }
-
 
     @Override
     public String toString(String indent) {

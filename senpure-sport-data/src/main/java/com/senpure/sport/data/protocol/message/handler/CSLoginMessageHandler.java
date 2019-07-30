@@ -2,10 +2,9 @@ package com.senpure.sport.data.protocol.message.handler;
 
 import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
 import com.senpure.sport.data.protocol.message.CSLoginMessage;
-import com.senpure.sport.data.protocol.message.SCLoginMessage;
-import com.senpure.sport.protocol.bean.Gender;
-import com.senpure.sport.protocol.bean.Player;
+import com.senpure.sport.data.service.PlayerService;
 import io.netty.channel.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,18 +15,12 @@ import org.springframework.stereotype.Component;
 public class CSLoginMessageHandler extends AbstractProducerMessageHandler<CSLoginMessage> {
 
     int i = 10086;
+    @Autowired
+    private PlayerService playerService;
 
     @Override
     public void execute(Channel channel, long token, long userId, CSLoginMessage message) {
-        SCLoginMessage loginMessage = new SCLoginMessage();
-        Player player = new Player();
-        player.setId(i++);
-        player.setAge(12);
-        player.setNick("nick");
-        player.setGender(Gender.FEMALE);
-        loginMessage.setPlayer(player);
-        gatewayManager.sendLoginSuccessMessage2Gateway(token, player.getId(), loginMessage);
-
+        playerService.login(message.getId(), token, message.getNick());
     }
 
     @Override

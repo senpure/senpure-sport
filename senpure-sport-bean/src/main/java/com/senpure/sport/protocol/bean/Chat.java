@@ -7,22 +7,28 @@ import io.netty.buffer.ByteBuf;
  * 聊天信息
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class Chat extends  Bean {
+public class Chat extends Bean {
     private ChatType type = ChatType.STR;
     private String value;
+
+    public void copy(Chat from) {
+        this.type = from.getType();
+        this.value = from.getValue();
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (type!= null){
-            writeVar32(buf,11,type.getValue());
+        if (type != null) {
+            writeVar32(buf, 11, type.getValue());
         }
-        if (value != null){
-            writeString(buf,19,value);
+        if (value != null) {
+            writeString(buf, 19, value);
         }
     }
 
@@ -30,15 +36,14 @@ public class Chat extends  Bean {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
-                    type = ChatType.getChatType( readVar32(buf)) ;
-
+                    type = ChatType.getChatType(readVar32(buf)) ;
                     break;
                 case 19:// 2 << 3 | 3
                     value = readString(buf);
@@ -53,17 +58,17 @@ public class Chat extends  Bean {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (type != null){
-            size += computeVar32Size(1,type.getValue());
+        size = 0;
+        if (type != null) {
+            size += computeVar32Size(1, type.getValue());
         }
-        if (value != null){
-            size += computeStringSize(1,value);
+        if (value != null) {
+            size += computeStringSize(1, value);
         }
         serializedSize = size ;
         return size ;
@@ -74,7 +79,7 @@ public class Chat extends  Bean {
     }
 
     public Chat setType(ChatType type) {
-        this.type=type;
+        this.type = type;
         return this;
     }
     public  String getValue() {
@@ -82,7 +87,7 @@ public class Chat extends  Bean {
     }
 
     public Chat setValue(String value) {
-        this.value=value;
+        this.value = value;
         return this;
     }
 
@@ -94,7 +99,6 @@ public class Chat extends  Bean {
                 + "}";
    }
 
-
     @Override
     public String toString(String indent) {
         //最长字段长度 5
@@ -104,7 +108,7 @@ public class Chat extends  Bean {
         sb.append("Chat").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("type", filedPad)).append(" = ");
-        if(type!=null){
+        if (type != null){
             sb.append(type);
         } else {
             sb.append("null");

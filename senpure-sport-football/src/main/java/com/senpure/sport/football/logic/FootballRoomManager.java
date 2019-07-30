@@ -78,7 +78,7 @@ public class FootballRoomManager {
 
     private boolean canUse(Integer value) {
 
-        return value >= startValue && value <= endValue;
+        return value >= startValue && value < endValue;
     }
 
     private Integer getEasyRoomId() {

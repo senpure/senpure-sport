@@ -1,7 +1,9 @@
 package com.senpure.sport;
 
+import com.senpure.base.AppEvn;
 import com.senpure.io.support.annotation.EnableConsumer;
-import org.springframework.boot.SpringApplication;
+import com.senpure.sport.client.ui.ClientView;
+import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -12,12 +14,16 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @time 2019-07-04 14:13:04
  */
 @SpringBootApplication
-@EnableConsumer
+@EnableConsumer(innerError = false)
 @EnableDiscoveryClient
-public class ClientBoot {
+public class ClientBoot extends AbstractJavaFxApplicationSupport {
 
     public static void main(String[] args) {
-        SpringApplication.run(ClientBoot.class, args);
+        AppEvn.installAnsiConsole();
+        AppEvn.markClassRootPath();
+
+        launch(ClientBoot.class, ClientView.class, args);
+
 
     }
 }

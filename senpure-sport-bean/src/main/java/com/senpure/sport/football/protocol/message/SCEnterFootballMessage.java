@@ -1,22 +1,22 @@
-package com.senpure.sport.volleyball.protocol.message;
+package com.senpure.sport.football.protocol.message;
 
 import com.senpure.sport.protocol.bean.Player;
 import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 进入排球房间
+ * 进入足球房间
  * 
  * @author senpure
  * @time 2019-7-30 15:03:58
  */
-public class SCEnterVolleyballMessage extends Message {
+public class SCEnterFootballMessage extends Message {
 
-    public static final int MESSAGE_ID = 2000104;
+    public static final int MESSAGE_ID = 3000104;
     private int roomId;
     private Player player;
 
-    public void copy(SCEnterVolleyballMessage from) {
+    public void copy(SCEnterFootballMessage from) {
         this.roomId = from.getRoomId();
         Player tempPlayer = new Player();
         tempPlayer.copy(from.getPlayer());
@@ -80,7 +80,7 @@ public class SCEnterVolleyballMessage extends Message {
         return roomId;
     }
 
-    public SCEnterVolleyballMessage setRoomId(int roomId) {
+    public SCEnterFootballMessage setRoomId(int roomId) {
         this.roomId = roomId;
         return this;
     }
@@ -88,19 +88,19 @@ public class SCEnterVolleyballMessage extends Message {
         return player;
     }
 
-    public SCEnterVolleyballMessage setPlayer(Player player) {
+    public SCEnterFootballMessage setPlayer(Player player) {
         this.player = player;
         return this;
     }
 
     @Override
     public int getMessageId() {
-        return 2000104;
+        return 3000104;
     }
 
     @Override
     public String toString() {
-        return "SCEnterVolleyballMessage[2000104]{"
+        return "SCEnterFootballMessage[3000104]{"
                 +"roomId=" + roomId
                 +",player=" + player
                 + "}";
@@ -114,7 +114,7 @@ public class SCEnterVolleyballMessage extends Message {
         int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("SCEnterVolleyballMessage").append("[2000104]").append("{");
+        sb.append("SCEnterFootballMessage").append("[3000104]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
         sb.append("\n");

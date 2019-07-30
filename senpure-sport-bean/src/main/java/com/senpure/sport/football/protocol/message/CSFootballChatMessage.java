@@ -8,20 +8,27 @@ import io.netty.buffer.ByteBuf;
  * 足球房间聊天
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class CSFootballChatMessage extends  Message {
+public class CSFootballChatMessage extends Message {
 
     public static final int MESSAGE_ID = 3000105;
     private Chat chat;
+
+    public void copy(CSFootballChatMessage from) {
+        Chat tempChat = new Chat();
+        tempChat.copy(from.getChat());
+        this.chat = tempChat;
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (chat!= null){
-            writeBean(buf,11,chat);
+        if (chat != null) {
+            writeBean(buf, 11, chat);
         }
     }
 
@@ -29,16 +36,15 @@ public class CSFootballChatMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
                     chat = new Chat();
                     readBean(buf,chat);
-
                     break;
                 default://skip
                     skip(buf, tag);
@@ -50,14 +56,14 @@ public class CSFootballChatMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (chat != null){
-            size += computeBeanSize(1,chat);
+        size = 0;
+        if (chat != null) {
+            size += computeBeanSize(1, chat);
         }
         serializedSize = size ;
         return size ;
@@ -68,7 +74,7 @@ public class CSFootballChatMessage extends  Message {
     }
 
     public CSFootballChatMessage setChat(Chat chat) {
-        this.chat=chat;
+        this.chat = chat;
         return this;
     }
 
@@ -84,7 +90,6 @@ public class CSFootballChatMessage extends  Message {
                 + "}";
    }
 
-
     @Override
     public String toString(String indent) {
         //4 + 3 = 7 个空格
@@ -96,7 +101,7 @@ public class CSFootballChatMessage extends  Message {
         sb.append("CSFootballChatMessage").append("[3000105]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("chat", filedPad)).append(" = ");
-        if(chat!=null){
+        if (chat != null){
             sb.append(chat.toString(indent+nextIndent));
         } else {
             sb.append("null");

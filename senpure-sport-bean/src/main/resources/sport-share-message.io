@@ -9,8 +9,9 @@ message CS JoinRoom 1000801 {
 }
 
 message SC Chat 100102 {
-    long sendId;                        //发送者id
-    Chat chat;
+    long   sendId;                      //发送者id
+    String title;                       //发送者头衔
+    Chat   chat;
 }
 
 

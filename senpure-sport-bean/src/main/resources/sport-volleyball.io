@@ -14,3 +14,12 @@ message SC EnterVolleyball 2000104 {
 message CS VolleyballChat 2000105 {
     Chat chat;
 }
+
+//离开排球房间
+message CS ExitVolleyball 2000107 {
+}
+
+message SC ExitVolleyball 2000108 {
+    Player player;                      //
+    int  roomId;
+}

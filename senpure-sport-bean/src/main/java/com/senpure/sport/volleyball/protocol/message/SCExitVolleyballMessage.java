@@ -5,22 +5,20 @@ import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 进入排球房间
- * 
  * @author senpure
  * @time 2019-7-30 15:03:58
  */
-public class SCEnterVolleyballMessage extends Message {
+public class SCExitVolleyballMessage extends Message {
 
-    public static final int MESSAGE_ID = 2000104;
-    private int roomId;
+    public static final int MESSAGE_ID = 2000108;
     private Player player;
+    private int roomId;
 
-    public void copy(SCEnterVolleyballMessage from) {
-        this.roomId = from.getRoomId();
+    public void copy(SCExitVolleyballMessage from) {
         Player tempPlayer = new Player();
         tempPlayer.copy(from.getPlayer());
         this.player = tempPlayer;
+        this.roomId = from.getRoomId();
     }
 
     /**
@@ -29,10 +27,10 @@ public class SCEnterVolleyballMessage extends Message {
     @Override
     public void write(ByteBuf buf) {
         getSerializedSize();
-        writeVar32(buf, 8, roomId);
         if (player != null) {
-            writeBean(buf, 19, player);
+            writeBean(buf, 11, player);
         }
+        writeVar32(buf, 16, roomId);
     }
 
     /**
@@ -45,12 +43,12 @@ public class SCEnterVolleyballMessage extends Message {
             switch (tag) {
                 case 0://end
                     return;
-                case 8:// 1 << 3 | 0
-                    roomId = readVar32(buf);
-                    break;
-                case 19:// 2 << 3 | 3
+                case 11:// 1 << 3 | 3
                     player = new Player();
                     readBean(buf,player);
+                    break;
+                case 16:// 2 << 3 | 0
+                    roomId = readVar32(buf);
                     break;
                 default://skip
                     skip(buf, tag);
@@ -68,41 +66,41 @@ public class SCEnterVolleyballMessage extends Message {
             return size;
         }
         size = 0;
-        size += computeVar32Size(1,roomId);
         if (player != null) {
             size += computeBeanSize(1, player);
         }
+        size += computeVar32Size(1,roomId);
         serializedSize = size ;
         return size ;
     }
 
-    public  int getRoomId() {
-        return roomId;
-    }
-
-    public SCEnterVolleyballMessage setRoomId(int roomId) {
-        this.roomId = roomId;
-        return this;
-    }
     public  Player getPlayer() {
         return player;
     }
 
-    public SCEnterVolleyballMessage setPlayer(Player player) {
+    public SCExitVolleyballMessage setPlayer(Player player) {
         this.player = player;
+        return this;
+    }
+    public  int getRoomId() {
+        return roomId;
+    }
+
+    public SCExitVolleyballMessage setRoomId(int roomId) {
+        this.roomId = roomId;
         return this;
     }
 
     @Override
     public int getMessageId() {
-        return 2000104;
+        return 2000108;
     }
 
     @Override
     public String toString() {
-        return "SCEnterVolleyballMessage[2000104]{"
-                +"roomId=" + roomId
-                +",player=" + player
+        return "SCExitVolleyballMessage[2000108]{"
+                +"player=" + player
+                +",roomId=" + roomId
                 + "}";
    }
 
@@ -114,9 +112,7 @@ public class SCEnterVolleyballMessage extends Message {
         int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("SCEnterVolleyballMessage").append("[2000104]").append("{");
-        sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append("SCExitVolleyballMessage").append("[2000108]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
         if (player != null){
@@ -124,6 +120,8 @@ public class SCEnterVolleyballMessage extends Message {
         } else {
             sb.append("null");
         }
+        sb.append("\n");
+        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

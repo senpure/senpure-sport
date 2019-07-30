@@ -5,45 +5,50 @@ import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 进入排球房间
- * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class SCEnterFootballlMessage extends  Message {
+public class SCExitFootBallMessage extends Message {
 
-    public static final int MESSAGE_ID = 3000104;
-    private int roomId;
+    public static final int MESSAGE_ID = 3000108;
     private Player player;
+    private int roomId;
+
+    public void copy(SCExitFootBallMessage from) {
+        Player tempPlayer = new Player();
+        tempPlayer.copy(from.getPlayer());
+        this.player = tempPlayer;
+        this.roomId = from.getRoomId();
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        writeVar32(buf,8,roomId);
-        if (player!= null){
-            writeBean(buf,19,player);
+        if (player != null) {
+            writeBean(buf, 11, player);
         }
+        writeVar32(buf, 16, roomId);
     }
 
     /**
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
-                case 8:// 1 << 3 | 0
-                    roomId = readVar32(buf);
-                    break;
-                case 19:// 2 << 3 | 3
+                    return;
+                case 11:// 1 << 3 | 3
                     player = new Player();
                     readBean(buf,player);
-
+                    break;
+                case 16:// 2 << 3 | 0
+                    roomId = readVar32(buf);
                     break;
                 default://skip
                     skip(buf, tag);
@@ -55,50 +60,49 @@ public class SCEnterFootballlMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        size += computeVar32Size(1,roomId);
-        if (player != null){
-            size += computeBeanSize(1,player);
+        size = 0;
+        if (player != null) {
+            size += computeBeanSize(1, player);
         }
+        size += computeVar32Size(1,roomId);
         serializedSize = size ;
         return size ;
     }
 
-    public  int getRoomId() {
-        return roomId;
-    }
-
-    public SCEnterFootballlMessage setRoomId(int roomId) {
-        this.roomId=roomId;
-        return this;
-    }
     public  Player getPlayer() {
         return player;
     }
 
-    public SCEnterFootballlMessage setPlayer(Player player) {
-        this.player=player;
+    public SCExitFootBallMessage setPlayer(Player player) {
+        this.player = player;
+        return this;
+    }
+    public  int getRoomId() {
+        return roomId;
+    }
+
+    public SCExitFootBallMessage setRoomId(int roomId) {
+        this.roomId = roomId;
         return this;
     }
 
     @Override
     public int getMessageId() {
-        return 3000104;
+        return 3000108;
     }
 
     @Override
     public String toString() {
-        return "SCEnterFootballlMessage[3000104]{"
-                +"roomId=" + roomId
-                +",player=" + player
+        return "SCExitFootBallMessage[3000108]{"
+                +"player=" + player
+                +",roomId=" + roomId
                 + "}";
    }
-
 
     @Override
     public String toString(String indent) {
@@ -108,16 +112,16 @@ public class SCEnterFootballlMessage extends  Message {
         int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("SCEnterFootballlMessage").append("[3000104]").append("{");
-        sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append("SCExitFootBallMessage").append("[3000108]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
-        if(player!=null){
+        if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {
             sb.append("null");
         }
+        sb.append("\n");
+        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

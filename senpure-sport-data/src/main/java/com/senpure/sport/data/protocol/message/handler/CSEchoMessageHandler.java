@@ -2,8 +2,8 @@ package com.senpure.sport.data.protocol.message.handler;
 
 import com.senpure.io.producer.ProducerMessageExecutor;
 import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
-import com.senpure.sport.protocol.message.CSEchoMessage;
-import com.senpure.sport.protocol.message.SCEchoMessage;
+import com.senpure.sport.data.protocol.message.CSEchoMessage;
+import com.senpure.sport.data.protocol.message.SCEchoMessage;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class CSEchoMessageHandler extends AbstractProducerMessageHandler<CSEchoM
         logger.debug("收到 {}", message);
         SCEchoMessage echoMessage = new SCEchoMessage();
         echoMessage.setEcho(message.getEcho());
-         gatewayManager.sendMessage2GatewayByToken(token, echoMessage);
+        gatewayManager.sendMessage2GatewayByToken(token, echoMessage);
 //        int requestId = GatewayManager.getRequestId();
 //
 //        messageExecutor.getService().schedule(() -> {

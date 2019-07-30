@@ -6,20 +6,27 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class SCLoginMessage extends  Message {
+public class SCLoginMessage extends Message {
 
     public static final int MESSAGE_ID = 1000102;
     private Player player;
+
+    public void copy(SCLoginMessage from) {
+        Player tempPlayer = new Player();
+        tempPlayer.copy(from.getPlayer());
+        this.player = tempPlayer;
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
-        if (player!= null){
-            writeBean(buf,11,player);
+        if (player != null) {
+            writeBean(buf, 11, player);
         }
     }
 
@@ -27,16 +34,15 @@ public class SCLoginMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 case 11:// 1 << 3 | 3
                     player = new Player();
                     readBean(buf,player);
-
                     break;
                 default://skip
                     skip(buf, tag);
@@ -48,14 +54,14 @@ public class SCLoginMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
-        if (player != null){
-            size += computeBeanSize(1,player);
+        size = 0;
+        if (player != null) {
+            size += computeBeanSize(1, player);
         }
         serializedSize = size ;
         return size ;
@@ -66,7 +72,7 @@ public class SCLoginMessage extends  Message {
     }
 
     public SCLoginMessage setPlayer(Player player) {
-        this.player=player;
+        this.player = player;
         return this;
     }
 
@@ -82,7 +88,6 @@ public class SCLoginMessage extends  Message {
                 + "}";
    }
 
-
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
@@ -94,7 +99,7 @@ public class SCLoginMessage extends  Message {
         sb.append("SCLoginMessage").append("[1000102]").append("{");
         sb.append("\n");
         sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
-        if(player!=null){
+        if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {
             sb.append("null");

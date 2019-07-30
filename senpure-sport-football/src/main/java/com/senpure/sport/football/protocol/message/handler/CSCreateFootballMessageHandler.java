@@ -1,8 +1,10 @@
 package com.senpure.sport.football.protocol.message.handler;
 
+import com.senpure.sport.football.logic.FootBallPlayer;
+import com.senpure.sport.football.logic.FootballRoom;
+import com.senpure.sport.football.logic.FootballRoomManager;
 import com.senpure.sport.football.protocol.message.CSCreateFootballMessage;
-import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
-import io.netty.channel.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +14,21 @@ import org.springframework.stereotype.Component;
  * @time 2019-7-26 11:20:08
  */
 @Component
-public class CSCreateFootballMessageHandler extends AbstractProducerMessageHandler<CSCreateFootballMessage> {
+public class CSCreateFootballMessageHandler extends AbstractFootBallMessageHandler<CSCreateFootballMessage> {
+
+    @Autowired
+    protected FootballRoomManager roomManager;
 
     @Override
-    public void execute(Channel channel, long token, long userId, CSCreateFootballMessage message) {
-        //TODO 请在这里写下你的代码
+    public void execute(FootBallPlayer player,CSCreateFootballMessage message) {
+        FootballRoom room = roomManager.getPlayerRoom(player.getId());
+
+        if (room != null) {
+            room.playerEnterRoom(player);
+            return;
+        }
+        room = roomManager.createRoom(gatewayManager, roomManager);
+        room.playerEnterRoom(player);
 
     }
 

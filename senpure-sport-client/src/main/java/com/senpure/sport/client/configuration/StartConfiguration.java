@@ -10,14 +10,11 @@ import com.senpure.io.support.MessageScanner;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import com.senpure.sport.data.protocol.message.SCEchoMessage;
-import com.senpure.sport.protocol.bean.ChatType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author senpure
  * @time 2019-07-04 14:22:32
  */
-@Configuration
-@Order
+
 public class StartConfiguration implements ApplicationRunner {
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -43,20 +39,9 @@ public class StartConfiguration implements ApplicationRunner {
         messageExecutor.getService().schedule(() -> {
 
             int value = 1;
-
             for (int i = 0; i < 5; i++) {
-
                 CSEchoMessage message = new CSEchoMessage();
-
                 Echo echo = new Echo();
-                for (int j = 0; j < 5; j++) {
-                    echo.getNums().add(value * j * 1L);
-                    echo.getStrs().add("str-" + value + "_" + j);
-                }
-                echo.getChatTypes().add(ChatType.STR);
-                echo.getChatTypes().add(ChatType.VOICE);
-                echo.getChatTypes().add(ChatType.STR);
-                echo.setValue(value);
                 message.setEcho(echo);
                 value++;
                 logger.debug("发送一个消息");

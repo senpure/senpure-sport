@@ -4,19 +4,23 @@ import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 创建排球房间
+ * 创建足球房间
  * 
  * @author senpure
- * @time 2019-7-26 17:16:03
+ * @time 2019-7-30 15:03:58
  */
-public class CSCreateFootballMessage extends  Message {
+public class CSCreateFootballMessage extends Message {
 
     public static final int MESSAGE_ID = 3000101;
+
+    public void copy(CSCreateFootballMessage from) {
+    }
+
     /**
      * 写入字节缓存
      */
     @Override
-    public void write(ByteBuf buf){
+    public void write(ByteBuf buf) {
         getSerializedSize();
     }
 
@@ -24,12 +28,12 @@ public class CSCreateFootballMessage extends  Message {
      * 读取字节缓存
      */
     @Override
-    public void read(ByteBuf buf,int endIndex){
-        while(true){
+    public void read(ByteBuf buf, int endIndex) {
+        while (true) {
             int tag = readTag(buf, endIndex);
             switch (tag) {
                 case 0://end
-                return;
+                    return;
                 default://skip
                     skip(buf, tag);
                     break;
@@ -40,12 +44,12 @@ public class CSCreateFootballMessage extends  Message {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize(){
-        int size = serializedSize ;
-        if (size != -1 ){
+    public int getSerializedSize() {
+        int size = serializedSize;
+        if (size != -1) {
             return size;
         }
-        size = 0 ;
+        size = 0;
         serializedSize = size ;
         return size ;
     }
@@ -61,7 +65,6 @@ public class CSCreateFootballMessage extends  Message {
         return "CSCreateFootballMessage[3000101]{"
                 + "}";
    }
-
 
     @Override
     public String toString(String indent) {

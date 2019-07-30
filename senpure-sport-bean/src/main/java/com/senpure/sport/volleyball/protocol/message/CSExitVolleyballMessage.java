@@ -4,16 +4,16 @@ import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 创建排球房间
+ * 离开排球房间
  * 
  * @author senpure
  * @time 2019-7-30 15:03:58
  */
-public class CSCreateVolleyballMessage extends Message {
+public class CSExitVolleyballMessage extends Message {
 
-    public static final int MESSAGE_ID = 2000101;
+    public static final int MESSAGE_ID = 2000107;
 
-    public void copy(CSCreateVolleyballMessage from) {
+    public void copy(CSExitVolleyballMessage from) {
     }
 
     /**
@@ -57,12 +57,12 @@ public class CSCreateVolleyballMessage extends Message {
 
     @Override
     public int getMessageId() {
-        return 2000101;
+        return 2000107;
     }
 
     @Override
     public String toString() {
-        return "CSCreateVolleyballMessage[2000101]{"
+        return "CSExitVolleyballMessage[2000107]{"
                 + "}";
    }
 
@@ -70,7 +70,7 @@ public class CSCreateVolleyballMessage extends Message {
     public String toString(String indent) {
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("CSCreateVolleyballMessage").append("[2000101]").append("{");
+        sb.append("CSExitVolleyballMessage").append("[2000107]").append("{");
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();
