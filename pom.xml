@@ -18,6 +18,8 @@
         <module>senpure-sport-gateway</module>
         <module>senpure-sport-client</module>
         <module>senpure-sport-football</module>
+        <module>senpure-sport-volleyball</module>
+
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -42,9 +44,15 @@
             </dependency>
             <dependency>
                 <groupId>com.senpure</groupId>
+                <artifactId>senpure-dispatcher</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
                 <artifactId>senpure-io-core</artifactId>
                 <version>${senpure.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.senpure</groupId>
                 <artifactId>senpure-io-generator</artifactId>

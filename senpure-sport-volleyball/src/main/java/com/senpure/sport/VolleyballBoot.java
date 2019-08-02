@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * FootBallBoot
+ * VolleyballBoot
  *
  * @author senpure
  * @time 2019-07-26 10:47:02
@@ -16,10 +16,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableProducer
 @EnableConsumer
 @EnableDiscoveryClient
-public class FootballBoot {
+public class VolleyballBoot {
 
     public static void main(String[] args) {
-        SpringApplication.run(FootballBoot.class, args);
+        SpringApplication.run(VolleyballBoot.class, args);
 
     }
 }

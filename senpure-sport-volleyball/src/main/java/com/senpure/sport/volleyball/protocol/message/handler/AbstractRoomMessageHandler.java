@@ -1,27 +1,27 @@
-package com.senpure.sport.football.protocol.message.handler;
+package com.senpure.sport.volleyball.protocol.message.handler;
 
 import com.senpure.io.protocol.Message;
-import com.senpure.sport.football.logic.FootBallPlayer;
-import com.senpure.sport.football.logic.FootballRoom;
-import com.senpure.sport.football.logic.FootballRoomManager;
+import com.senpure.sport.volleyball.logic.VolleyballPlayer;
+import com.senpure.sport.volleyball.logic.VolleyballRoom;
+import com.senpure.sport.volleyball.logic.VolleyballRoomManager;
 import com.senpure.sport.protocol.bean.ErrorType;
 import com.senpure.sport.protocol.message.SCErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * AbstractFootBallMessageHandler
+ * AbstractVolleyballMessageHandler
  *
  * @author senpure
  * @time 2019-07-29 16:35:59
  */
-public abstract class AbstractRoomMessageHandler<T extends Message> extends AbstractFootBallMessageHandler<T> {
+public abstract class AbstractRoomMessageHandler<T extends Message> extends AbstractVolleyballMessageHandler<T> {
 
     @Autowired
-    protected FootballRoomManager roomManager;
+    protected VolleyballRoomManager roomManager;
 
     @Override
-    public void execute(FootBallPlayer player,T message) {
-        FootballRoom room = roomManager.getPlayerRoom(player.getId());
+    public void execute(VolleyballPlayer player, T message) {
+        VolleyballRoom room = roomManager.getPlayerRoom(player.getId());
         if (room == null) {
             logger.error("{}[{}] 不在房间中", player.getNick(), player.getId());
             SCErrorMessage errorMessage = new SCErrorMessage();
@@ -33,5 +33,5 @@ public abstract class AbstractRoomMessageHandler<T extends Message> extends Abst
         execute(player, room,message);
     }
 
-    public abstract void execute(FootBallPlayer player, FootballRoom room,T message);
+    public abstract void execute(VolleyballPlayer player, VolleyballRoom room, T message);
 }
