@@ -1,4 +1,4 @@
-package com.senpure.sport.data;
+package com.senpure.sport;
 
 import com.senpure.io.support.annotation.EnableProducer;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +17,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class DataBoot {
 
     public static void main(String[] args) {
+
 
         SpringApplication.run(DataBoot.class, args);
     }

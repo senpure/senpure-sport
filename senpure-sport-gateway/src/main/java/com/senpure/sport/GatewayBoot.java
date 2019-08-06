@@ -1,4 +1,4 @@
-package com.senpure.sport.gateway;
+package com.senpure.sport;
 
 import com.senpure.io.support.annotation.EnableGateway;
 import org.springframework.boot.SpringApplication;

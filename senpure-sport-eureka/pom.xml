@@ -30,7 +30,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.senpure.sport.EurekaBoott</mainClass>
+                    <mainClass>com.senpure.sport.EurekaBoot</mainClass>
                     <layout>ZIP</layout>
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
 

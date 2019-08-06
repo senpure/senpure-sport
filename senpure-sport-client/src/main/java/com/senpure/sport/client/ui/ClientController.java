@@ -288,8 +288,10 @@ public class ClientController implements Initializable {
                     try {
                         if (remoteServerManager.getDefaultChannelManager() == null) {
                             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(properties.getConsumer().getRemoteName());
+
                             if (serviceInstances.size() == 0) {
-                                logger.warn("没有服务可用{}", properties.getConsumer().getRemoteName());
+                                logger.warn("没有服务可用{}  {}", properties.getConsumer().getRemoteName(),discoveryClient.description());
+                                return;
                             }
                             ServiceInstance instance;
                             if (lastFailServerKey == null) {
@@ -338,6 +340,7 @@ public class ClientController implements Initializable {
                                     consumerServer.setMessageExecutor(messageExecutor);
                                     consumerServer.setRemoteServerManager(remoteServerManager);
                                     consumerServer.setProperties(properties.getConsumer());
+
                                     if (consumerServer.start(remoteServerChannelManager.getHost(), remoteServerChannelManager.getPort())) {
                                         servers.add(consumerServer);
                                         this.consumerServer = consumerServer;

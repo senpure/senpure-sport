@@ -44,6 +44,11 @@
             </dependency>
             <dependency>
                 <groupId>com.senpure</groupId>
+                <artifactId>senpure-dispatcher-bean</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
                 <artifactId>senpure-dispatcher</artifactId>
                 <version>${senpure.version}</version>
             </dependency>

@@ -1,8 +1,10 @@
 package com.senpure.sport.volleyball.protocol.message.handler;
 
-import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;
 import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
+import com.senpure.sport.client.ui.ClientController;
+import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;
 import io.netty.channel.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,16 +15,19 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SCEnterVolleyballMessageHandler extends AbstractConsumerMessageHandler<SCEnterVolleyballMessage> {
+    @Autowired
+    private ClientController clientController;
 
     @Override
     public void execute(Channel channel, SCEnterVolleyballMessage message) {
-        //TODO 请在这里写下你的代码
+
+        clientController.enterVolleyballRoom(message);
 
     }
 
     @Override
     public int handlerId() {
-               // 2019-7-25 18:02:32 2000104
+        // 2019-7-25 18:02:32 2000104
         return SCEnterVolleyballMessage.MESSAGE_ID;
     }
 
