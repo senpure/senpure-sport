@@ -1,4 +1,4 @@
-package com.senpure.sport.data.protocol.bean;
+package com.senpure.io.bean;
 
 import com.senpure.io.protocol.Bean;
 import io.netty.buffer.ByteBuf;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2019-8-14 14:26:01
  */
 public class Echo extends Bean {
     //booleanValue

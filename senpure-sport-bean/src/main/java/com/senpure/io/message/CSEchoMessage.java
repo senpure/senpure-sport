@@ -1,22 +1,22 @@
-package com.senpure.sport.protocol.message;
+package com.senpure.io.message;
 
+import com.senpure.io.bean.Echo;
 import com.senpure.io.protocol.Message;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 加入房间
- * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2019-8-14 14:26:01
  */
-public class CSJoinRoomMessage extends Message {
+public class CSEchoMessage extends Message {
 
-    public static final int MESSAGE_ID = 1000801;
-    //房间编号
-    private String roomId;
+    public static final int MESSAGE_ID = 1000103;
+    private Echo echo;
 
-    public void copy(CSJoinRoomMessage from) {
-        this.roomId = from.getRoomId();
+    public void copy(CSEchoMessage from) {
+        Echo tempEcho = new Echo();
+        tempEcho.copy(from.getEcho());
+        this.echo = tempEcho;
     }
 
     /**
@@ -25,9 +25,8 @@ public class CSJoinRoomMessage extends Message {
     @Override
     public void write(ByteBuf buf) {
         getSerializedSize();
-        //房间编号
-        if (roomId != null) {
-            writeString(buf, 11, roomId);
+        if (echo != null) {
+            writeBean(buf, 11, echo);
         }
     }
 
@@ -41,9 +40,9 @@ public class CSJoinRoomMessage extends Message {
             switch (tag) {
                 case 0://end
                     return;
-                //房间编号
                 case 11:// 1 << 3 | 3
-                    roomId = readString(buf);
+                    echo = new Echo();
+                    readBean(buf,echo);
                     break;
                 default://skip
                     skip(buf, tag);
@@ -61,52 +60,50 @@ public class CSJoinRoomMessage extends Message {
             return size;
         }
         size = 0;
-        //房间编号
-        if (roomId != null) {
-            size += computeStringSize(1, roomId);
+        if (echo != null) {
+            size += computeBeanSize(1, echo);
         }
         serializedSize = size ;
         return size ;
     }
 
-    /**
-     * get 房间编号
-     * @return
-     */
-    public  String getRoomId() {
-        return roomId;
+    public  Echo getEcho() {
+        return echo;
     }
 
-    /**
-     * set 房间编号
-     */
-    public CSJoinRoomMessage setRoomId(String roomId) {
-        this.roomId = roomId;
+    public CSEchoMessage setEcho(Echo echo) {
+        this.echo = echo;
         return this;
     }
 
     @Override
     public int getMessageId() {
-        return 1000801;
+        return 1000103;
     }
 
     @Override
     public String toString() {
-        return "CSJoinRoomMessage[1000801]{"
-                +"roomId=" + roomId
+        return "CSEchoMessage[1000103]{"
+                +"echo=" + echo
                 + "}";
    }
 
     @Override
     public String toString(String indent) {
-        //最长字段长度 6
-        int filedPad = 6;
+        //4 + 3 = 7 个空格
+        String nextIndent ="       ";
+        //最长字段长度 4
+        int filedPad = 4;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("CSJoinRoomMessage").append("[1000801]").append("{");
-        //房间编号
+        sb.append("CSEchoMessage").append("[1000103]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append(indent).append(rightPad("echo", filedPad)).append(" = ");
+        if (echo != null){
+            sb.append(echo.toString(indent+nextIndent));
+        } else {
+            sb.append("null");
+        }
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

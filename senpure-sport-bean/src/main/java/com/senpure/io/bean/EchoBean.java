@@ -1,19 +1,19 @@
-package com.senpure.sport.volleyball.protocol.message;
+package com.senpure.io.bean;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.Bean;
 import io.netty.buffer.ByteBuf;
 
 /**
- * 创建排球房间
+ * Echo中的一个bean
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2019-8-14 14:26:01
  */
-public class CSCreateVolleyballMessage extends Message {
+public class EchoBean extends Bean {
+    private int value;
 
-    public static final int MESSAGE_ID = 2000101;
-
-    public void copy(CSCreateVolleyballMessage from) {
+    public void copy(EchoBean from) {
+        this.value = from.getValue();
     }
 
     /**
@@ -22,6 +22,7 @@ public class CSCreateVolleyballMessage extends Message {
     @Override
     public void write(ByteBuf buf) {
         getSerializedSize();
+        writeVar32(buf, 8, value);
     }
 
     /**
@@ -34,6 +35,9 @@ public class CSCreateVolleyballMessage extends Message {
             switch (tag) {
                 case 0://end
                     return;
+                case 8:// 1 << 3 | 0
+                    value = readVar32(buf);
+                    break;
                 default://skip
                     skip(buf, tag);
                     break;
@@ -50,27 +54,36 @@ public class CSCreateVolleyballMessage extends Message {
             return size;
         }
         size = 0;
+        size += computeVar32Size(1,value);
         serializedSize = size ;
         return size ;
     }
 
+    public  int getValue() {
+        return value;
+    }
 
-    @Override
-    public int getMessageId() {
-        return 2000101;
+    public EchoBean setValue(int value) {
+        this.value = value;
+        return this;
     }
 
     @Override
     public String toString() {
-        return "CSCreateVolleyballMessage[2000101]{"
+        return "EchoBean{"
+                +"value=" + value
                 + "}";
    }
 
     @Override
     public String toString(String indent) {
+        //最长字段长度 5
+        int filedPad = 5;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
-        sb.append("CSCreateVolleyballMessage").append("[2000101]").append("{");
+        sb.append("EchoBean").append("{");
+        sb.append("\n");
+        sb.append(indent).append(rightPad("value", filedPad)).append(" = ").append(value);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

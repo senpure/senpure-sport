@@ -1,10 +1,10 @@
-package com.senpure.sport.data.protocol.bean;
+package com.senpure.io.bean;
 
 /**
  * Echo中的一个enum
  * 
  * @author senpure
- * @time 2019-8-14 14:28:41
+ * @time 2019-8-14 14:26:01
  */
 public enum EchoEnum {
     X(1),

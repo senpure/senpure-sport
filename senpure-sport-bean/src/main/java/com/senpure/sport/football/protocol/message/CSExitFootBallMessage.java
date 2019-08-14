@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 离开足球房间
  * 
  * @author senpure
- * @time 2019-7-30 15:03:58
+ * @time 2019-8-14 14:28:42
  */
 public class CSExitFootBallMessage extends Message {
 
