@@ -1,5 +1,5 @@
-namespace com.senpure.sport;
-javaPack  com.senpure.sport.protocol;
+namespace   com.senpure.sport;
+javaPackage com.senpure.sport.protocol;
 
 //性别
 enum Gender {

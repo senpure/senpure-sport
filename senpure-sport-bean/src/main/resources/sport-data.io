@@ -1,6 +1,6 @@
-import    sport-bean.io;
-namespace com.senpure.sport.data;
-javaPack  com.senpure.sport.data.protocol;
+import      sport-bean.io;
+namespace   com.senpure.sport.data;
+javaPackage com.senpure.sport.data.protocol;
 
 message CS Login 1000101 {
     String id;
