@@ -19,6 +19,7 @@
         <module>senpure-sport-client</module>
         <module>senpure-sport-football</module>
         <module>senpure-sport-volleyball</module>
+        <module>senpure-sport-helper</module>
 
     </modules>
     <dependencyManagement>
@@ -36,6 +37,11 @@
                 <version>${senpure.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-base</artifactId>
+                <version>${senpure.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.senpure</groupId>
