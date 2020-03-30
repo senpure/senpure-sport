@@ -25,10 +25,10 @@ bean Echo {
     float    [] floatValues;            //floatValues
     double      doubleValue;            //doubleValue
     double   [] doubleValues;           //doubleValues
-    sfixed32    sfixed32Value;          //sfixed32Value
-    sfixed32 [] sfixed32Values;         //sfixed32Values
-    sfixed64    sfixed64Value;          //sfixed64Value
-    sfixed64 [] sfixed64Values;         //sfixed64Values
+    fixed32    fixed32Value;          //fixed32Value
+    fixed32 [] fixed32Values;         //fixed32Values
+    fixed64    fixed64Value;          //fixed64Value
+    fixed64 [] fixed64Values;         //fixed64Values
     String      stringValue;            //stringValue
     String   [] stringValues;           //stringValues
     EchoBean    beanValue;              //beanValue
@@ -50,10 +50,10 @@ bean Echo {
     float    [] floatValues2;
     double      doubleValue2;
     double   [] doubleValues2;
-    sfixed32    sfixed32Value2;
-    sfixed32 [] sfixed32Values2;
-    sfixed64    sfixed64Value2;
-    sfixed64 [] sfixed64Values2;
+    fixed32    fixed32Value2;
+    fixed32 [] fixed32Values2;
+    fixed64    fixed64Value2;
+    fixed64 [] fixed64Values2;
     String      stringValue2;
     String   [] stringValues2;
     EchoBean    beanValue2;
