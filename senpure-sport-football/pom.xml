@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.senpure</groupId>
-            <artifactId>senpure-io-support-starter</artifactId>
+            <artifactId>senpure-io-server</artifactId>
         </dependency>
     </dependencies>
 
@@ -60,7 +60,10 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
+
+
         </plugins>
     </build>
 </project>

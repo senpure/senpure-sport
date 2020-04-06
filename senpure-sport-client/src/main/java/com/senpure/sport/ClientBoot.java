@@ -1,7 +1,7 @@
 package com.senpure.sport;
 
 import com.senpure.base.AppEvn;
-import com.senpure.io.support.annotation.EnableConsumer;
+import com.senpure.io.server.support.annotation.EnableConsumer;
 import com.senpure.sport.client.ui.ClientView;
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

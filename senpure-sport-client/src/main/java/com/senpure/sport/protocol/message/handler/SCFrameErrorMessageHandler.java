@@ -1,7 +1,8 @@
 package com.senpure.sport.protocol.message.handler;
 
-import com.senpure.io.consumer.handler.SCInnerErrorMessageHandler;
-import com.senpure.io.message.SCInnerErrorMessage;
+
+import com.senpure.io.server.consumer.handler.SCInnerErrorMessageHandler;
+import com.senpure.io.server.protocol.message.SCInnerErrorMessage;
 import com.senpure.sport.client.ui.ClientController;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,6 @@ public class SCFrameErrorMessageHandler extends SCInnerErrorMessageHandler {
 
     @Override
     public void execute(Channel channel, SCInnerErrorMessage message) throws Exception {
-        clientController.message(message.getType() + message.getMessage());
+        clientController.message(message.getCode() + message.getMessage());
     }
 }

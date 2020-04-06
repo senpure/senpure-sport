@@ -1,12 +1,12 @@
 package com.senpure.sport.client.configuration;
 
 import com.senpure.base.util.Spring;
-import com.senpure.io.bean.IdName;
-import com.senpure.io.consumer.ConsumerMessageExecutor;
-import com.senpure.io.consumer.RemoteServerManager;
-import com.senpure.io.consumer.remoting.Response;
-import com.senpure.io.consumer.remoting.SuccessCallback;
-import com.senpure.io.support.MessageScanner;
+import com.senpure.io.server.consumer.ConsumerMessageExecutor;
+import com.senpure.io.server.consumer.RemoteServerManager;
+import com.senpure.io.server.consumer.remoting.Response;
+import com.senpure.io.server.consumer.remoting.SuccessCallback;
+import com.senpure.io.server.protocol.bean.IdName;
+import com.senpure.io.server.support.MessageScanner;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import com.senpure.sport.data.protocol.message.SCEchoMessage;

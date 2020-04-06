@@ -1,6 +1,7 @@
 package com.senpure.sport.protocol.message.handler;
 
-import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
+
+import com.senpure.io.server.consumer.handler.AbstractConsumerMessageHandler;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
 import io.netty.channel.Channel;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,8 @@
 package com.senpure.sport.football.protocol.message.handler;
 
-import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
+
 import com.senpure.io.protocol.Message;
+import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
 import com.senpure.sport.football.logic.FootBallPlayer;
 import com.senpure.sport.football.service.FootballService;
 import com.senpure.sport.protocol.bean.ErrorType;
@@ -37,7 +38,7 @@ public abstract class AbstractFootBallMessageHandler<T extends Message> extends 
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("玩家不存在");
             gatewayManager.sendMessage2GatewayByToken(token, errorMessage);
-            logger.warn("{} 玩家不存在 token", userId, token);
+            logger.warn("{} 玩家不存在 token {}", userId, token);
             return;
         }
         execute(player,message);

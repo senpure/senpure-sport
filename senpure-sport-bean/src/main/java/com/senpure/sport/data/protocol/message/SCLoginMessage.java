@@ -1,22 +1,26 @@
 package com.senpure.sport.data.protocol.message;
 
 import com.senpure.sport.protocol.bean.Player;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class SCLoginMessage extends Message {
+public class SCLoginMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000102;
     private Player player;
 
-    public void copy(SCLoginMessage from) {
-        Player tempPlayer = new Player();
-        tempPlayer.copy(from.getPlayer());
-        this.player = tempPlayer;
+    public void copy(SCLoginMessage source) {
+        if (source.getPlayer() != null) {
+            Player tempPlayer = new Player();
+            tempPlayer.copy(source.getPlayer());
+            this.player = tempPlayer;
+        } else {
+            this.player = null;
+            }
     }
 
     /**
@@ -61,13 +65,14 @@ public class SCLoginMessage extends Message {
         }
         size = 0;
         if (player != null) {
+             //tag size 11
             size += computeBeanSize(1, player);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -84,21 +89,20 @@ public class SCLoginMessage extends Message {
     @Override
     public String toString() {
         return "SCLoginMessage[1000102]{"
-                +"player=" + player
+                + "player=" + player
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
-        String nextIndent ="         ";
+        String nextIndent = "         ";
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("SCLoginMessage").append("[1000102]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
+        sb.append(indent).append("player = ");
         if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {

@@ -1,21 +1,21 @@
 package com.senpure.sport.data.protocol.message;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 获取运动员信息
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSPlayerMessage extends Message {
+public class CSPlayerMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000105;
     private long playerId;
 
-    public void copy(CSPlayerMessage from) {
-        this.playerId = from.getPlayerId();
+    public void copy(CSPlayerMessage source) {
+        this.playerId = source.getPlayerId();
     }
 
     /**
@@ -56,12 +56,13 @@ public class CSPlayerMessage extends Message {
             return size;
         }
         size = 0;
+        //tag size 8
         size += computeVar64Size(1, playerId);
         serializedSize = size ;
         return size ;
     }
 
-    public  long getPlayerId() {
+    public long getPlayerId() {
         return playerId;
     }
 
@@ -78,19 +79,18 @@ public class CSPlayerMessage extends Message {
     @Override
     public String toString() {
         return "CSPlayerMessage[1000105]{"
-                +"playerId=" + playerId
+                + "playerId=" + playerId
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 8
-        int filedPad = 8;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("CSPlayerMessage").append("[1000105]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("playerId", filedPad)).append(" = ").append(playerId);
+        sb.append(indent).append("playerId = ").append(playerId);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

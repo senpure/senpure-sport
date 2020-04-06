@@ -1,6 +1,7 @@
 package com.senpure.sport.volleyball.protocol.message.handler;
 
-import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
+
+import com.senpure.io.server.consumer.handler.AbstractConsumerMessageHandler;
 import com.senpure.sport.client.ui.ClientController;
 import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;
 import io.netty.channel.Channel;

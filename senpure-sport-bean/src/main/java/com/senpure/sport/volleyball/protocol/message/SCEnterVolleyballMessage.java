@@ -1,26 +1,30 @@
 package com.senpure.sport.volleyball.protocol.message;
 
 import com.senpure.sport.protocol.bean.Player;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 进入排球房间
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class SCEnterVolleyballMessage extends Message {
+public class SCEnterVolleyballMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 2000104;
     private int roomId;
     private Player player;
 
-    public void copy(SCEnterVolleyballMessage from) {
-        this.roomId = from.getRoomId();
-        Player tempPlayer = new Player();
-        tempPlayer.copy(from.getPlayer());
-        this.player = tempPlayer;
+    public void copy(SCEnterVolleyballMessage source) {
+        this.roomId = source.getRoomId();
+        if (source.getPlayer() != null) {
+            Player tempPlayer = new Player();
+            tempPlayer.copy(source.getPlayer());
+            this.player = tempPlayer;
+        } else {
+            this.player = null;
+            }
     }
 
     /**
@@ -68,15 +72,17 @@ public class SCEnterVolleyballMessage extends Message {
             return size;
         }
         size = 0;
-        size += computeVar32Size(1,roomId);
+        //tag size 8
+        size += computeVar32Size(1, roomId);
         if (player != null) {
+             //tag size 19
             size += computeBeanSize(1, player);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  int getRoomId() {
+    public int getRoomId() {
         return roomId;
     }
 
@@ -84,7 +90,8 @@ public class SCEnterVolleyballMessage extends Message {
         this.roomId = roomId;
         return this;
     }
-    public  Player getPlayer() {
+
+    public Player getPlayer() {
         return player;
     }
 
@@ -101,24 +108,23 @@ public class SCEnterVolleyballMessage extends Message {
     @Override
     public String toString() {
         return "SCEnterVolleyballMessage[2000104]{"
-                +"roomId=" + roomId
-                +",player=" + player
+                + "roomId=" + roomId
+                + ",player=" + player
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
-        String nextIndent ="         ";
+        String nextIndent = "         ";
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("SCEnterVolleyballMessage").append("[2000104]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append(indent).append("roomId = ").append(roomId);
         sb.append("\n");
-        sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
+        sb.append(indent).append("player = ");
         if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {

@@ -1,7 +1,7 @@
 package com.senpure.sport.football.logic;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.producer.GatewayManager;
+import com.senpure.io.server.producer.GatewayManager;
 
 import java.util.*;
 import java.util.concurrent.BlockingDeque;

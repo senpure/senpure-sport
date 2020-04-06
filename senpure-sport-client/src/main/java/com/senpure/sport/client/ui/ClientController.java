@@ -1,10 +1,10 @@
 package com.senpure.sport.client.ui;
 
 import com.senpure.base.util.DateFormatUtil;
-import com.senpure.io.ServerProperties;
-import com.senpure.io.consumer.*;
-import com.senpure.io.consumer.remoting.Response;
 import com.senpure.io.protocol.Message;
+import com.senpure.io.server.ServerProperties;
+import com.senpure.io.server.consumer.*;
+import com.senpure.io.server.consumer.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSLoginMessage;
 import com.senpure.sport.data.protocol.message.SCLoginMessage;
 import com.senpure.sport.football.protocol.message.CSCreateFootballMessage;

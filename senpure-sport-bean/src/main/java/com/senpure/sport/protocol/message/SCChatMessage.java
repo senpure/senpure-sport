@@ -1,14 +1,14 @@
 package com.senpure.sport.protocol.message;
 
 import com.senpure.sport.protocol.bean.Chat;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class SCChatMessage extends Message {
+public class SCChatMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 100102;
     //发送者id
@@ -17,12 +17,16 @@ public class SCChatMessage extends Message {
     private String title;
     private Chat chat;
 
-    public void copy(SCChatMessage from) {
-        this.sendId = from.getSendId();
-        this.title = from.getTitle();
-        Chat tempChat = new Chat();
-        tempChat.copy(from.getChat());
-        this.chat = tempChat;
+    public void copy(SCChatMessage source) {
+        this.sendId = source.getSendId();
+        this.title = source.getTitle();
+        if (source.getChat() != null) {
+            Chat tempChat = new Chat();
+            tempChat.copy(source.getChat());
+            this.chat = tempChat;
+        } else {
+            this.chat = null;
+            }
     }
 
     /**
@@ -81,12 +85,15 @@ public class SCChatMessage extends Message {
         }
         size = 0;
         //发送者id
+        //tag size 8
         size += computeVar64Size(1, sendId);
         //发送者头衔
         if (title != null) {
-            size += computeStringSize(1, title);
+             //tag size 19
+             size += computeStringSize(1, title);
         }
         if (chat != null) {
+             //tag size 27
             size += computeBeanSize(1, chat);
         }
         serializedSize = size ;
@@ -95,9 +102,10 @@ public class SCChatMessage extends Message {
 
     /**
      * get 发送者id
+     *
      * @return
      */
-    public  long getSendId() {
+    public long getSendId() {
         return sendId;
     }
 
@@ -108,11 +116,13 @@ public class SCChatMessage extends Message {
         this.sendId = sendId;
         return this;
     }
+
     /**
      * get 发送者头衔
+     *
      * @return
      */
-    public  String getTitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -123,7 +133,8 @@ public class SCChatMessage extends Message {
         this.title = title;
         return this;
     }
-    public  Chat getChat() {
+
+    public Chat getChat() {
         return chat;
     }
 
@@ -140,29 +151,28 @@ public class SCChatMessage extends Message {
     @Override
     public String toString() {
         return "SCChatMessage[100102]{"
-                +"sendId=" + sendId
-                +",title=" + title
-                +",chat=" + chat
+                + "sendId=" + sendId
+                + ",title=" + title
+                + ",chat=" + chat
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
-        String nextIndent ="         ";
+        String nextIndent = "         ";
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("SCChatMessage").append("[100102]").append("{");
         //发送者id
         sb.append("\n");
-        sb.append(indent).append(rightPad("sendId", filedPad)).append(" = ").append(sendId);
+        sb.append(indent).append("sendId = ").append(sendId);
         //发送者头衔
         sb.append("\n");
-        sb.append(indent).append(rightPad("title", filedPad)).append(" = ").append(title);
+        sb.append(indent).append("title  = ").append(title);
         sb.append("\n");
-        sb.append(indent).append(rightPad("chat", filedPad)).append(" = ");
+        sb.append(indent).append("chat   = ");
         if (chat != null){
             sb.append(chat.toString(indent+nextIndent));
         } else {

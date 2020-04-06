@@ -1,6 +1,7 @@
 package com.senpure.sport.data.protocol.message.handler;
 
-import com.senpure.io.producer.handler.AbstractProducerMessageHandler;
+
+import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
 import com.senpure.sport.data.protocol.message.CSLoginMessage;
 import com.senpure.sport.data.service.PlayerService;
 import io.netty.channel.Channel;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CSLoginMessageHandler extends AbstractProducerMessageHandler<CSLoginMessage> {
 
-    int i = 10086;
     @Autowired
     private PlayerService playerService;
 

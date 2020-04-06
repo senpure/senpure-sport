@@ -1,19 +1,19 @@
 package com.senpure.sport.volleyball.protocol.message;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 创建排球房间
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSCreateVolleyballMessage extends Message {
+public class CSCreateVolleyballMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 2000101;
 
-    public void copy(CSCreateVolleyballMessage from) {
+    public void copy(CSCreateVolleyballMessage source) {
     }
 
     /**
@@ -64,7 +64,7 @@ public class CSCreateVolleyballMessage extends Message {
     public String toString() {
         return "CSCreateVolleyballMessage[2000101]{"
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {

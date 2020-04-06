@@ -1,6 +1,7 @@
 package com.senpure.sport.volleyball.logic;
 
-import com.senpure.io.producer.GatewayManager;
+
+import com.senpure.io.server.producer.GatewayManager;
 import com.senpure.sport.protocol.bean.Chat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

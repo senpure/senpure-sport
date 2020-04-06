@@ -1,19 +1,19 @@
 package com.senpure.sport.data.protocol.bean;
 
-import com.senpure.io.protocol.Bean;
+import com.senpure.io.protocol.CompressBean;
 import io.netty.buffer.ByteBuf;
 
 /**
  * Echo中的一个bean
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class EchoBean extends Bean {
+public class EchoBean extends CompressBean {
     private int value;
 
-    public void copy(EchoBean from) {
-        this.value = from.getValue();
+    public void copy(EchoBean source) {
+        this.value = source.getValue();
     }
 
     /**
@@ -54,12 +54,13 @@ public class EchoBean extends Bean {
             return size;
         }
         size = 0;
-        size += computeVar32Size(1,value);
+        //tag size 8
+        size += computeVar32Size(1, value);
         serializedSize = size ;
         return size ;
     }
 
-    public  int getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -71,19 +72,18 @@ public class EchoBean extends Bean {
     @Override
     public String toString() {
         return "EchoBean{"
-                +"value=" + value
+                + "value=" + value
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 5
-        int filedPad = 5;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("EchoBean").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("value", filedPad)).append(" = ").append(value);
+        sb.append(indent).append("value = ").append(value);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

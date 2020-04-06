@@ -1,11 +1,12 @@
 package com.senpure.sport.volleyball.service;
 
-import com.senpure.io.consumer.RemoteServerManager;
-import com.senpure.io.consumer.remoting.Response;
+
+import com.senpure.io.server.consumer.RemoteServerManager;
+import com.senpure.io.server.consumer.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
-import com.senpure.sport.volleyball.logic.VolleyballPlayer;
 import com.senpure.sport.protocol.bean.Player;
+import com.senpure.sport.volleyball.logic.VolleyballPlayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

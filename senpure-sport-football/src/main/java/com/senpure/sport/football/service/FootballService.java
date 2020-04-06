@@ -1,7 +1,8 @@
 package com.senpure.sport.football.service;
 
-import com.senpure.io.consumer.RemoteServerManager;
-import com.senpure.io.consumer.remoting.Response;
+
+import com.senpure.io.server.consumer.RemoteServerManager;
+import com.senpure.io.server.consumer.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
 import com.senpure.sport.football.logic.FootBallPlayer;

@@ -1,24 +1,28 @@
 package com.senpure.sport.football.protocol.message;
 
 import com.senpure.sport.protocol.bean.Chat;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 足球房间聊天
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSFootballChatMessage extends Message {
+public class CSFootballChatMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 3000105;
     private Chat chat;
 
-    public void copy(CSFootballChatMessage from) {
-        Chat tempChat = new Chat();
-        tempChat.copy(from.getChat());
-        this.chat = tempChat;
+    public void copy(CSFootballChatMessage source) {
+        if (source.getChat() != null) {
+            Chat tempChat = new Chat();
+            tempChat.copy(source.getChat());
+            this.chat = tempChat;
+        } else {
+            this.chat = null;
+            }
     }
 
     /**
@@ -63,13 +67,14 @@ public class CSFootballChatMessage extends Message {
         }
         size = 0;
         if (chat != null) {
+             //tag size 11
             size += computeBeanSize(1, chat);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  Chat getChat() {
+    public Chat getChat() {
         return chat;
     }
 
@@ -86,21 +91,20 @@ public class CSFootballChatMessage extends Message {
     @Override
     public String toString() {
         return "CSFootballChatMessage[3000105]{"
-                +"chat=" + chat
+                + "chat=" + chat
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //4 + 3 = 7 个空格
-        String nextIndent ="       ";
+        String nextIndent = "       ";
         //最长字段长度 4
-        int filedPad = 4;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("CSFootballChatMessage").append("[3000105]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("chat", filedPad)).append(" = ");
+        sb.append(indent).append("chat = ");
         if (chat != null){
             sb.append(chat.toString(indent+nextIndent));
         } else {

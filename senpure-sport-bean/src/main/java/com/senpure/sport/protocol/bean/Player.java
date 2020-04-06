@@ -1,25 +1,25 @@
 package com.senpure.sport.protocol.bean;
 
-import com.senpure.io.protocol.Bean;
+import com.senpure.io.protocol.CompressBean;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 运动员
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class Player extends Bean {
+public class Player extends CompressBean {
     private long id;
     private int age;
     private String nick;
     private Gender gender = Gender.MALE;
 
-    public void copy(Player from) {
-        this.id = from.getId();
-        this.age = from.getAge();
-        this.nick = from.getNick();
-        this.gender = from.getGender();
+    public void copy(Player source) {
+        this.id = source.getId();
+        this.age = source.getAge();
+        this.nick = source.getNick();
+        this.gender = source.getGender();
     }
 
     /**
@@ -76,19 +76,23 @@ public class Player extends Bean {
             return size;
         }
         size = 0;
+        //tag size 8
         size += computeVar64Size(1, id);
-        size += computeVar32Size(1,age);
+        //tag size 16
+        size += computeVar32Size(1, age);
         if (nick != null) {
-            size += computeStringSize(1, nick);
+             //tag size 27
+             size += computeStringSize(1, nick);
         }
         if (gender != null) {
+             //tag size 35
             size += computeVar32Size(1, gender.getValue());
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  long getId() {
+    public long getId() {
         return id;
     }
 
@@ -96,7 +100,8 @@ public class Player extends Bean {
         this.id = id;
         return this;
     }
-    public  int getAge() {
+
+    public int getAge() {
         return age;
     }
 
@@ -104,7 +109,8 @@ public class Player extends Bean {
         this.age = age;
         return this;
     }
-    public  String getNick() {
+
+    public String getNick() {
         return nick;
     }
 
@@ -112,7 +118,8 @@ public class Player extends Bean {
         this.nick = nick;
         return this;
     }
-    public  Gender getGender() {
+
+    public Gender getGender() {
         return gender;
     }
 
@@ -124,28 +131,27 @@ public class Player extends Bean {
     @Override
     public String toString() {
         return "Player{"
-                +"id=" + id
-                +",age=" + age
-                +",nick=" + nick
-                +",gender=" + gender
+                + "id=" + id
+                + ",age=" + age
+                + ",nick=" + nick
+                + ",gender=" + gender
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("Player").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("id", filedPad)).append(" = ").append(id);
+        sb.append(indent).append("id     = ").append(id);
         sb.append("\n");
-        sb.append(indent).append(rightPad("age", filedPad)).append(" = ").append(age);
+        sb.append(indent).append("age    = ").append(age);
         sb.append("\n");
-        sb.append(indent).append(rightPad("nick", filedPad)).append(" = ").append(nick);
+        sb.append(indent).append("nick   = ").append(nick);
         sb.append("\n");
-        sb.append(indent).append(rightPad("gender", filedPad)).append(" = ");
+        sb.append(indent).append("gender = ");
         if (gender != null){
             sb.append(gender);
         } else {

@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.senpure</groupId>
-            <artifactId>senpure-io-support-starter</artifactId>
+            <artifactId>senpure-io-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

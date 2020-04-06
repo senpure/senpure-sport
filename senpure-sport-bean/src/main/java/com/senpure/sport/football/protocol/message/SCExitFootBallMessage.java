@@ -1,24 +1,28 @@
 package com.senpure.sport.football.protocol.message;
 
 import com.senpure.sport.protocol.bean.Player;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class SCExitFootBallMessage extends Message {
+public class SCExitFootBallMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 3000108;
     private Player player;
     private int roomId;
 
-    public void copy(SCExitFootBallMessage from) {
-        Player tempPlayer = new Player();
-        tempPlayer.copy(from.getPlayer());
-        this.player = tempPlayer;
-        this.roomId = from.getRoomId();
+    public void copy(SCExitFootBallMessage source) {
+        if (source.getPlayer() != null) {
+            Player tempPlayer = new Player();
+            tempPlayer.copy(source.getPlayer());
+            this.player = tempPlayer;
+        } else {
+            this.player = null;
+            }
+        this.roomId = source.getRoomId();
     }
 
     /**
@@ -67,14 +71,16 @@ public class SCExitFootBallMessage extends Message {
         }
         size = 0;
         if (player != null) {
+             //tag size 11
             size += computeBeanSize(1, player);
         }
-        size += computeVar32Size(1,roomId);
+        //tag size 16
+        size += computeVar32Size(1, roomId);
         serializedSize = size ;
         return size ;
     }
 
-    public  Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -82,7 +88,8 @@ public class SCExitFootBallMessage extends Message {
         this.player = player;
         return this;
     }
-    public  int getRoomId() {
+
+    public int getRoomId() {
         return roomId;
     }
 
@@ -99,29 +106,28 @@ public class SCExitFootBallMessage extends Message {
     @Override
     public String toString() {
         return "SCExitFootBallMessage[3000108]{"
-                +"player=" + player
-                +",roomId=" + roomId
+                + "player=" + player
+                + ",roomId=" + roomId
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
-        String nextIndent ="         ";
+        String nextIndent = "         ";
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("SCExitFootBallMessage").append("[3000108]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
+        sb.append(indent).append("player = ");
         if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {
             sb.append("null");
         }
         sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append(indent).append("roomId = ").append(roomId);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

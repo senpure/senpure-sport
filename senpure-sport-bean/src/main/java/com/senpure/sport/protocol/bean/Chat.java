@@ -1,21 +1,21 @@
 package com.senpure.sport.protocol.bean;
 
-import com.senpure.io.protocol.Bean;
+import com.senpure.io.protocol.CompressBean;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 聊天信息
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class Chat extends Bean {
+public class Chat extends CompressBean {
     private ChatType type = ChatType.STR;
     private String value;
 
-    public void copy(Chat from) {
-        this.type = from.getType();
-        this.value = from.getValue();
+    public void copy(Chat source) {
+        this.type = source.getType();
+        this.value = source.getValue();
     }
 
     /**
@@ -65,16 +65,18 @@ public class Chat extends Bean {
         }
         size = 0;
         if (type != null) {
+             //tag size 11
             size += computeVar32Size(1, type.getValue());
         }
         if (value != null) {
-            size += computeStringSize(1, value);
+             //tag size 19
+             size += computeStringSize(1, value);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  ChatType getType() {
+    public ChatType getType() {
         return type;
     }
 
@@ -82,7 +84,8 @@ public class Chat extends Bean {
         this.type = type;
         return this;
     }
-    public  String getValue() {
+
+    public String getValue() {
         return value;
     }
 
@@ -94,27 +97,26 @@ public class Chat extends Bean {
     @Override
     public String toString() {
         return "Chat{"
-                +"type=" + type
-                +",value=" + value
+                + "type=" + type
+                + ",value=" + value
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 5
-        int filedPad = 5;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("Chat").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("type", filedPad)).append(" = ");
+        sb.append(indent).append("type  = ");
         if (type != null){
             sb.append(type);
         } else {
             sb.append("null");
         }
         sb.append("\n");
-        sb.append(indent).append(rightPad("value", filedPad)).append(" = ").append(value);
+        sb.append(indent).append("value = ").append(value);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

@@ -1,6 +1,7 @@
 package com.senpure.sport.football.protocol.message.handler;
 
-import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
+
+import com.senpure.io.server.consumer.handler.AbstractConsumerMessageHandler;
 import com.senpure.sport.client.ui.ClientController;
 import com.senpure.sport.football.protocol.message.SCEnterFootballMessage;
 import io.netty.channel.Channel;

@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <senpure.version>1.0-SNAPSHOT</senpure.version>
+
     </properties>
 
     <modules>
@@ -71,7 +72,7 @@
             </dependency>
             <dependency>
                 <groupId>com.senpure</groupId>
-                <artifactId>senpure-io-support-starter</artifactId>
+                <artifactId>senpure-io-server</artifactId>
                 <version>${senpure.version}</version>
             </dependency>
             <dependency>
@@ -89,16 +90,48 @@
 
     <build>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+
+                    <executions>
+
+                        <execution>
+                            <id>copy-resource</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/../products/${project.artifactId}</outputDirectory>
+
+                                <resources>
+                                    <resource>
+                                        <!-- 文件地址 -->
+                                        <directory>${build.directory}</directory>
+                                        <excludes>
+                                            <exclude>classes/</exclude>
+                                            <exclude>generated-sources/</exclude>
+                                            <exclude>maven*/</exclude>
+                                            <exclude>*.original</exclude>
+                                        </excludes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!--    -->
         <plugins>
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
@@ -107,5 +140,6 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 </project>

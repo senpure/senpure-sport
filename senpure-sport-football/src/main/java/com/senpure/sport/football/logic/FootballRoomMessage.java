@@ -1,7 +1,8 @@
 package com.senpure.sport.football.logic;
 
-import com.senpure.io.producer.GatewayManager;
+
 import com.senpure.io.protocol.Message;
+import com.senpure.io.server.producer.GatewayManager;
 import com.senpure.sport.football.protocol.message.SCEnterFootballMessage;
 import com.senpure.sport.football.protocol.message.SCExitFootBallMessage;
 import com.senpure.sport.football.service.FootballService;

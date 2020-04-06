@@ -1,8 +1,8 @@
 package com.senpure.sport.protocol.message.handler;
 
+import com.senpure.io.server.consumer.handler.AbstractConsumerMessageHandler;
 import com.senpure.sport.client.ui.ClientController;
 import com.senpure.sport.protocol.message.SCErrorMessage;
-import com.senpure.io.consumer.handler.AbstractConsumerMessageHandler;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

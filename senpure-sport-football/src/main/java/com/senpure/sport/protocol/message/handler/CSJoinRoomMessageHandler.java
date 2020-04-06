@@ -1,6 +1,6 @@
 package com.senpure.sport.protocol.message.handler;
 
-import com.senpure.io.producer.handler.ProducerAskMessageHandler;
+import com.senpure.io.server.producer.handler.ProducerAskMessageHandler;
 import com.senpure.sport.football.logic.FootBallPlayer;
 import com.senpure.sport.football.logic.FootballRoom;
 import com.senpure.sport.football.logic.FootballRoomManager;

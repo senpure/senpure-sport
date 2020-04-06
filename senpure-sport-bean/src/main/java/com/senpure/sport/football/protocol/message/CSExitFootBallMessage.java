@@ -1,19 +1,19 @@
 package com.senpure.sport.football.protocol.message;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 离开足球房间
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSExitFootBallMessage extends Message {
+public class CSExitFootBallMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 3000107;
 
-    public void copy(CSExitFootBallMessage from) {
+    public void copy(CSExitFootBallMessage source) {
     }
 
     /**
@@ -64,7 +64,7 @@ public class CSExitFootBallMessage extends Message {
     public String toString() {
         return "CSExitFootBallMessage[3000107]{"
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {

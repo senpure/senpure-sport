@@ -1,7 +1,7 @@
 package com.senpure.sport.data.service;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.producer.GatewayManager;
+import com.senpure.io.server.producer.GatewayManager;
 import com.senpure.sport.data.model.SportPlayer;
 import com.senpure.sport.data.protocol.message.SCLoginMessage;
 import com.senpure.sport.protocol.bean.ErrorType;
@@ -25,8 +25,16 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Service
 public class PlayerService {
-    @Autowired
+
+
     private GatewayManager gatewayManager;
+
+    @Autowired
+    public void setGatewayManager(GatewayManager gatewayManager) {
+        this.gatewayManager = gatewayManager;
+    }
+
+
 
     private Logger logger = LoggerFactory.getLogger(getClass());
     private AtomicLong idGenerator = new AtomicLong(100000);
@@ -68,7 +76,7 @@ public class PlayerService {
         if (player.getGatewayToken() != 0) {
             long token = player.getGatewayToken();
             //不同设备登陆同一个号，踢掉之前登陆的
-            if (token != gatewayToken.longValue()) {
+            if (token != gatewayToken) {
                 SCErrorMessage errorMessage = new SCErrorMessage();
                 errorMessage.setType(ErrorType.NORMAL);
                 errorMessage.setValue("账号在其他地方登陆");
@@ -77,10 +85,20 @@ public class PlayerService {
                 logger.info("{}[{}]其他地方重复登陆", player.getNick(), player.getId());
             }
         }
+
         player.setGatewayToken(gatewayToken);
         SCLoginMessage message = new SCLoginMessage();
         message.setPlayer(convert(player));
         gatewayManager.sendLoginSuccessMessage2Gateway(gatewayToken, player.getId(), message);
         return player;
+    }
+
+    public void logout(Long userId) {
+
+        SportPlayer player = idPlayerMap.remove(userId);
+        if (player != null) {
+            player.setGatewayToken(0L);
+            strPlayerMap.remove(player.getStrId());
+        }
     }
 }

@@ -1,22 +1,26 @@
 package com.senpure.sport.data.protocol.message;
 
 import com.senpure.sport.data.protocol.bean.Echo;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSEchoMessage extends Message {
+public class CSEchoMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000103;
     private Echo echo;
 
-    public void copy(CSEchoMessage from) {
-        Echo tempEcho = new Echo();
-        tempEcho.copy(from.getEcho());
-        this.echo = tempEcho;
+    public void copy(CSEchoMessage source) {
+        if (source.getEcho() != null) {
+            Echo tempEcho = new Echo();
+            tempEcho.copy(source.getEcho());
+            this.echo = tempEcho;
+        } else {
+            this.echo = null;
+            }
     }
 
     /**
@@ -61,13 +65,14 @@ public class CSEchoMessage extends Message {
         }
         size = 0;
         if (echo != null) {
+             //tag size 11
             size += computeBeanSize(1, echo);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  Echo getEcho() {
+    public Echo getEcho() {
         return echo;
     }
 
@@ -84,21 +89,20 @@ public class CSEchoMessage extends Message {
     @Override
     public String toString() {
         return "CSEchoMessage[1000103]{"
-                +"echo=" + echo
+                + "echo=" + echo
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //4 + 3 = 7 个空格
-        String nextIndent ="       ";
+        String nextIndent = "       ";
         //最长字段长度 4
-        int filedPad = 4;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("CSEchoMessage").append("[1000103]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("echo", filedPad)).append(" = ");
+        sb.append(indent).append("echo = ");
         if (echo != null){
             sb.append(echo.toString(indent+nextIndent));
         } else {

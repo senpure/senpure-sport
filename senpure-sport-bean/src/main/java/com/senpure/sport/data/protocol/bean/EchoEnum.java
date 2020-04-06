@@ -4,7 +4,7 @@ package com.senpure.sport.data.protocol.bean;
  * Echo中的一个enum
  * 
  * @author senpure
- * @time 2019-8-14 14:28:41
+ * @time 2020-3-29 21:20:22
  */
 public enum EchoEnum {
     X(1),

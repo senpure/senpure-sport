@@ -1,22 +1,22 @@
 package com.senpure.sport.protocol.message;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * 加入房间
  * 
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSJoinRoomMessage extends Message {
+public class CSJoinRoomMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000801;
     //房间编号
     private String roomId;
 
-    public void copy(CSJoinRoomMessage from) {
-        this.roomId = from.getRoomId();
+    public void copy(CSJoinRoomMessage source) {
+        this.roomId = source.getRoomId();
     }
 
     /**
@@ -63,7 +63,8 @@ public class CSJoinRoomMessage extends Message {
         size = 0;
         //房间编号
         if (roomId != null) {
-            size += computeStringSize(1, roomId);
+             //tag size 11
+             size += computeStringSize(1, roomId);
         }
         serializedSize = size ;
         return size ;
@@ -71,9 +72,10 @@ public class CSJoinRoomMessage extends Message {
 
     /**
      * get 房间编号
+     *
      * @return
      */
-    public  String getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
@@ -93,20 +95,19 @@ public class CSJoinRoomMessage extends Message {
     @Override
     public String toString() {
         return "CSJoinRoomMessage[1000801]{"
-                +"roomId=" + roomId
+                + "roomId=" + roomId
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("CSJoinRoomMessage").append("[1000801]").append("{");
         //房间编号
         sb.append("\n");
-        sb.append(indent).append(rightPad("roomId", filedPad)).append(" = ").append(roomId);
+        sb.append(indent).append("roomId = ").append(roomId);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

@@ -1,6 +1,7 @@
 package com.senpure.sport.client.ui;
 
-import com.senpure.io.ChannelAttributeUtil;
+
+import com.senpure.io.server.ChannelAttributeUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 

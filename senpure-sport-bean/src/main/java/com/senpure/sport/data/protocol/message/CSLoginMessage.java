@@ -1,21 +1,21 @@
 package com.senpure.sport.data.protocol.message;
 
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class CSLoginMessage extends Message {
+public class CSLoginMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000101;
     private String id;
     private String nick;
 
-    public void copy(CSLoginMessage from) {
-        this.id = from.getId();
-        this.nick = from.getNick();
+    public void copy(CSLoginMessage source) {
+        this.id = source.getId();
+        this.nick = source.getNick();
     }
 
     /**
@@ -65,16 +65,18 @@ public class CSLoginMessage extends Message {
         }
         size = 0;
         if (id != null) {
-            size += computeStringSize(1, id);
+             //tag size 11
+             size += computeStringSize(1, id);
         }
         if (nick != null) {
-            size += computeStringSize(1, nick);
+             //tag size 19
+             size += computeStringSize(1, nick);
         }
         serializedSize = size ;
         return size ;
     }
 
-    public  String getId() {
+    public String getId() {
         return id;
     }
 
@@ -82,7 +84,8 @@ public class CSLoginMessage extends Message {
         this.id = id;
         return this;
     }
-    public  String getNick() {
+
+    public String getNick() {
         return nick;
     }
 
@@ -99,22 +102,21 @@ public class CSLoginMessage extends Message {
     @Override
     public String toString() {
         return "CSLoginMessage[1000101]{"
-                +"id=" + id
-                +",nick=" + nick
+                + "id=" + id
+                + ",nick=" + nick
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //最长字段长度 4
-        int filedPad = 4;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("CSLoginMessage").append("[1000101]").append("{");
         sb.append("\n");
-        sb.append(indent).append(rightPad("id", filedPad)).append(" = ").append(id);
+        sb.append(indent).append("id   = ").append(id);
         sb.append("\n");
-        sb.append(indent).append(rightPad("nick", filedPad)).append(" = ").append(nick);
+        sb.append(indent).append("nick = ").append(nick);
         sb.append("\n");
         sb.append(indent).append("}");
         return sb.toString();

@@ -1,23 +1,27 @@
 package com.senpure.sport.data.protocol.message;
 
 import com.senpure.sport.protocol.bean.Player;
-import com.senpure.io.protocol.Message;
+import com.senpure.io.protocol.CompressMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2019-8-14 14:28:42
+ * @time 2020-3-29 21:20:22
  */
-public class SCPlayerMessage extends Message {
+public class SCPlayerMessage extends CompressMessage {
 
     public static final int MESSAGE_ID = 1000106;
     //运动员
     private Player player;
 
-    public void copy(SCPlayerMessage from) {
-        Player tempPlayer = new Player();
-        tempPlayer.copy(from.getPlayer());
-        this.player = tempPlayer;
+    public void copy(SCPlayerMessage source) {
+        if (source.getPlayer() != null) {
+            Player tempPlayer = new Player();
+            tempPlayer.copy(source.getPlayer());
+            this.player = tempPlayer;
+        } else {
+            this.player = null;
+            }
     }
 
     /**
@@ -65,6 +69,7 @@ public class SCPlayerMessage extends Message {
         size = 0;
         //运动员
         if (player != null) {
+             //tag size 11
             size += computeBeanSize(1, player);
         }
         serializedSize = size ;
@@ -73,9 +78,10 @@ public class SCPlayerMessage extends Message {
 
     /**
      * get 运动员
+     *
      * @return
      */
-    public  Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -95,22 +101,21 @@ public class SCPlayerMessage extends Message {
     @Override
     public String toString() {
         return "SCPlayerMessage[1000106]{"
-                +"player=" + player
+                + "player=" + player
                 + "}";
-   }
+    }
 
     @Override
     public String toString(String indent) {
         //6 + 3 = 9 个空格
-        String nextIndent ="         ";
+        String nextIndent = "         ";
         //最长字段长度 6
-        int filedPad = 6;
         indent = indent == null ? "" : indent;
         StringBuilder sb = new StringBuilder();
         sb.append("SCPlayerMessage").append("[1000106]").append("{");
         //运动员
         sb.append("\n");
-        sb.append(indent).append(rightPad("player", filedPad)).append(" = ");
+        sb.append(indent).append("player = ");
         if (player != null){
             sb.append(player.toString(indent+nextIndent));
         } else {

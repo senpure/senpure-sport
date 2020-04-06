@@ -1,7 +1,7 @@
 package com.senpure.sport;
 
-import com.senpure.io.support.annotation.EnableConsumer;
-import com.senpure.io.support.annotation.EnableProducer;
+import com.senpure.io.server.support.annotation.EnableConsumer;
+import com.senpure.io.server.support.annotation.EnableProducer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
