@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @time 2019-07-26 10:47:02
  */
 @SpringBootApplication
-@EnableProducer
+@EnableProducer(false)
 @EnableConsumer
 @EnableDiscoveryClient
 public class FootballBoot {

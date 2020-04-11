@@ -109,8 +109,9 @@ public class Executor implements ApplicationRunner {
                         if (appName != null) {
                             if (appName.startsWith("eureka-")) {
                                 replaceProperties.computeIfPresent("server.port", (key, value) -> {
-                                    logger.info("{}\n{}\n{} -> {}", file.getAbsolutePath(), key, value, temp[0]);
-                                    return temp[0];
+                                    String s[] = temp[0].split(":");
+                                    logger.info("{}\n{}\n{} -> {}", file.getAbsolutePath(), key, value, s[1]);
+                                    return s[1];
                                 });
                             }
                         }
@@ -146,8 +147,6 @@ public class Executor implements ApplicationRunner {
                     try {
                         out = new FileOutputStream(file);
                         replaceProperties.store(out);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     } finally {
@@ -183,16 +182,10 @@ public class Executor implements ApplicationRunner {
                 for (File file : files) {
                     String name = file.getParentFile().getName() + "-" + file.getName();
                     name = file.getParentFile().getParentFile().getAbsolutePath() + File.separator + name;
-                    logger.debug("{} - > {}", file.getAbsolutePath(), name);
+                    logger.info("{} - > {}", file.getAbsolutePath(), name);
                     Link.createLink(file.getAbsolutePath(), name, file.getParent());
                 }
-                try {
-                    logger.debug("生成bat快捷方式完成");
-                    //给程序时间生成
-                    Thread.sleep(1500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                logger.info("生成bat快捷方式完成");
             }
         }
     }
@@ -216,9 +209,11 @@ public class Executor implements ApplicationRunner {
 
     private void findProperties(List<File> files, File file) {
         if (file.isDirectory()) {
-
-            for (File listFile : file.listFiles()) {
-                findProperties(files, listFile);
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File listFile : children) {
+                    findProperties(files, listFile);
+                }
             }
         } else {
             if (file.getName().endsWith(".properties")) {
@@ -229,10 +224,13 @@ public class Executor implements ApplicationRunner {
 
     private void findBat(List<File> files, File file) {
         if (file.isDirectory()) {
-
-            for (File listFile : file.listFiles()) {
-                findBat(files, listFile);
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File listFile : children) {
+                    findBat(files, listFile);
+                }
             }
+
         } else {
             if (file.getName().endsWith(".bat")) {
                 files.add(file);

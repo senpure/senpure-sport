@@ -61,8 +61,10 @@ public class Link {
 
         String cmd = "cmd.exe /c " + bat.getAbsolutePath() + " " + source + " " + (name + ".lnk")+" "+workspace;
         try {
-            Runtime.getRuntime().exec(cmd);
-        } catch (IOException e) {
+            Process process = Runtime.getRuntime().exec(cmd);
+            process.waitFor();
+            process.destroy();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         //   executeBatFile("C:\\Users\\Administrator\\Desktop\\999.bat", true);

@@ -35,7 +35,6 @@ public class PlayerService {
     }
 
 
-
     private Logger logger = LoggerFactory.getLogger(getClass());
     private AtomicLong idGenerator = new AtomicLong(100000);
 
@@ -80,7 +79,9 @@ public class PlayerService {
                 SCErrorMessage errorMessage = new SCErrorMessage();
                 errorMessage.setType(ErrorType.NORMAL);
                 errorMessage.setValue("账号在其他地方登陆");
-                gatewayManager.sendMessage2GatewayByToken(token, errorMessage);
+
+                gatewayManager.sendMessage2GatewayByToken(token, errorMessage,
+                        GatewayManager.ZERO_REQUEST_ID_SUPPLIER);
                 gatewayManager.sendKickOffMessage2GatewayByToken(token);
                 logger.info("{}[{}]其他地方重复登陆", player.getNick(), player.getId());
             }

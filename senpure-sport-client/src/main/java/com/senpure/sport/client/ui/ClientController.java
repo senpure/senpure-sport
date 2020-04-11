@@ -290,7 +290,7 @@ public class ClientController implements Initializable {
                             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(properties.getConsumer().getRemoteName());
 
                             if (serviceInstances.size() == 0) {
-                                logger.warn("没有服务可用{}  {}", properties.getConsumer().getRemoteName(),discoveryClient.description());
+                                logger.warn("没有服务可用{}  {}", properties.getConsumer().getRemoteName(), discoveryClient.description());
                                 return;
                             }
                             ServiceInstance instance;
@@ -328,7 +328,9 @@ public class ClientController implements Initializable {
                                     start = true;
                                     message("开始建立连接");
                                 } else {
-                                    message("连接断开" + consumerServer.getChannel());
+                                    if (failTimes == 1) {
+                                        message("连接断开" + consumerServer.getChannel());
+                                    }
                                     if (now - lastFailTime >= properties.getConsumer().getConnectFailInterval()) {
                                         start = true;
                                         message("开始重连");

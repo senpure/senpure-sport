@@ -51,7 +51,7 @@ public class FootballRoom {
         players.remove(player.getId());
         logger.debug("{}[{}][{}] 离开房间", player.getNick(), player.getId(), roomId);
         roomManager.playerExitRoom(player.getId());
-        message.sendPlayerEntryRoomMessage(player);
+        message.sendPlayerExitRoomMessage(player);
     }
 
 
