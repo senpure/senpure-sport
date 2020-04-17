@@ -32,11 +32,11 @@ public class CSPlayerMessageHandler extends AbstractProducerMessageHandler<CSPla
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("运动员id不存在" + message.getPlayerId());
-            gatewayManager.sendMessage2GatewayByToken(token, errorMessage);
+            gatewayManager.respondMessageByToken(token, errorMessage);
         } else {
             SCPlayerMessage scPlayerMessage = new SCPlayerMessage();
             scPlayerMessage.setPlayer(playerService.convert(player));
-            gatewayManager.sendMessage2GatewayByToken(token, scPlayerMessage);
+            gatewayManager.respondMessageByToken(token, scPlayerMessage);
         }
 
     }

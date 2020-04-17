@@ -80,9 +80,8 @@ public class PlayerService {
                 errorMessage.setType(ErrorType.NORMAL);
                 errorMessage.setValue("账号在其他地方登陆");
 
-                gatewayManager.sendMessage2GatewayByToken(token, errorMessage,
-                        GatewayManager.ZERO_REQUEST_ID_SUPPLIER);
-                gatewayManager.sendKickOffMessage2GatewayByToken(token);
+                gatewayManager.sendMessageByToken(token, errorMessage);
+                gatewayManager.sendKickOffMessageByToken(token);
                 logger.info("{}[{}]其他地方重复登陆", player.getNick(), player.getId());
             }
         }
@@ -90,7 +89,7 @@ public class PlayerService {
         player.setGatewayToken(gatewayToken);
         SCLoginMessage message = new SCLoginMessage();
         message.setPlayer(convert(player));
-        gatewayManager.sendLoginSuccessMessage2Gateway(gatewayToken, player.getId(), message);
+        gatewayManager.respondMessageByTokenAndRelationUser(gatewayToken, player.getId(), message);
         return player;
     }
 

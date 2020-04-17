@@ -26,12 +26,12 @@ public class CSEchoMessageHandler extends AbstractProducerMessageHandler<CSEchoM
         logger.debug("收到 {}", message);
         SCEchoMessage echoMessage = new SCEchoMessage();
         echoMessage.setEcho(message.getEcho());
-        gatewayManager.sendMessage2GatewayByToken(token, echoMessage);
+        gatewayManager.respondMessageByToken(token, echoMessage);
 //        int requestId = GatewayManager.getRequestId();
 //
 //        messageExecutor.getService().schedule(() -> {
 //            GatewayManager.setRequestId(requestId);
-//            gatewayManager.sendMessage2GatewayByToken(token, echoMessage);
+//            gatewayManager.respondMessageByToken(token, echoMessage);
 //            GatewayManager.clearRequestId();
 //        }, 480, TimeUnit.MILLISECONDS);
 

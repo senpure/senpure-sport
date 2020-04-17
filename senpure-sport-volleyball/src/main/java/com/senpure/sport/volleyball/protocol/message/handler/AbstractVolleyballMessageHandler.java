@@ -27,7 +27,7 @@ public abstract class AbstractVolleyballMessageHandler<T extends Message> extend
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("没有登录");
-            gatewayManager.sendMessage2GatewayByToken(token, errorMessage);
+            gatewayManager.respondMessageByToken(token, errorMessage);
             logger.warn("{} 没有登录", token);
             return;
         }
@@ -36,7 +36,7 @@ public abstract class AbstractVolleyballMessageHandler<T extends Message> extend
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("玩家不存在");
-            gatewayManager.sendMessage2GatewayByToken(token, errorMessage);
+            gatewayManager.respondMessageByToken(token, errorMessage);
             logger.warn("{} 玩家不存在 token", userId, token);
             return;
         }

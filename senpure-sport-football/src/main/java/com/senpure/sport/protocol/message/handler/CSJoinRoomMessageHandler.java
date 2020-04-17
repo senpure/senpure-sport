@@ -42,7 +42,7 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
         errorMessage.setType(ErrorType.NORMAL);
         errorMessage.setValue("房间已经解散");
         // errorMessage.setArgs(Lists.newArrayList());
-        gatewayManager.sendMessage2Gateway(player.getId(), errorMessage);
+        gatewayManager.respondMessage(player.getId(), errorMessage);
 
     }
 

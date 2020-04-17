@@ -28,7 +28,7 @@ public class CSExitFootBallMessageHandler extends AbstractFootBallMessageHandler
             SCExitFootBallMessage exitFootBallMessage = new SCExitFootBallMessage();
             exitFootBallMessage.setPlayer(FootballService.convert(player));
             exitFootBallMessage.setRoomId(0);
-            gatewayManager.sendMessage2Gateway(player.getId(), exitFootBallMessage);
+            gatewayManager.respondMessage(player.getId(), exitFootBallMessage);
             return;
         }
         room.playerExitRoom(player);

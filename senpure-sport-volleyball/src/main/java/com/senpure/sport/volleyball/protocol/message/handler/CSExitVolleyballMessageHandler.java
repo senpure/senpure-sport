@@ -28,7 +28,7 @@ public class CSExitVolleyballMessageHandler extends AbstractVolleyballMessageHan
             SCExitFootBallMessage exitFootBallMessage = new SCExitFootBallMessage();
             exitFootBallMessage.setPlayer(VolleyballService.convert(player));
             exitFootBallMessage.setRoomId(0);
-            gatewayManager.sendMessage2Gateway(player.getId(), exitFootBallMessage);
+            gatewayManager.respondMessage(player.getId(), exitFootBallMessage);
             return;
         }
         room.playerExitRoom(player);

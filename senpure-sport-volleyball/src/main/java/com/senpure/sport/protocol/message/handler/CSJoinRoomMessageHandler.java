@@ -43,7 +43,7 @@ public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<C
         errorMessage.setType(ErrorType.NORMAL);
         errorMessage.setValue("房间已经解散");
         // errorMessage.setArgs(Lists.newArrayList());
-        gatewayManager.sendMessage2Gateway(player.getId(), errorMessage);
+        gatewayManager.respondMessage(player.getId(), errorMessage);
 
     }
 

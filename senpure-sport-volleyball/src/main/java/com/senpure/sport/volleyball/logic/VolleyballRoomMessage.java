@@ -29,8 +29,7 @@ public class VolleyballRoomMessage {
 
     private void sendMessage(Message message) {
         List<Long> userIds = new ArrayList<>(room.getPlayers().keySet());
-
-        gatewayManager.sendMessage2Gateway(userIds, message);
+        gatewayManager.sendMessage(userIds, message);
     }
 
     public void sendPlayerEntryRoomMessage(VolleyballPlayer player) {
