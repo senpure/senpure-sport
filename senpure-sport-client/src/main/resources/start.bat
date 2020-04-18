@@ -12,7 +12,7 @@ for  %%a in (*) do (
    echo %%a|find /i "senpure-" >nul && set fileName=%%a
 )
 if %fileName% =="" (
-    echo "没有找到可运行的jar文件"
+    echo "娌℃湁鎵惧埌鍙繍琛岀殑jar鏂囦欢"
     goto :end
 )
 
