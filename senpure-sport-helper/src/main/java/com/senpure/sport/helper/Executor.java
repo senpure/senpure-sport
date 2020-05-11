@@ -167,7 +167,7 @@ public class Executor implements ApplicationRunner {
 
     private void checkBat() {
         if (AppEvn.classInJar(AppEvn.getStartClass())) {
-            if (properties.isGenearteBatLink()) {
+            if (properties.isGenerateBatLink()) {
                 try {
                     for (int i = 3; i > 0; i--) {
                         logger.warn("{}准备生成快捷启动方式,安全卫士可能会进行拦截,请注意授权同意", i);

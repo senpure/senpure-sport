@@ -10,19 +10,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("helper")
 public class HelperProperties {
-    private boolean genearteBatLink=true;
+    private boolean generateBatLink=true;
     private String databaseUrl="localhost:3306";
     private String databaseUsername="root";
     private String databasePassword="123456";
     private String eurekaServiceUrl="localhost:8761";
 
 
-    public boolean isGenearteBatLink() {
-        return genearteBatLink;
+    public boolean isGenerateBatLink() {
+        return generateBatLink;
     }
 
-    public void setGenearteBatLink(boolean genearteBatLink) {
-        this.genearteBatLink = genearteBatLink;
+    public void setGenerateBatLink(boolean generateBatLink) {
+        this.generateBatLink = generateBatLink;
     }
 
     public String getDatabaseUrl() {
