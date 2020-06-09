@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 public class SCPlayerMessageHandler  extends AbstractConsumerMessageHandler<SCPlayerMessage> {
     @Override
     public void execute(Channel channel, SCPlayerMessage message) throws Exception {
-
     }
 
     @Override

@@ -1,26 +1,22 @@
 package com.senpure.sport;
 
-
-import com.senpure.io.server.support.annotation.EnableConsumer;
-import com.senpure.io.server.support.annotation.EnableProvider;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * FootBallBoot
+ * AdminBoot
  *
  * @author senpure
- * @time 2019-07-26 10:47:02
+ * @time 2020-06-08 10:43:43
  */
 @SpringBootApplication
-@EnableProvider(false)
-@EnableConsumer
 @EnableDiscoveryClient
-public class FootballBoot {
-
+@EnableAdminServer
+public class AdminBoot {
     public static void main(String[] args) {
-        SpringApplication.run(FootballBoot.class, args);
 
+        SpringApplication.run(AdminBoot.class, args);
     }
 }

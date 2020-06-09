@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>senpure-sport-data</artifactId>
+    <artifactId>senpure-sport-admin</artifactId>
 
 
     <dependencies>
@@ -19,50 +19,18 @@
         </dependency>
         <dependency>
             <groupId>com.senpure</groupId>
-            <artifactId>senpure-io-server</artifactId>
+            <artifactId>senpure-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-
-        </dependency>
-
-        <!--
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>com.senpure</groupId>
-            <artifactId>senpure-sport-bean</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <!--
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-            -->
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -71,7 +39,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.senpure.sport.DataBoot</mainClass>
+                    <mainClass>com.senpure.sport.AdminBoot</mainClass>
                     <layout>ZIP</layout>
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
 

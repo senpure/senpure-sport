@@ -2,7 +2,7 @@ package com.senpure.sport.volleyball.logic;
 
 
 import com.senpure.io.protocol.Message;
-import com.senpure.io.server.producer.GatewayManager;
+import com.senpure.io.server.provider.GatewayManager;
 import com.senpure.sport.protocol.bean.Chat;
 import com.senpure.sport.protocol.message.SCChatMessage;
 import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;

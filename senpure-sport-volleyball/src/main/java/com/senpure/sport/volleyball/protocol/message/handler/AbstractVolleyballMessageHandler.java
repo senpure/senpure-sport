@@ -1,7 +1,7 @@
 package com.senpure.sport.volleyball.protocol.message.handler;
 
 import com.senpure.io.protocol.Message;
-import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
+import com.senpure.io.server.provider.handler.AbstractProviderMessageHandler;
 import com.senpure.sport.protocol.bean.ErrorType;
 import com.senpure.sport.protocol.message.SCErrorMessage;
 import com.senpure.sport.volleyball.logic.VolleyballPlayer;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author senpure
  * @time 2019-07-29 16:35:59
  */
-public abstract class AbstractVolleyballMessageHandler<T extends Message> extends AbstractProducerMessageHandler<T> {
+public abstract class AbstractVolleyballMessageHandler<T extends Message> extends AbstractProviderMessageHandler<T> {
 
 
     @Autowired

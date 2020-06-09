@@ -1,8 +1,8 @@
 package com.senpure.sport.data.protocol.message.handler;
 
 
-import com.senpure.io.server.producer.handler.CSBreakUserGatewayMessageHandler;
 import com.senpure.io.server.protocol.message.CSBreakUserGatewayMessage;
+import com.senpure.io.server.provider.handler.CSBreakUserGatewayMessageHandler;
 import com.senpure.sport.data.service.PlayerService;
 import io.netty.channel.Channel;
 import org.springframework.stereotype.Component;

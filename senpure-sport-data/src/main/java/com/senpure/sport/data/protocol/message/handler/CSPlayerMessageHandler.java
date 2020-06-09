@@ -1,6 +1,6 @@
 package com.senpure.sport.data.protocol.message.handler;
 
-import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
+import com.senpure.io.server.provider.handler.AbstractProviderMessageHandler;
 import com.senpure.sport.data.model.SportPlayer;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @time 2019-7-25 15:14:56
  */
 @Component
-public class CSPlayerMessageHandler extends AbstractProducerMessageHandler<CSPlayerMessage> {
+public class CSPlayerMessageHandler extends AbstractProviderMessageHandler<CSPlayerMessage> {
 
     @Autowired
     private PlayerService playerService;

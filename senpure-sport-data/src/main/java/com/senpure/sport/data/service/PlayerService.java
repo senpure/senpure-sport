@@ -1,7 +1,7 @@
 package com.senpure.sport.data.service;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.server.producer.GatewayManager;
+import com.senpure.io.server.provider.GatewayManager;
 import com.senpure.sport.data.model.SportPlayer;
 import com.senpure.sport.data.protocol.message.SCLoginMessage;
 import com.senpure.sport.protocol.bean.ErrorType;

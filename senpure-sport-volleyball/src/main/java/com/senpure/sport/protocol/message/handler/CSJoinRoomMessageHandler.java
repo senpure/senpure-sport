@@ -1,7 +1,7 @@
 package com.senpure.sport.protocol.message.handler;
 
 
-import com.senpure.io.server.producer.handler.ProducerAskMessageHandler;
+import com.senpure.io.server.provider.handler.ProviderAskMessageHandler;
 import com.senpure.sport.protocol.bean.ErrorType;
 import com.senpure.sport.protocol.message.CSJoinRoomMessage;
 import com.senpure.sport.protocol.message.SCErrorMessage;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @time 2019-7-26 11:26:01
  */
 @Component
-public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<CSJoinRoomMessage> implements ProducerAskMessageHandler<CSJoinRoomMessage> {
+public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<CSJoinRoomMessage> implements ProviderAskMessageHandler<CSJoinRoomMessage> {
 
 
     @Autowired

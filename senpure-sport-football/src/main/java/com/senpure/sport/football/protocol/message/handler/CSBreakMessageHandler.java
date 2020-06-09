@@ -1,8 +1,8 @@
 package com.senpure.sport.football.protocol.message.handler;
 
 
-import com.senpure.io.server.producer.handler.CSBreakUserGatewayMessageHandler;
 import com.senpure.io.server.protocol.message.CSBreakUserGatewayMessage;
+import com.senpure.io.server.provider.handler.CSBreakUserGatewayMessageHandler;
 import com.senpure.sport.football.logic.FootBallPlayer;
 import com.senpure.sport.football.logic.FootballRoom;
 import com.senpure.sport.football.logic.FootballRoomManager;

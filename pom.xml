@@ -21,6 +21,8 @@
         <module>senpure-sport-football</module>
         <module>senpure-sport-volleyball</module>
         <module>senpure-sport-helper</module>
+        <module>senpure-sport-admin</module>
+
 
     </modules>
     <dependencyManagement>
@@ -32,6 +34,33 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-base</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-io-core</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-io-server</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>2.2.3</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-client -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>2.2.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

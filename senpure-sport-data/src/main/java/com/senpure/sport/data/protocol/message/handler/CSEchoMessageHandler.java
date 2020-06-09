@@ -1,8 +1,8 @@
 package com.senpure.sport.data.protocol.message.handler;
 
 
-import com.senpure.io.server.producer.ProducerMessageExecutor;
-import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
+import com.senpure.io.server.provider.ProviderMessageExecutor;
+import com.senpure.io.server.provider.handler.AbstractProviderMessageHandler;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import com.senpure.sport.data.protocol.message.SCEchoMessage;
 import io.netty.channel.Channel;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
  * @time 2019-7-4 17:47:02
  */
 @Component
-public class CSEchoMessageHandler extends AbstractProducerMessageHandler<CSEchoMessage> {
+public class CSEchoMessageHandler extends AbstractProviderMessageHandler<CSEchoMessage> {
 
 
     @Autowired
-    private ProducerMessageExecutor messageExecutor;
+    private ProviderMessageExecutor messageExecutor;
 
     @Override
     public void execute(Channel channel, long token, long userId, CSEchoMessage message) {

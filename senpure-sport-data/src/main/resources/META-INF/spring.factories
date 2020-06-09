@@ -1,0 +1,9 @@
+org.springframework.boot.SpringApplicationRunListener=\
+  com.senpure.sport.data.SpringBootLifeCycleRunListener
+
+
+
+
+
+
+

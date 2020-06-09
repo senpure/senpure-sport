@@ -2,7 +2,7 @@ package com.senpure.sport.football.protocol.message.handler;
 
 
 import com.senpure.io.protocol.Message;
-import com.senpure.io.server.producer.handler.AbstractProducerMessageHandler;
+import com.senpure.io.server.provider.handler.AbstractProviderMessageHandler;
 import com.senpure.sport.football.logic.FootBallPlayer;
 import com.senpure.sport.football.service.FootballService;
 import com.senpure.sport.protocol.bean.ErrorType;
@@ -10,13 +10,14 @@ import com.senpure.sport.protocol.message.SCErrorMessage;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 /**
  * AbstractFootBallMessageHandler
  *
  * @author senpure
  * @time 2019-07-29 16:35:59
  */
-public abstract class AbstractFootBallMessageHandler<T extends Message> extends AbstractProducerMessageHandler<T> {
+public abstract class AbstractFootBallMessageHandler<T extends Message> extends AbstractProviderMessageHandler<T> {
 
 
     @Autowired
