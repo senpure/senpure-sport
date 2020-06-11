@@ -40,7 +40,7 @@ public class CSExitFootBallMessageHandler extends AbstractFootBallMessageHandler
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         return CSExitFootBallMessage.MESSAGE_ID;
     }
 }

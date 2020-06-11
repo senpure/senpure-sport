@@ -29,7 +29,7 @@ public class SCEnterFootballMessageHandler extends AbstractConsumerMessageHandle
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
                // 2019-7-25 18:02:33 3000104
         return SCEnterFootballMessage.MESSAGE_ID;
     }

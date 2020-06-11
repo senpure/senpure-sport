@@ -20,7 +20,7 @@ public class SCLoginMessageHandler extends AbstractConsumerMessageHandler<SCLogi
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
                // 2019-7-4 14:27:16 1000102
         return SCLoginMessage.MESSAGE_ID;
     }

@@ -18,5 +18,5 @@ if %fileName% =="" (
 
 ::echo %fileName%
 title %fileName%
-java -Xms100m -Xmx100m -Dlog4j.configurationFile=log4j2.xml -jar %fileName%
+java -Xms100m -Xmx100m -Dio.netty.leakDetectionLevel=PARANOID -Dlog4j.configurationFile=log4j2.xml -jar %fileName%
 :end

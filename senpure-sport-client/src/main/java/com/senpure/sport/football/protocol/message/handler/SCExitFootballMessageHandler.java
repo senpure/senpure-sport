@@ -27,7 +27,7 @@ public class SCExitFootballMessageHandler extends AbstractConsumerMessageHandler
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
 
         return SCExitFootBallMessage.MESSAGE_ID;
     }

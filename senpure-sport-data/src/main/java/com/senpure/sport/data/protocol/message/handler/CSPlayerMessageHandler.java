@@ -42,7 +42,7 @@ public class CSPlayerMessageHandler extends AbstractProviderMessageHandler<CSPla
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         //2019-7-25 15:14:56 1000105
         return CSPlayerMessage.MESSAGE_ID;
     }

@@ -98,7 +98,7 @@ public class PlayerService {
         SportPlayer player = idPlayerMap.remove(userId);
         if (player != null) {
             player.setGatewayToken(0L);
-            strPlayerMap.remove(player.getStrId());
+          //  strPlayerMap.remove(player.getStrId());
         }
     }
 }

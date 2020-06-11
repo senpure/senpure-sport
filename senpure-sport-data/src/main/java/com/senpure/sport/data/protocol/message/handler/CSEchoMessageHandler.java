@@ -38,7 +38,7 @@ public class CSEchoMessageHandler extends AbstractProviderMessageHandler<CSEchoM
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         //2019-7-4 17:47:02 1000103
         return CSEchoMessage.MESSAGE_ID;
     }

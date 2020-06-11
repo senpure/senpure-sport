@@ -56,7 +56,7 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         //2019-7-26 11:26:01 1000801
         return CSJoinRoomMessage.MESSAGE_ID;
     }

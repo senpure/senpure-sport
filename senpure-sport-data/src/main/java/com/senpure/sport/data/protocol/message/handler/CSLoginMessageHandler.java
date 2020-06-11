@@ -24,7 +24,7 @@ public class CSLoginMessageHandler extends AbstractProviderMessageHandler<CSLogi
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         //2019-7-4 10:13:29 1000101
         return CSLoginMessage.MESSAGE_ID;
     }

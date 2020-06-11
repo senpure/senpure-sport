@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @time 2019-07-04 14:13:04
  */
 @SpringBootApplication
-@EnableConsumer(innerError = false)
+@EnableConsumer
 @EnableDiscoveryClient
 public class ClientBoot extends AbstractJavaFxApplicationSupport {
 

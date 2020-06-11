@@ -19,7 +19,7 @@ public class SCPlayerMessageHandler  extends AbstractConsumerMessageHandler<SCPl
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         return SCPlayerMessage.MESSAGE_ID;
     }
 

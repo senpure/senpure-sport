@@ -20,7 +20,7 @@ public class SCEchoMessageHandler extends AbstractConsumerMessageHandler<SCEchoM
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
                // 2019-7-4 17:47:02 1000104
         return SCEchoMessage.MESSAGE_ID;
     }

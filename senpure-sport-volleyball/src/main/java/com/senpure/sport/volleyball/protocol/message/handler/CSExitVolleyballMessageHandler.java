@@ -40,7 +40,7 @@ public class CSExitVolleyballMessageHandler extends AbstractVolleyballMessageHan
     }
 
     @Override
-    public int handlerId() {
+    public int handleMessageId() {
         return CSExitVolleyballMessage.MESSAGE_ID;
     }
 }
