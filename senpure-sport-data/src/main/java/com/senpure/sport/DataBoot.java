@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableProvider
+@EnableProvider(false)
 public class DataBoot {
 
     public static void main(String[] args) {

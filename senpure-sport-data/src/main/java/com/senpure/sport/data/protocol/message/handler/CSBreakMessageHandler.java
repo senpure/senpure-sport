@@ -2,7 +2,7 @@ package com.senpure.sport.data.protocol.message.handler;
 
 
 import com.senpure.io.server.protocol.message.CSBreakUserGatewayMessage;
-import com.senpure.io.server.provider.handler.CSBreakUserGatewayMessageHandler;
+import com.senpure.io.server.provider.handler.CSBreakUserGatewayMessageHandlerImpl;
 import com.senpure.sport.data.service.PlayerService;
 import io.netty.channel.Channel;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class CSBreakMessageHandler extends CSBreakUserGatewayMessageHandler {
+public class CSBreakMessageHandler extends CSBreakUserGatewayMessageHandlerImpl {
     @Resource
     private PlayerService playerService;
 

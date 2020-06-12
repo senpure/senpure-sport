@@ -5,6 +5,8 @@ import com.senpure.io.protocol.Message;
 import com.senpure.io.server.ServerProperties;
 import com.senpure.io.server.consumer.*;
 import com.senpure.io.server.consumer.remoting.Response;
+import com.senpure.sport.data.protocol.bean.Echo;
+import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import com.senpure.sport.data.protocol.message.CSLoginMessage;
 import com.senpure.sport.data.protocol.message.SCLoginMessage;
 import com.senpure.sport.football.protocol.message.CSCreateFootballMessage;
@@ -220,13 +222,24 @@ public class ClientController implements Initializable {
         remoteServerManager.sendMessage(message);
 
     }
+    private void sendEchoMessage() {
+        String text = textAreaSend.getText();
+        textAreaSend.clear();
+        CSEchoMessage message = new CSEchoMessage();
+        Echo echo = new Echo();
+        echo.setStringValue(text);
+        message.setEcho(echo);
 
+        remoteServerManager.sendMessage(message);
+
+    }
     public void sendChatMessage() {
         if (position == POSITION_VOLLEYBALL) {
             sendVolleyballChatMessage();
         } else if (position == POSITION_FOOTBALL) {
             sendFootballChatMessage();
         } else {
+            sendEchoMessage();
             message("您还没有进入房间");
         }
     }
