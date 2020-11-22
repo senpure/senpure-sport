@@ -23,6 +23,6 @@ public class SCFrameErrorMessageHandler extends SCInnerErrorMessageHandlerImpl {
 
     @Override
     public void execute(Channel channel, SCInnerErrorMessage message) throws Exception {
-        clientController.message(message.getCode() + message.getMessage());
+        clientController.message(message.getCode()+" " + message.getMessage());
     }
 }

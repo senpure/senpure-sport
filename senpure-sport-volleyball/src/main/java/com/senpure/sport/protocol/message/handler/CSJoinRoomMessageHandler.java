@@ -76,7 +76,7 @@ public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<C
     public Answer ask(CSJoinRoomMessage message) {
         Answer answer = new Answer();
         answer.setValue(message.getRoomId());
-        if (roomManager.getRoom(message.getSerializedSize()) != null) {
+        if (roomManager.getRoom(Integer.parseInt(message.getRoomId())) != null) {
             answer.setHandle(true);
         }
         return answer;
