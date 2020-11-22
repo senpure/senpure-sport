@@ -47,8 +47,7 @@ public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<C
 
     }
 
-    @Override
-    public boolean ask(String value) {
+    public boolean ask2(String value) {
         int roomId = Integer.parseInt(value);
         if (roomManager.getRoom(roomId) != null) {
             return true;
@@ -71,5 +70,15 @@ public class CSJoinRoomMessageHandler extends AbstractVolleyballMessageHandler<C
     @Override
     public boolean direct() {
         return false;
+    }
+
+    @Override
+    public Answer ask(CSJoinRoomMessage message) {
+        Answer answer = new Answer();
+        answer.setValue(message.getRoomId());
+        if (roomManager.getRoom(message.getSerializedSize()) != null) {
+            answer.setHandle(true);
+        }
+        return answer;
     }
 }

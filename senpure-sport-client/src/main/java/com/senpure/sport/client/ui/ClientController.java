@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.stereotype.Controller;
 
 import javax.annotation.PreDestroy;
 import java.net.URL;
@@ -50,6 +51,7 @@ import java.util.concurrent.TimeUnit;
  * @time 2018-12-26 15:29:55
  */
 @FXMLController
+@Controller
 public class ClientController implements Initializable {
     public final static int POSITION_FOOTBALL = 1;
     public final static int POSITION_VOLLEYBALL = 2;

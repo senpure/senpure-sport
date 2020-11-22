@@ -1,12 +1,13 @@
 package com.senpure.sport.protocol.message.handler;
 
 
-import com.senpure.io.server.consumer.handler.SCInnerErrorMessageHandler;
+import com.senpure.io.server.consumer.handler.SCInnerErrorMessageHandlerImpl;
 import com.senpure.io.server.protocol.message.SCInnerErrorMessage;
 import com.senpure.sport.client.ui.ClientController;
 import io.netty.channel.Channel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * SCFrameErrorMessageHandler
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Component;
  * @time 2019-07-30 14:07:41
  */
 @Component
-public class SCFrameErrorMessageHandler extends SCInnerErrorMessageHandler {
+public class SCFrameErrorMessageHandler extends SCInnerErrorMessageHandlerImpl {
 
-    @Autowired
+    @Resource
     private ClientController clientController;
 
     @Override

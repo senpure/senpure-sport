@@ -57,7 +57,9 @@ public class FootballConfiguration {
         ServiceInstance serviceInstance = loadBalancerClient.choose(dispatcherName);
         if (serviceInstance == null) {
 
-            Assert.error("dispatcher 服务没有启动");
+           // Assert.error("dispatcher 服务没有启动");
+
+            return new FootballRoomManager(100000, 6000000);
         }
 
         String url = "http://" + dispatcherName + "/range/dispatch?configId={configId}&serverName={serverName}&serverKey={serverKey}";
@@ -73,5 +75,12 @@ public class FootballConfiguration {
 
         logger.info("调度返回{}",rangeValue);
         return new FootballRoomManager(rangeValue.getStart().intValue(), rangeValue.getEnd().intValue());
+    }
+
+    @Bean
+    @OnMissingMessageHandler(1)
+    public  String testStr()
+    {
+        return "testStr";
     }
 }

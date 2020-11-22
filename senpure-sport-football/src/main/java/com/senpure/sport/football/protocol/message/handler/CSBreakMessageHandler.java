@@ -2,6 +2,7 @@ package com.senpure.sport.football.protocol.message.handler;
 
 
 import com.senpure.io.server.protocol.message.CSBreakUserGatewayMessage;
+import com.senpure.io.server.provider.handler.AbstractInnerMessageHandler;
 import com.senpure.io.server.provider.handler.CSBreakUserGatewayMessageHandler;
 import com.senpure.sport.football.logic.FootBallPlayer;
 import com.senpure.sport.football.logic.FootballRoom;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class CSBreakMessageHandler extends CSBreakUserGatewayMessageHandler {
+public class CSBreakMessageHandler extends AbstractInnerMessageHandler<CSBreakUserGatewayMessage> implements CSBreakUserGatewayMessageHandler {
 
     @Resource
     private FootballRoomManager roomManager;
@@ -36,5 +37,16 @@ public class CSBreakMessageHandler extends CSBreakUserGatewayMessageHandler {
 
             }
         }
+    }
+
+
+    @Override
+    public CSBreakUserGatewayMessage getEmptyMessage() {
+        return new CSBreakUserGatewayMessage();
+    }
+
+    @Override
+    public int handleMessageId() {
+        return CSBreakUserGatewayMessage.MESSAGE_ID;
     }
 }

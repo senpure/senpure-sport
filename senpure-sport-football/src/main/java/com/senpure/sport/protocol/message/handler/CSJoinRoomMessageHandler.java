@@ -8,8 +8,9 @@ import com.senpure.sport.football.protocol.message.handler.AbstractFootBallMessa
 import com.senpure.sport.protocol.bean.ErrorType;
 import com.senpure.sport.protocol.message.CSJoinRoomMessage;
 import com.senpure.sport.protocol.message.SCErrorMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 加入房间处理器
@@ -21,8 +22,11 @@ import org.springframework.stereotype.Component;
 public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJoinRoomMessage> implements ProviderAskMessageHandler<CSJoinRoomMessage> {
 
 
-    @Autowired
+    @Resource
     private FootballRoomManager roomManager;
+
+
+
 
     @Override
     public void execute(FootBallPlayer player, CSJoinRoomMessage message) {
@@ -46,8 +50,7 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
 
     }
 
-    @Override
-    public boolean ask(String value) {
+    public boolean ask2(String value) {
         int roomId = Integer.parseInt(value);
         if (roomManager.getRoom(roomId) != null) {
             return true;
@@ -70,5 +73,17 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
     @Override
     public boolean direct() {
         return false;
+    }
+
+
+    @Override
+    public Answer ask(CSJoinRoomMessage message) {
+        System.out.println(message.toString());
+        Answer answer = new Answer();
+        answer.setValue(message.getRoomId());
+        if (roomManager.getRoom(Integer.parseInt(message.getRoomId())) != null) {
+            answer.setHandle(true);
+        }
+        return answer;
     }
 }
