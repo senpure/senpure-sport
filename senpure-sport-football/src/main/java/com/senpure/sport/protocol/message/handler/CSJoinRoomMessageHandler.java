@@ -46,7 +46,7 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
         errorMessage.setType(ErrorType.NORMAL);
         errorMessage.setValue("房间已经解散");
         // errorMessage.setArgs(Lists.newArrayList());
-        gatewayManager.respondMessage(player.getId(), errorMessage);
+        messageSender.respondMessage(player.getId(), errorMessage);
 
     }
 
@@ -59,13 +59,13 @@ public class CSJoinRoomMessageHandler extends AbstractFootBallMessageHandler<CSJ
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         //2019-7-26 11:26:01 1000801
         return CSJoinRoomMessage.MESSAGE_ID;
     }
 
     @Override
-    public CSJoinRoomMessage getEmptyMessage() {
+    public CSJoinRoomMessage newEmptyMessage() {
         return new CSJoinRoomMessage();
     }
 

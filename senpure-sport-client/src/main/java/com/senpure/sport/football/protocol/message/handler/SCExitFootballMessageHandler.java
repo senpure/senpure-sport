@@ -8,6 +8,8 @@ import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * @author senpure
  * @time 2019-7-25 18:02:33
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class SCExitFootballMessageHandler extends AbstractConsumerMessageHandler<SCExitFootBallMessage> {
 
 
-    @Autowired
+    @Resource
     private ClientController clientController;
 
     @Override
@@ -27,13 +29,13 @@ public class SCExitFootballMessageHandler extends AbstractConsumerMessageHandler
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
 
         return SCExitFootBallMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCExitFootBallMessage getEmptyMessage() {
+    public SCExitFootBallMessage newEmptyMessage() {
         return new SCExitFootBallMessage();
     }
 

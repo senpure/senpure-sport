@@ -17,6 +17,7 @@ public class HelperProperties {
     private String eurekaServiceUrl="localhost:8761";
 
 
+
     public boolean isGenerateBatLink() {
         return generateBatLink;
     }
@@ -56,4 +57,6 @@ public class HelperProperties {
     public void setEurekaServiceUrl(String eurekaServiceUrl) {
         this.eurekaServiceUrl = eurekaServiceUrl;
     }
+
+
 }

@@ -1,7 +1,8 @@
 package com.senpure.sport.data.service;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.server.provider.GatewayManager;
+
+import com.senpure.io.server.provider.MessageSender;
 import com.senpure.sport.data.model.SportPlayer;
 import com.senpure.sport.data.protocol.message.SCLoginMessage;
 import com.senpure.sport.protocol.bean.ErrorType;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -26,13 +28,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class PlayerService {
 
-
-    private GatewayManager gatewayManager;
-
-    @Autowired
-    public void setGatewayManager(GatewayManager gatewayManager) {
-        this.gatewayManager = gatewayManager;
-    }
+    @Resource
+    private MessageSender messageSender;
 
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -55,6 +52,7 @@ public class PlayerService {
 
     public SportPlayer login(String id, Long gatewayToken, String nick) {
 
+        logger.debug("{} {} 登陆",id,gatewayToken);
         SportPlayer player = strPlayerMap.get(id);
         if (player == null) {
             player = new SportPlayer();
@@ -72,6 +70,8 @@ public class PlayerService {
             strPlayerMap.put(id, player);
             idPlayerMap.put(player.getId(), player);
         }
+
+        logger.debug("player.getGatewayToken {} ",player.getGatewayToken());
         if (player.getGatewayToken() != 0) {
             long token = player.getGatewayToken();
             //不同设备登陆同一个号，踢掉之前登陆的
@@ -80,8 +80,8 @@ public class PlayerService {
                 errorMessage.setType(ErrorType.NORMAL);
                 errorMessage.setValue("账号在其他地方登陆");
 
-                gatewayManager.sendMessageByToken(token, errorMessage);
-                gatewayManager.sendKickOffMessageByToken(token);
+                messageSender.sendMessageByToken(token, errorMessage);
+                messageSender.sendKickOffMessageByToken(token);
                 logger.info("{}[{}]其他地方重复登陆", player.getNick(), player.getId());
             }
         }
@@ -89,7 +89,7 @@ public class PlayerService {
         player.setGatewayToken(gatewayToken);
         SCLoginMessage message = new SCLoginMessage();
         message.setPlayer(convert(player));
-        gatewayManager.respondMessageByTokenAndRelationUser(gatewayToken, player.getId(), message);
+        messageSender.respondMessageByTokenAndRelationUser(gatewayToken, player.getId(), message);
         return player;
     }
 

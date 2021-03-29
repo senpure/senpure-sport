@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class SCErrorMessage extends CompressMessage {
 
@@ -32,7 +32,7 @@ public class SCErrorMessage extends CompressMessage {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         if (type != null) {
             writeVar32(buf, 11, type.getValue());
         }
@@ -77,7 +77,7 @@ public class SCErrorMessage extends CompressMessage {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;
@@ -149,7 +149,7 @@ public class SCErrorMessage extends CompressMessage {
     }
 
     @Override
-    public int getMessageId() {
+    public int messageId() {
         return 1000500;
     }
 

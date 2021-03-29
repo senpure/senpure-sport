@@ -9,6 +9,8 @@ import com.senpure.sport.volleyball.service.VolleyballService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * CSExitVolleyballMessageHandler
  *
@@ -28,19 +30,21 @@ public class CSExitVolleyballMessageHandler extends AbstractVolleyballMessageHan
             SCExitFootBallMessage exitFootBallMessage = new SCExitFootBallMessage();
             exitFootBallMessage.setPlayer(VolleyballService.convert(player));
             exitFootBallMessage.setRoomId(0);
-            gatewayManager.respondMessage(player.getId(), exitFootBallMessage);
+            messageSender.respondMessage(player.getId(), exitFootBallMessage);
             return;
         }
         room.playerExitRoom(player);
     }
 
     @Override
-    public CSExitVolleyballMessage getEmptyMessage() {
+    public CSExitVolleyballMessage newEmptyMessage() {
         return new CSExitVolleyballMessage ();
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         return CSExitVolleyballMessage.MESSAGE_ID;
     }
+
+
 }

@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class SCExitVolleyballMessage extends CompressMessage {
 
@@ -30,7 +30,7 @@ public class SCExitVolleyballMessage extends CompressMessage {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         if (player != null) {
             writeBean(buf, 11, player);
         }
@@ -64,7 +64,7 @@ public class SCExitVolleyballMessage extends CompressMessage {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;
@@ -99,7 +99,7 @@ public class SCExitVolleyballMessage extends CompressMessage {
     }
 
     @Override
-    public int getMessageId() {
+    public int messageId() {
         return 2000108;
     }
 

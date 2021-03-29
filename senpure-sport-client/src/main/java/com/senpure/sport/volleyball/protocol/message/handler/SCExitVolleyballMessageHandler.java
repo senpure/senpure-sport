@@ -28,13 +28,13 @@ public class SCExitVolleyballMessageHandler extends AbstractConsumerMessageHandl
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         // 2019-7-25 18:02:33 3000104
         return SCExitVolleyballMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCExitVolleyballMessage getEmptyMessage() {
+    public SCExitVolleyballMessage newEmptyMessage() {
         return new SCExitVolleyballMessage();
     }
 

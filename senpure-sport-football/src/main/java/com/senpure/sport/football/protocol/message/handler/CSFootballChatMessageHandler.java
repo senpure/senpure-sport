@@ -23,13 +23,13 @@ public class CSFootballChatMessageHandler extends AbstractRoomMessageHandler<CSF
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                 //2019-7-26 11:20:08 3000105
         return CSFootballChatMessage.MESSAGE_ID;
     }
 
     @Override
-    public CSFootballChatMessage getEmptyMessage() {
+    public CSFootballChatMessage newEmptyMessage() {
         return new CSFootballChatMessage();
     }
 

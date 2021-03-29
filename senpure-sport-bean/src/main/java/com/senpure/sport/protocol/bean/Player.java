@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 运动员
  * 
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class Player extends CompressBean {
     private long id;
@@ -27,7 +27,7 @@ public class Player extends CompressBean {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         writeVar64(buf, 8, id);
         writeVar32(buf, 16, age);
         if (nick != null) {
@@ -70,7 +70,7 @@ public class Player extends CompressBean {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;

@@ -119,6 +119,8 @@ public class Executor implements ApplicationRunner {
                     }
 
                 }
+
+
                 if (database) {
                     replaceProperties.computeIfPresent("spring.datasource.druid.url", (key, value) -> {
                         String fullurl = value;

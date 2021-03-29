@@ -41,10 +41,16 @@
             <artifactId>senpure-io-server</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.senpure</groupId>
+            <artifactId>senpure-javafx-support</artifactId>
+        </dependency>
+        <!--
+        <dependency>
             <groupId>de.roskenet</groupId>
             <artifactId>springboot-javafx-support</artifactId>
             <version>2.1.6</version>
         </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>

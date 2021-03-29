@@ -26,25 +26,25 @@ public class CSEchoMessageHandler extends AbstractProviderMessageHandler<CSEchoM
         logger.debug("收到 {}", message);
         SCEchoMessage echoMessage = new SCEchoMessage();
         echoMessage.setEcho(message.getEcho());
-        gatewayManager.respondMessageByToken(token, echoMessage);
-//        int requestId = GatewayManager.getRequestId();
+        messageSender.respondMessageByToken(token, echoMessage);
+//        int requestId = messageSender.getRequestId();
 //
 //        messageExecutor.getService().schedule(() -> {
-//            GatewayManager.setRequestId(requestId);
-//            gatewayManager.respondMessageByToken(token, echoMessage);
-//            GatewayManager.clearRequestId();
+//            messageSender.setRequestId(requestId);
+//            messageSender.respondMessageByToken(token, echoMessage);
+//            messageSender.clearRequestId();
 //        }, 480, TimeUnit.MILLISECONDS);
 
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         //2019-7-4 17:47:02 1000103
         return CSEchoMessage.MESSAGE_ID;
     }
 
     @Override
-    public CSEchoMessage getEmptyMessage() {
+    public CSEchoMessage newEmptyMessage() {
         return new CSEchoMessage();
     }
 }

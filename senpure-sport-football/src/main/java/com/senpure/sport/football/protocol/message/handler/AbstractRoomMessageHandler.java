@@ -27,7 +27,7 @@ public abstract class AbstractRoomMessageHandler<T extends Message> extends Abst
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("您不在房间中");
-            gatewayManager.respondMessage(player.getId(),errorMessage);
+            messageSender.respondMessage(player.getId(),errorMessage);
             return;
         }
         execute(player, room,message);

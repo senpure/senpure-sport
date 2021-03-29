@@ -2,7 +2,8 @@ package com.senpure.sport.football.logic;
 
 
 import com.senpure.io.protocol.Message;
-import com.senpure.io.server.provider.GatewayManager;
+import com.senpure.io.server.provider.MessageSender;
+
 import com.senpure.sport.football.protocol.message.SCEnterFootballMessage;
 import com.senpure.sport.football.protocol.message.SCExitFootBallMessage;
 import com.senpure.sport.football.service.FootballService;
@@ -20,17 +21,17 @@ import java.util.List;
  */
 public class FootballRoomMessage {
     private FootballRoom room;
-    private GatewayManager gatewayManager;
+    private MessageSender messageSender;
 
-    public FootballRoomMessage(FootballRoom room, GatewayManager gatewayManager) {
+    public FootballRoomMessage(FootballRoom room, MessageSender messageSender) {
         this.room = room;
-        this.gatewayManager = gatewayManager;
+        this.messageSender = messageSender;
     }
 
     private void sendMessage(Message message) {
         List<Long> userIds = new ArrayList<>(room.getPlayers().keySet());
 
-        gatewayManager.sendMessage(userIds, message);
+        messageSender.sendMessage(userIds, message);
     }
 
     public void sendPlayerEntryRoomMessage(FootBallPlayer player) {

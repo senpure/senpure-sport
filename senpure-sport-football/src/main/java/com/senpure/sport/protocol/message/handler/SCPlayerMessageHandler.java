@@ -18,13 +18,16 @@ public class SCPlayerMessageHandler  extends AbstractConsumerMessageHandler<SCPl
     public void execute(Channel channel, SCPlayerMessage message) throws Exception {
     }
 
+
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         return SCPlayerMessage.MESSAGE_ID;
     }
 
+
+
     @Override
-    public SCPlayerMessage getEmptyMessage() {
+    public SCPlayerMessage newEmptyMessage() {
         return  new SCPlayerMessage();
     }
 }

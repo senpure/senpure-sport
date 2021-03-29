@@ -28,19 +28,19 @@ public class CSExitFootBallMessageHandler extends AbstractFootBallMessageHandler
             SCExitFootBallMessage exitFootBallMessage = new SCExitFootBallMessage();
             exitFootBallMessage.setPlayer(FootballService.convert(player));
             exitFootBallMessage.setRoomId(0);
-            gatewayManager.respondMessage(player.getId(), exitFootBallMessage);
+            messageSender.respondMessage(player.getId(), exitFootBallMessage);
             return;
         }
         room.playerExitRoom(player);
     }
 
     @Override
-    public CSExitFootBallMessage getEmptyMessage() {
+    public CSExitFootBallMessage newEmptyMessage() {
         return new CSExitFootBallMessage();
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         return CSExitFootBallMessage.MESSAGE_ID;
     }
 }

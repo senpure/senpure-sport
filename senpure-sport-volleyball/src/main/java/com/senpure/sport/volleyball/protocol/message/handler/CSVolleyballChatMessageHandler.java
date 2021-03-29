@@ -23,13 +23,13 @@ public class CSVolleyballChatMessageHandler extends AbstractRoomMessageHandler<C
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                 //2019-7-26 11:20:08 3000105
         return CSVolleyballChatMessage.MESSAGE_ID;
     }
 
     @Override
-    public CSVolleyballChatMessage getEmptyMessage() {
+    public CSVolleyballChatMessage newEmptyMessage() {
         return new CSVolleyballChatMessage();
     }
 

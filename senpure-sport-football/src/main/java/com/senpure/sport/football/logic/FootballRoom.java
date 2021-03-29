@@ -1,7 +1,8 @@
 package com.senpure.sport.football.logic;
 
 
-import com.senpure.io.server.provider.GatewayManager;
+import com.senpure.io.server.provider.MessageSender;
+
 import com.senpure.sport.protocol.bean.Chat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,9 @@ public class FootballRoom {
 
     private Map<Long, FootBallPlayer> players = new ConcurrentHashMap<>();
 
-    public FootballRoom(int roomId, GatewayManager gatewayManager, FootballRoomManager roomManager) {
+    public FootballRoom(int roomId, MessageSender messageSender, FootballRoomManager roomManager) {
         this.roomId = roomId;
-        this.message = new FootballRoomMessage(this, gatewayManager);
+        this.message = new FootballRoomMessage(this, messageSender);
         this.roomManager = roomManager;
     }
 

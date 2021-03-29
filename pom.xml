@@ -22,8 +22,7 @@
         <module>senpure-sport-volleyball</module>
         <module>senpure-sport-helper</module>
         <module>senpure-sport-admin</module>
-
-
+        <module>senpure-sport-dispatcher</module>
 
     </modules>
     <dependencyManagement>
@@ -48,6 +47,16 @@
             <dependency>
                 <groupId>com.senpure</groupId>
                 <artifactId>senpure-io-server</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-javafx-support</artifactId>
+                <version>${senpure.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.senpure</groupId>
+                <artifactId>senpure-sport-dispatcher</artifactId>
                 <version>${senpure.version}</version>
             </dependency>
             <dependency>

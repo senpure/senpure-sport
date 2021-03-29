@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class Echo extends CompressBean {
     //booleanValue
@@ -182,7 +182,7 @@ public class Echo extends CompressBean {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         //booleanValue
         writeBoolean(buf, 8, booleanValue);
         //booleanValues
@@ -751,7 +751,7 @@ public class Echo extends CompressBean {
     private int enumValues2SerializedSize = 0;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;

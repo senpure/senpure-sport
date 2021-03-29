@@ -2,9 +2,12 @@ package com.senpure.sport.client.ui;
 
 import com.senpure.base.util.DateFormatUtil;
 import com.senpure.io.protocol.Message;
+import com.senpure.io.server.MessageDecoderContext;
 import com.senpure.io.server.ServerProperties;
 import com.senpure.io.server.consumer.*;
+import com.senpure.io.server.consumer.handler.ConsumerMessageHandler;
 import com.senpure.io.server.consumer.remoting.Response;
+import com.senpure.javafx.Javafx;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
 import com.senpure.sport.data.protocol.message.CSLoginMessage;
@@ -22,8 +25,7 @@ import com.senpure.sport.volleyball.protocol.message.CSCreateVolleyballMessage;
 import com.senpure.sport.volleyball.protocol.message.CSVolleyballChatMessage;
 import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;
 import com.senpure.sport.volleyball.protocol.message.SCExitVolleyballMessage;
-import de.felixroske.jfxsupport.FXMLController;
-import de.felixroske.jfxsupport.GUIState;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,6 +41,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
@@ -50,7 +53,7 @@ import java.util.concurrent.TimeUnit;
  * @author senpure
  * @time 2018-12-26 15:29:55
  */
-@FXMLController
+
 @Controller
 public class ClientController implements Initializable {
     public final static int POSITION_FOOTBALL = 1;
@@ -65,16 +68,19 @@ public class ClientController implements Initializable {
     TextArea textAreaSend;
     @FXML
     TextField textRoomId;
-    @Autowired
+    @Resource
     private RemoteServerManager remoteServerManager;
-    @Autowired
+    @Resource
     private DiscoveryClient discoveryClient;
-    @Autowired
+    @Resource
     private ServerProperties properties;
-    @Autowired
+    @Resource
     private ConsumerMessageExecutor messageExecutor;
 
-
+    @Resource
+    private ConsumerMessageHandlerContext handlerContext;
+    @Resource
+    private MessageDecoderContext decoderContext;
     private int position = 0;
     private long playerId = 0;
 
@@ -95,17 +101,28 @@ public class ClientController implements Initializable {
     }
 
     public void login() {
+        login(0);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void login(int times) {
         if (future == null) {
             connect();
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
         }
         if (consumerServer == null) {
-            message("连接还没准备好,请稍后再试");
+            if (times < 10) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                login(++times);
+            } else {
+                message("连接还没准备好,请稍后再试");
+            }
             return;
+
         }
         String strId = textFieldStrId.getText();
         if (strId == null || strId.trim().length() == 0) {
@@ -138,12 +155,14 @@ public class ClientController implements Initializable {
             playerId = player.getId();
             textFieldNick.setText(player.getNick());
             textAreaCore.appendText(player.getNick() + "[" + player.getId() + "]登录成功!\n");
-            GUIState.getStage().setTitle("|sport-客户端|[" + player.getNick() + "]");
+            Javafx.getPrimaryStage().setTitle("|sport-客户端|[" + player.getNick() + "]");
         } else {
             Message message = response.getError();
             try {
-                ConsumerMessageHandlerUtil.getHandler(message.getMessageId()).
-                        execute(response.getChannel(), message);
+
+                ConsumerMessageHandler handler = handlerContext.handler(message.messageId());
+                handler.execute(response.getChannel(), message);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -224,6 +243,7 @@ public class ClientController implements Initializable {
         remoteServerManager.sendMessage(message);
 
     }
+
     private void sendEchoMessage() {
         String text = textAreaSend.getText();
         textAreaSend.clear();
@@ -235,14 +255,16 @@ public class ClientController implements Initializable {
         remoteServerManager.sendMessage(message);
 
     }
+
     public void sendChatMessage() {
         if (position == POSITION_VOLLEYBALL) {
             sendVolleyballChatMessage();
         } else if (position == POSITION_FOOTBALL) {
             sendFootballChatMessage();
         } else {
+
+            message("您还没有进入房间,发送echoMessage");
             sendEchoMessage();
-            message("您还没有进入房间");
         }
     }
 
@@ -250,7 +272,7 @@ public class ClientController implements Initializable {
     public void exitRoom(SCExitFootBallMessage message) {
         if (message.getPlayer().getId() == playerId) {
             position = 0;
-            Platform.runLater(() -> GUIState.getStage().setTitle("|sport-客户端|"));
+            Platform.runLater(() -> Javafx.getPrimaryStage().setTitle("|sport-客户端|"));
         }
         message(message.getPlayer().getNick() + "退出足球房间[" + message.getRoomId() + "]");
 
@@ -259,7 +281,7 @@ public class ClientController implements Initializable {
     public void exitRoom(SCExitVolleyballMessage message) {
         if (message.getPlayer().getId() == playerId) {
             position = 0;
-            Platform.runLater(() -> GUIState.getStage().setTitle("|sport-客户端|"));
+            Platform.runLater(() -> Javafx.getPrimaryStage().setTitle("|sport-客户端|"));
         }
         message(message.getPlayer().getNick() + "退出排球房间[" + message.getRoomId() + "]");
 
@@ -358,17 +380,19 @@ public class ClientController implements Initializable {
                                     consumerServer.setRemoteServerManager(remoteServerManager);
                                     consumerServer.setProperties(properties.getConsumer());
 
+                                    consumerServer.setDecoderContext(decoderContext);
+
                                     if (consumerServer.start(remoteServerChannelManager.getHost(), remoteServerChannelManager.getPort())) {
                                         servers.add(consumerServer);
                                         this.consumerServer = consumerServer;
                                         //验证
                                         message("连接成功");
-                                        Platform.runLater(() -> GUIState.getStage().setTitle("|sport-客户端|-连接成功"));
+                                        Platform.runLater(() -> Javafx.getPrimaryStage().setTitle("|sport-客户端|-连接成功"));
 
                                         remoteServerChannelManager.addChannel(consumerServer.getChannel());
                                         failTimes = 0;
                                     } else {
-                                        Platform.runLater(() -> GUIState.getStage().setTitle("|chat-客户端|-没有连接"));
+                                        Platform.runLater(() -> Javafx.getPrimaryStage().setTitle("|chat-客户端|-没有连接"));
                                         message("建立连接失败");
                                         lastFailTime = now;
                                         lastFailServerKey = remoteServerChannelManager.getServerKey();
@@ -400,9 +424,12 @@ public class ClientController implements Initializable {
         future.cancel(true);
         future = null;
         connect = false;
+        if (consumerServer != null) {
 
-        message("连接关闭" + consumerServer.getChannel());
-        consumerServer.getChannel().close();
+            message("连接关闭" + consumerServer.getChannel());
+            consumerServer.getChannel().close();
+        }
+
         lastFailTime = 0;
         failTimes = 0;
         lastFailServerKey = null;

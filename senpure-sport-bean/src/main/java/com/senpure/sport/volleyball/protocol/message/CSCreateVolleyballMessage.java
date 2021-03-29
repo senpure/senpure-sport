@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 创建排球房间
  * 
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class CSCreateVolleyballMessage extends CompressMessage {
 
@@ -21,7 +21,7 @@ public class CSCreateVolleyballMessage extends CompressMessage {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
     }
 
     /**
@@ -44,7 +44,7 @@ public class CSCreateVolleyballMessage extends CompressMessage {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;
@@ -56,7 +56,7 @@ public class CSCreateVolleyballMessage extends CompressMessage {
 
 
     @Override
-    public int getMessageId() {
+    public int messageId() {
         return 2000101;
     }
 

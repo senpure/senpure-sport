@@ -8,6 +8,8 @@ import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * 进入排球房间处理器
  *
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class SCEnterFootballMessageHandler extends AbstractConsumerMessageHandler<SCEnterFootballMessage> {
 
 
-    @Autowired
+    @Resource
     private ClientController clientController;
 
     @Override
@@ -29,13 +31,13 @@ public class SCEnterFootballMessageHandler extends AbstractConsumerMessageHandle
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                // 2019-7-25 18:02:33 3000104
         return SCEnterFootballMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCEnterFootballMessage getEmptyMessage() {
+    public SCEnterFootballMessage newEmptyMessage() {
         return new SCEnterFootballMessage();
     }
 

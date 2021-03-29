@@ -1,7 +1,8 @@
 package com.senpure.sport.football.logic;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.server.provider.GatewayManager;
+import com.senpure.io.server.provider.MessageSender;
+
 
 import java.util.*;
 import java.util.concurrent.BlockingDeque;
@@ -33,9 +34,9 @@ public class FootballRoomManager {
         easyRoom();
     }
 
-    public FootballRoom createRoom(GatewayManager gatewayManager, FootballRoomManager roomManager) {
+    public FootballRoom createRoom(MessageSender messageSender, FootballRoomManager roomManager) {
         int roomId = nextRoomId();
-        FootballRoom room = new FootballRoom(roomId, gatewayManager, roomManager);
+        FootballRoom room = new FootballRoom(roomId, messageSender, roomManager);
         roomMap.put(roomId, room);
         return room;
     }

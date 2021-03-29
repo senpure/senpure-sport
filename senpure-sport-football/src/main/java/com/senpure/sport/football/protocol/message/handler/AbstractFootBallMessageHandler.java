@@ -23,13 +23,14 @@ public abstract class AbstractFootBallMessageHandler<T extends Message> extends 
     @Autowired
     protected FootballService footballService;
 
+
     @Override
     public void execute(Channel channel, long token, long userId, T message) throws Exception {
         if (userId == 0) {
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("没有登录");
-            gatewayManager.respondMessageByToken(token, errorMessage);
+            messageSender.respondMessageByToken(token, errorMessage);
             logger.warn("{} 没有登录", token);
             return;
         }
@@ -38,7 +39,7 @@ public abstract class AbstractFootBallMessageHandler<T extends Message> extends 
             SCErrorMessage errorMessage = new SCErrorMessage();
             errorMessage.setType(ErrorType.NORMAL);
             errorMessage.setValue("玩家不存在");
-            gatewayManager.respondMessageByToken(token, errorMessage);
+            messageSender.respondMessageByToken(token, errorMessage);
             logger.warn("{} 玩家不存在 token {}", userId, token);
             return;
         }

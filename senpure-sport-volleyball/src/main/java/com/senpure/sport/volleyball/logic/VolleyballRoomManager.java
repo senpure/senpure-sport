@@ -1,7 +1,8 @@
 package com.senpure.sport.volleyball.logic;
 
 import com.senpure.base.util.RandomUtil;
-import com.senpure.io.server.provider.GatewayManager;
+import com.senpure.io.server.provider.MessageSender;
+
 
 import java.util.*;
 import java.util.concurrent.BlockingDeque;
@@ -33,9 +34,9 @@ public class VolleyballRoomManager {
         easyRoom();
     }
 
-    public VolleyballRoom createRoom(GatewayManager gatewayManager, VolleyballRoomManager roomManager) {
+    public VolleyballRoom createRoom(MessageSender messageSender, VolleyballRoomManager roomManager) {
         int roomId = nextRoomId();
-        VolleyballRoom room = new VolleyballRoom(roomId, gatewayManager, roomManager);
+        VolleyballRoom room = new VolleyballRoom(roomId, messageSender, roomManager);
         roomMap.put(roomId, room);
         return room;
     }

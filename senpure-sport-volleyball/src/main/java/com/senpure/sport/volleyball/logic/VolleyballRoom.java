@@ -1,7 +1,8 @@
 package com.senpure.sport.volleyball.logic;
 
 
-import com.senpure.io.server.provider.GatewayManager;
+
+import com.senpure.io.server.provider.MessageSender;
 import com.senpure.sport.protocol.bean.Chat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,9 @@ public class VolleyballRoom {
 
     private Map<Long, VolleyballPlayer> players = new ConcurrentHashMap<>();
 
-    public VolleyballRoom(int roomId, GatewayManager gatewayManager, VolleyballRoomManager roomManager) {
+    public VolleyballRoom(int roomId, MessageSender messageSender, VolleyballRoomManager roomManager) {
         this.roomId = roomId;
-        this.message = new VolleyballRoomMessage(this, gatewayManager);
+        this.message = new VolleyballRoomMessage(this, messageSender);
         this.roomManager = roomManager;
     }
 

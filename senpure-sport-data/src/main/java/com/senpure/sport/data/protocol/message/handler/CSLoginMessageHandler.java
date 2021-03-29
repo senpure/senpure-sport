@@ -8,6 +8,8 @@ import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author senpure
  * @time 2019-7-4 10:13:29
@@ -23,14 +25,19 @@ public class CSLoginMessageHandler extends AbstractProviderMessageHandler<CSLogi
         playerService.login(message.getId(), token, message.getNick());
     }
 
+    /**
+     * new 一个空对象
+     */
     @Override
-    public int handleMessageId() {
+    public @NotNull CSLoginMessage newEmptyMessage() {
+       return new CSLoginMessage();
+    }
+
+    @Override
+    public int messageId() {
         //2019-7-4 10:13:29 1000101
         return CSLoginMessage.MESSAGE_ID;
     }
 
-    @Override
-    public CSLoginMessage getEmptyMessage() {
-        return new CSLoginMessage();
-    }
+
 }

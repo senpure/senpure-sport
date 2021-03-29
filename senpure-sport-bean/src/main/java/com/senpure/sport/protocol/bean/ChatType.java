@@ -2,7 +2,7 @@ package com.senpure.sport.protocol.bean;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public enum ChatType {
     STR(1),//文字

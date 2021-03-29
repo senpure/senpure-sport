@@ -16,9 +16,9 @@ public class CSBreakMessageHandler extends CSBreakUserGatewayMessageHandlerImpl 
 
     public void execute(Channel channel, long token, long userId, CSBreakUserGatewayMessage message) {
         if (message.getToken() != 0L) {
-            this.gatewayManager.breakToken(message.getToken(), message.getRelationToken());
+            this.messageSender.breakToken(message.getToken(), message.getRelationToken());
         }
-        boolean breakUser = this.gatewayManager.breakUser(message.getUserId(), message.getRelationToken());
+        boolean breakUser = this.messageSender.breakUser(message.getUserId(), message.getRelationToken());
         if (breakUser) {
             playerService.logout(message.getUserId());
         }

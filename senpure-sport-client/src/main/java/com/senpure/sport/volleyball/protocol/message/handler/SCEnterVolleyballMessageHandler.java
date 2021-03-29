@@ -27,13 +27,13 @@ public class SCEnterVolleyballMessageHandler extends AbstractConsumerMessageHand
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         // 2019-7-25 18:02:32 2000104
         return SCEnterVolleyballMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCEnterVolleyballMessage getEmptyMessage() {
+    public SCEnterVolleyballMessage newEmptyMessage() {
         return new SCEnterVolleyballMessage();
     }
 

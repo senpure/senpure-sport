@@ -27,19 +27,19 @@ public class CSCreateFootballMessageHandler extends AbstractFootBallMessageHandl
             room.playerEnterRoom(player);
             return;
         }
-        room = roomManager.createRoom(gatewayManager, roomManager);
+        room = roomManager.createRoom(messageSender, roomManager);
         room.playerEnterRoom(player);
 
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                 //2019-7-26 11:20:08 3000101
         return CSCreateFootballMessage.MESSAGE_ID;
     }
 
     @Override
-    public CSCreateFootballMessage getEmptyMessage() {
+    public CSCreateFootballMessage newEmptyMessage() {
         return new CSCreateFootballMessage();
     }
 }

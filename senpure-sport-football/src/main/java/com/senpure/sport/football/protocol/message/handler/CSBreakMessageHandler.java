@@ -23,9 +23,9 @@ public class CSBreakMessageHandler extends AbstractInnerMessageHandler<CSBreakUs
 
     public void execute(Channel channel, long token, long userId, CSBreakUserGatewayMessage message) {
         if (message.getToken() != 0L) {
-            this.gatewayManager.breakToken(message.getToken(), message.getRelationToken());
+            this.messageSender.breakToken(message.getToken(), message.getRelationToken());
         }
-        boolean breakUser = this.gatewayManager.breakUser(message.getUserId(), message.getRelationToken());
+        boolean breakUser = this.messageSender.breakUser(message.getUserId(), message.getRelationToken());
         if (breakUser) {
 
             FootballRoom room = roomManager.getPlayerRoom(userId);
@@ -41,12 +41,12 @@ public class CSBreakMessageHandler extends AbstractInnerMessageHandler<CSBreakUs
 
 
     @Override
-    public CSBreakUserGatewayMessage getEmptyMessage() {
+    public CSBreakUserGatewayMessage newEmptyMessage() {
         return new CSBreakUserGatewayMessage();
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
         return CSBreakUserGatewayMessage.MESSAGE_ID;
     }
 }

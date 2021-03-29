@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class SCPlayerMessage extends CompressMessage {
 
@@ -29,7 +29,7 @@ public class SCPlayerMessage extends CompressMessage {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         //运动员
         if (player != null) {
             writeBean(buf, 11, player);
@@ -61,7 +61,7 @@ public class SCPlayerMessage extends CompressMessage {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;
@@ -94,7 +94,7 @@ public class SCPlayerMessage extends CompressMessage {
     }
 
     @Override
-    public int getMessageId() {
+    public int messageId() {
         return 1000106;
     }
 

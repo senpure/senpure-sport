@@ -2,7 +2,8 @@ package com.senpure.sport.volleyball.logic;
 
 
 import com.senpure.io.protocol.Message;
-import com.senpure.io.server.provider.GatewayManager;
+import com.senpure.io.server.provider.MessageSender;
+
 import com.senpure.sport.protocol.bean.Chat;
 import com.senpure.sport.protocol.message.SCChatMessage;
 import com.senpure.sport.volleyball.protocol.message.SCEnterVolleyballMessage;
@@ -20,16 +21,16 @@ import java.util.List;
  */
 public class VolleyballRoomMessage {
     private VolleyballRoom room;
-    private GatewayManager gatewayManager;
+    private MessageSender messageSender;
 
-    public VolleyballRoomMessage(VolleyballRoom room, GatewayManager gatewayManager) {
+    public VolleyballRoomMessage(VolleyballRoom room, MessageSender messageSender) {
         this.room = room;
-        this.gatewayManager = gatewayManager;
+        this.messageSender = messageSender;
     }
 
     private void sendMessage(Message message) {
         List<Long> userIds = new ArrayList<>(room.getPlayers().keySet());
-        gatewayManager.sendMessage(userIds, message);
+        messageSender.sendMessage(userIds, message);
     }
 
     public void sendPlayerEntryRoomMessage(VolleyballPlayer player) {

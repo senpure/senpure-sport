@@ -4,7 +4,7 @@ package com.senpure.sport.protocol.bean;
  * 错误信息类型
  * 
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public enum ErrorType {
     NORMAL(1),//文字提示

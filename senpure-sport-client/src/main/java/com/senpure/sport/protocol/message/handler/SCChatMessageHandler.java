@@ -24,13 +24,13 @@ private ClientController clientController;
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                // 2019-7-25 15:16:07 100102
         return SCChatMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCChatMessage getEmptyMessage() {
+    public SCChatMessage newEmptyMessage() {
         return new SCChatMessage();
     }
 

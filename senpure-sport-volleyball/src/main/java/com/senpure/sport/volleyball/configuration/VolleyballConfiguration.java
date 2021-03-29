@@ -58,7 +58,8 @@ public class VolleyballConfiguration {
         ServiceInstance serviceInstance = loadBalancerClient.choose(dispatcherName);
         if (serviceInstance == null) {
 
-            Assert.error("dispatcher 服务没有启动");
+           // Assert.error("dispatcher 服务没有启动");
+            return new VolleyballRoomManager(600000, 10000000);
         }
 
         String url = "http://" + dispatcherName + "/range/dispatch?configId={configId}&serverName={serverName}&serverKey={serverKey}";

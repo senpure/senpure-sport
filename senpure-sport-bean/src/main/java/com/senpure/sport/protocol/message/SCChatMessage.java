@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2020-3-29 21:20:22
+ * @time 2021-3-18 18:28:00
  */
 public class SCChatMessage extends CompressMessage {
 
@@ -34,7 +34,7 @@ public class SCChatMessage extends CompressMessage {
      */
     @Override
     public void write(ByteBuf buf) {
-        getSerializedSize();
+        serializedSize();
         //发送者id
         writeVar64(buf, 8, sendId);
         //发送者头衔
@@ -78,7 +78,7 @@ public class SCChatMessage extends CompressMessage {
     private int serializedSize = -1;
 
     @Override
-    public int getSerializedSize() {
+    public int serializedSize() {
         int size = serializedSize;
         if (size != -1) {
             return size;
@@ -144,7 +144,7 @@ public class SCChatMessage extends CompressMessage {
     }
 
     @Override
-    public int getMessageId() {
+    public int messageId() {
         return 100102;
     }
 

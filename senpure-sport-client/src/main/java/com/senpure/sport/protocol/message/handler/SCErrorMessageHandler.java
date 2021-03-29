@@ -23,13 +23,13 @@ public class SCErrorMessageHandler extends AbstractConsumerMessageHandler<SCErro
     }
 
     @Override
-    public int handleMessageId() {
+    public int messageId() {
                // 2019-7-25 15:16:07 1000500
         return SCErrorMessage.MESSAGE_ID;
     }
 
     @Override
-    public SCErrorMessage getEmptyMessage() {
+    public SCErrorMessage newEmptyMessage() {
         return new SCErrorMessage();
     }
 
