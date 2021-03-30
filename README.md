@@ -65,7 +65,6 @@
      |helper.databaseUsername | 数组库账号|默认 root|
      |helper.databasePassword | 数组库密码|默认 root|
      |helper.eurekaServiceUrl | 注册中心地址|默认 localhost:8761|
-     |helper.gatewayUseCode | 网关直接使用硬配置|默认 false|
 4. 执行products/senpure-sport-helper下的start.bat
    + 该操作会修改好所有的配置文件，并且在products目录下生成快捷启动方式如果helper.generateBatLink配置为tue的话。
    + 没有什么特别情况只需要修改数据库地址，账号，密码即可
@@ -78,6 +77,33 @@
    + senpure-sport-gateway ,senpure-sport-football , senpure-sport-volleyball不支持多实例。
     
 如果电脑配置有些低将全部服务在一台电脑启动可能会有卡顿。
+
+## 细节
+
+ 提示生成快捷方式
+
+![生成快捷方式](resources/images/helper.png "helper")
+
+快捷方式生成完成
+
+![快捷方式生成完成](resources/images/bat-link.png "bat-link")
+
+启动eureka成功标识
+
+![eureka](resources/images/success.png "eureka-success")
+
+初次启动dispatcher回创建数据库
+
+![create-database](resources/images/create-database.png "create-database")
+
+服务实例启动完成后会向网关注册自己能处理的消息
+
+![register-message](resources/images/register-message.png "register-message")
+
+
+
+
+
     
 
    

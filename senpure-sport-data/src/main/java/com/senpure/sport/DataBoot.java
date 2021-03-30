@@ -37,10 +37,16 @@ public class DataBoot {
 
             String name = temp.getName();
 
+            System.out.println(name+ " "+temp.getClass());
             System.out.println(name+ " "+temp.containsProperty("a.csPort"));
             System.out.println(name+ " "+temp.containsProperty("a.cs-port"));
             System.out.println(name+ " "+temp.containsProperty("b.csPort"));
             System.out.println(name+ " "+temp.containsProperty("b.cs-port"));
+            System.out.println(name+ " ----------------------------------------");
+            System.out.println(name+ " "+temp.getProperty("a.csPort"));
+            System.out.println(name+ " "+temp.getProperty("a.cs-port"));
+            System.out.println(name+ " "+temp.getProperty("b.csPort"));
+            System.out.println(name+ " "+temp.getProperty("b.cs-port"));
         }
 
     }

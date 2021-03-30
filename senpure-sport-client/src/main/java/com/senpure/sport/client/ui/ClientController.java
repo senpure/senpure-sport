@@ -1,6 +1,7 @@
 package com.senpure.sport.client.ui;
 
 import com.senpure.base.util.DateFormatUtil;
+import com.senpure.executor.TaskLoopGroup;
 import com.senpure.io.protocol.Message;
 import com.senpure.io.server.MessageDecoderContext;
 import com.senpure.io.server.ServerProperties;
@@ -81,8 +82,11 @@ public class ClientController implements Initializable {
     private ConsumerMessageHandlerContext handlerContext;
     @Resource
     private MessageDecoderContext decoderContext;
+    @Resource
+    private TaskLoopGroup executors;
     private int position = 0;
     private long playerId = 0;
+
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -101,7 +105,8 @@ public class ClientController implements Initializable {
     }
 
     public void login() {
-        login(0);
+        executors.execute(() -> login(0));
+
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
