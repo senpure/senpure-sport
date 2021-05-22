@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * Echo中的一个bean
  * 
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class EchoBean extends CompressBean {
     private int value;

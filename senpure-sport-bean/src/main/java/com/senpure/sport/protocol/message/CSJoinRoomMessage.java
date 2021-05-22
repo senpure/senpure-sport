@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 加入房间
  * 
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class CSJoinRoomMessage extends CompressMessage {
 
@@ -85,6 +85,11 @@ public class CSJoinRoomMessage extends CompressMessage {
     public CSJoinRoomMessage setRoomId(String roomId) {
         this.roomId = roomId;
         return this;
+    }
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_CS;
     }
 
     @Override

@@ -14,7 +14,7 @@ for  %%a in (*) do (
 if %fileName% =="" (
     echo "没有找到可运行的jar文件"
     goto :end
-)
+)-
 
 ::echo %fileName%
 title %fileName%

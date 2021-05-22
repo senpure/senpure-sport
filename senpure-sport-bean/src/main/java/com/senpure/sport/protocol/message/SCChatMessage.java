@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class SCChatMessage extends CompressMessage {
 
@@ -141,6 +141,11 @@ public class SCChatMessage extends CompressMessage {
     public SCChatMessage setChat(Chat chat) {
         this.chat = chat;
         return this;
+    }
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_SC;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.senpure.sport.football.service;
 
 
-import com.senpure.io.server.consumer.RemoteServerManager;
-import com.senpure.io.server.consumer.remoting.Response;
+
+import com.senpure.io.server.consumer.ProviderManager;
+import com.senpure.io.server.remoting.RemoteServerManager;
+import com.senpure.io.server.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
 import com.senpure.sport.football.logic.FootBallPlayer;
@@ -25,7 +27,7 @@ public class FootballService {
     private Map<Long, FootBallPlayer> playerMap = new ConcurrentHashMap<>();
 
     @Autowired
-    private RemoteServerManager remoteServerManager;
+    private ProviderManager remoteServerManager;
     public static Player convert(FootBallPlayer footBallPlayer) {
         Player player = new Player();
         player.copy(footBallPlayer);
@@ -40,7 +42,7 @@ public class FootballService {
             Response response = remoteServerManager.sendSyncMessage(message);
             if (response.isSuccess()) {
                 player = new FootBallPlayer();
-                SCPlayerMessage scPlayerMessage = response.getValue();
+                SCPlayerMessage scPlayerMessage = response.getMessage();
                 player.copy(scPlayerMessage.getPlayer());
                 playerMap.putIfAbsent(playerId, player);
                 return playerMap.get(playerId);

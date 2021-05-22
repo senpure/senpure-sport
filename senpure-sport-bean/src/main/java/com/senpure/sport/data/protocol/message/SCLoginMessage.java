@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class SCLoginMessage extends CompressMessage {
 
@@ -79,6 +79,11 @@ public class SCLoginMessage extends CompressMessage {
     public SCLoginMessage setPlayer(Player player) {
         this.player = player;
         return this;
+    }
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_SC;
     }
 
     @Override

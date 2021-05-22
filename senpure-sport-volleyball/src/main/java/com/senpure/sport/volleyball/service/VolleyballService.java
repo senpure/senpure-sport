@@ -1,8 +1,9 @@
 package com.senpure.sport.volleyball.service;
 
 
-import com.senpure.io.server.consumer.RemoteServerManager;
-import com.senpure.io.server.consumer.remoting.Response;
+
+import com.senpure.io.server.consumer.ProviderManager;
+import com.senpure.io.server.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;
 import com.senpure.sport.protocol.bean.Player;
@@ -25,7 +26,7 @@ public class VolleyballService {
     private Map<Long, VolleyballPlayer> playerMap = new ConcurrentHashMap<>();
 
     @Autowired
-    private RemoteServerManager remoteServerManager;
+    private ProviderManager remoteServerManager;
     public static Player convert(VolleyballPlayer volleyballPlayer) {
         Player player = new Player();
         player.copy(volleyballPlayer);
@@ -40,7 +41,7 @@ public class VolleyballService {
             Response response = remoteServerManager.sendSyncMessage(message);
             if (response.isSuccess()) {
                 player = new VolleyballPlayer();
-                SCPlayerMessage scPlayerMessage = response.getValue();
+                SCPlayerMessage scPlayerMessage = response.getMessage();
                 player.copy(scPlayerMessage.getPlayer());
                 playerMap.putIfAbsent(playerId, player);
                 return playerMap.get(playerId);

@@ -58,13 +58,13 @@
    + 如果下载的products体验包可直接跳到第三步
 2. 将 [senpure-sport](https://github.com/senpure/senpure-sprot) 导入本地 执行maven package
 3. 进入products/senpure-sport-helper 修改application.properties配置
-   + |     配置   | 说嘛                                                              | 备注             |
+   + |     配置   | 说明                                                              | 备注             |
      |:------------|:--------------------------------------------------------------------|:-----------------|
      |helper.generateBatLink | 是否生成快捷模式|默认 true 注意杀毒软件会进行拦截|
      |helper.databaseUrl | 数组库地址|默认 localhost:3306|
      |helper.databaseUsername | 数组库账号|默认 root|
      |helper.databasePassword | 数组库密码|默认 root|
-     |helper.eurekaServiceUrl | 注册中心地址|默认 localhost:8761|
+     |helper.eurekaServiceUrl | 注册中心地址,senpure-sport-eureka 实例|默认 localhost:8761|
 4. 执行products/senpure-sport-helper下的start.bat
    + 该操作会修改好所有的配置文件，并且在products目录下生成快捷启动方式如果helper.generateBatLink配置为tue的话。
    + 没有什么特别情况只需要修改数据库地址，账号，密码即可
@@ -92,7 +92,7 @@
 
 ![eureka](resources/images/success.png "eureka-success")
 
-初次启动dispatcher回创建数据库
+初次启动dispatcher会创建数据库
 
 ![create-database](resources/images/create-database.png "create-database")
 

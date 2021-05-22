@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 离开足球房间
  * 
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class CSExitFootBallMessage extends CompressMessage {
 
@@ -54,6 +54,11 @@ public class CSExitFootBallMessage extends CompressMessage {
         return size ;
     }
 
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_CS;
+    }
 
     @Override
     public int messageId() {

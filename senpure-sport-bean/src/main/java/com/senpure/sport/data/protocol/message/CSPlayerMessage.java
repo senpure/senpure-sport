@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 获取运动员信息
  * 
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class CSPlayerMessage extends CompressMessage {
 
@@ -69,6 +69,11 @@ public class CSPlayerMessage extends CompressMessage {
     public CSPlayerMessage setPlayerId(long playerId) {
         this.playerId = playerId;
         return this;
+    }
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_CS;
     }
 
     @Override

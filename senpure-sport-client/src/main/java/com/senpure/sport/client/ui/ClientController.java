@@ -3,11 +3,14 @@ package com.senpure.sport.client.ui;
 import com.senpure.base.util.DateFormatUtil;
 import com.senpure.executor.TaskLoopGroup;
 import com.senpure.io.protocol.Message;
+import com.senpure.io.server.Constant;
 import com.senpure.io.server.MessageDecoderContext;
 import com.senpure.io.server.ServerProperties;
 import com.senpure.io.server.consumer.*;
 import com.senpure.io.server.consumer.handler.ConsumerMessageHandler;
-import com.senpure.io.server.consumer.remoting.Response;
+
+import com.senpure.io.server.remoting.ChannelService;
+import com.senpure.io.server.remoting.Response;
 import com.senpure.javafx.Javafx;
 import com.senpure.sport.data.protocol.bean.Echo;
 import com.senpure.sport.data.protocol.message.CSEchoMessage;
@@ -36,7 +39,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Controller;
@@ -70,7 +73,7 @@ public class ClientController implements Initializable {
     @FXML
     TextField textRoomId;
     @Resource
-    private RemoteServerManager remoteServerManager;
+    private ProviderManager providerManager;
     @Resource
     private DiscoveryClient discoveryClient;
     @Resource
@@ -153,16 +156,19 @@ public class ClientController implements Initializable {
 //        });
 
         //同步调用登录
-        Response response = remoteServerManager.sendSyncMessage(loginMessage);
+        Response response = providerManager.sendSyncMessage(loginMessage);
         if (response.isSuccess()) {
-            SCLoginMessage message = response.getValue();
+            SCLoginMessage message = response.getMessage();
             player = message.getPlayer();
             playerId = player.getId();
-            textFieldNick.setText(player.getNick());
-            textAreaCore.appendText(player.getNick() + "[" + player.getId() + "]登录成功!\n");
-            Javafx.getPrimaryStage().setTitle("|sport-客户端|[" + player.getNick() + "]");
+            Platform.runLater(() -> {
+                textFieldNick.setText(player.getNick());
+                textAreaCore.appendText(player.getNick() + "[" + player.getId() + "]登录成功!\n");
+                Javafx.getPrimaryStage().setTitle("|sport-客户端|[" + player.getNick() + "]");
+            });
+
         } else {
-            Message message = response.getError();
+            Message message = response.getMessage();
             try {
 
                 ConsumerMessageHandler handler = handlerContext.handler(message.messageId());
@@ -180,20 +186,20 @@ public class ClientController implements Initializable {
         int roomId = Integer.parseInt(textRoomId.getText());
         message.setRoomId(roomId + "");
 
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
     }
 
     public void createFootballRoom() {
 
         CSCreateFootballMessage message = new CSCreateFootballMessage();
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
 
     }
 
     public void createVolleyballRoom() {
 
         CSCreateVolleyballMessage message = new CSCreateVolleyballMessage();
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
 
     }
 
@@ -233,7 +239,7 @@ public class ClientController implements Initializable {
         chat.setType(ChatType.STR);
         chat.setValue(text);
         message.setChat(chat);
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
 
     }
 
@@ -245,7 +251,7 @@ public class ClientController implements Initializable {
         chat.setType(ChatType.STR);
         chat.setValue(text);
         message.setChat(chat);
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
 
     }
 
@@ -257,7 +263,7 @@ public class ClientController implements Initializable {
         echo.setStringValue(text);
         message.setEcho(echo);
 
-        remoteServerManager.sendMessage(message);
+        providerManager.sendMessage(message);
 
     }
 
@@ -309,12 +315,14 @@ public class ClientController implements Initializable {
 
     private volatile boolean connect = false;
 
-    ServerProperties.Gateway gateway = new ServerProperties.Gateway();
+    ServerProperties.GatewayProperties gateway = new ServerProperties.GatewayProperties();
 
     private List<ConsumerServer> servers = new ArrayList<>();
     private ConsumerServer consumerServer;
     private ScheduledFuture future;
 
+
+    private long lastLogTime = 0;
 
     public synchronized void connect() {
         if (properties.getConsumer().isAutoConnect()) {
@@ -328,11 +336,20 @@ public class ClientController implements Initializable {
                 .getService()
                 .scheduleWithFixedDelay(() -> {
                     try {
-                        if (remoteServerManager.getDefaultChannelManager() == null) {
+                        long now = System.currentTimeMillis();
+                        boolean canLog = false;
+                        if (now - lastLogTime > 10000) {
+                            lastLogTime = now;
+                            canLog = true;
+                        }
+                        if (providerManager.getDefaultRemoteServer() == null) {
                             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(properties.getConsumer().getRemoteName());
 
                             if (serviceInstances.size() == 0) {
-                                logger.warn("没有服务可用{}  {}", properties.getConsumer().getRemoteName(), discoveryClient.description());
+                                if (canLog) {
+                                    logger.warn("没有服务可用{}  {}", properties.getConsumer().getRemoteName(), discoveryClient.description());
+
+                                }
                                 return;
                             }
                             ServiceInstance instance;
@@ -342,28 +359,36 @@ public class ClientController implements Initializable {
                                 Random random = new Random();
                                 instance = serviceInstances.get(random.nextInt(serviceInstances.size()));
                             }
-                            String portStr = instance.getMetadata().get("csPort");
+                            String portStr = instance.getMetadata().get(Constant.GATEWAY_METADATA_CONSUMER_PORT);
                             int port;
                             if (portStr == null) {
-                                port = gateway.getCsPort();
+                                port = gateway.getConsumer().getPort();
                             } else {
                                 port = Integer.parseInt(portStr);
                             }
-                            String serverKey = remoteServerManager.getRemoteServerKey(instance.getHost(), port);
-                            RemoteServerChannelManager remoteServerChannelManager = remoteServerManager.
-                                    getRemoteServerChannelManager(serverKey);
-                            remoteServerChannelManager.setHost(instance.getHost());
-                            remoteServerChannelManager.setPort(port);
-                            remoteServerChannelManager.setDefaultMessageRetryTimeLimit(properties.getConsumer().getMessageRetryTimeLimit());
-                            remoteServerManager.setDefaultChannelManager(remoteServerChannelManager);
+                            String serverKey = providerManager.getRemoteServerKey(instance.getHost(), port);
+                            Provider provider = new Provider(messageExecutor.getService());
+                            provider.setRemoteServerKey(serverKey);
+                            provider.setFutureService(messageExecutor);
+                            if (properties.getConsumer().getRemoteChannel() <= 1) {
+                                provider.setChannelService(new ChannelService.SingleChannelService(serverKey));
+                            } else {
+                                provider.setChannelService(new ChannelService.MultipleChannelService(serverKey));
+                            }
+                            provider.setDefaultTimeout(properties.getConsumer().getRequestTimeout());
+                            provider.setDefaultWaitSendTimeout(properties.getConsumer().getMessageWaitSendTimeout());
+
+                            provider.verifyWorkable();
+                            providerManager.setDefaultRemoteServer(provider);
+
                         } else {
 
-                            RemoteServerChannelManager remoteServerChannelManager =
-                                    remoteServerManager.getDefaultChannelManager();
+                            Provider remoteServerChannelManager =
+                                    providerManager.getDefaultRemoteServer();
                             if (remoteServerChannelManager.isConnecting()) {
                                 return;
                             }
-                            long now = System.currentTimeMillis();
+
                             if (remoteServerChannelManager.getChannelSize() < 1) {
                                 boolean start = false;
                                 if (lastFailTime == 0) {
@@ -382,12 +407,23 @@ public class ClientController implements Initializable {
                                     remoteServerChannelManager.setConnecting(true);
                                     ConsumerServer consumerServer = new ConsumerServer();
                                     consumerServer.setMessageExecutor(messageExecutor);
-                                    consumerServer.setRemoteServerManager(remoteServerManager);
+                                    consumerServer.setRemoteServerManager(providerManager);
                                     consumerServer.setProperties(properties.getConsumer());
 
                                     consumerServer.setDecoderContext(decoderContext);
 
-                                    if (consumerServer.start(remoteServerChannelManager.getHost(), remoteServerChannelManager.getPort())) {
+                                    if (consumerServer.start(properties.getConsumer().getRemoteHost(), properties.getConsumer().getRemotePort())) {
+
+                                        Iterator<ConsumerServer> iterator = servers.iterator();
+                                        while (iterator.hasNext()) {
+                                            ConsumerServer server = iterator.next();
+                                            logger.info("server.isClosed() {}", server.isClosed());
+                                            if (server.isClosed()) {
+                                                iterator.remove();
+                                                server.destroy();
+                                            }
+                                        }
+
                                         servers.add(consumerServer);
                                         this.consumerServer = consumerServer;
                                         //验证
@@ -400,10 +436,10 @@ public class ClientController implements Initializable {
                                         Platform.runLater(() -> Javafx.getPrimaryStage().setTitle("|chat-客户端|-没有连接"));
                                         message("建立连接失败");
                                         lastFailTime = now;
-                                        lastFailServerKey = remoteServerChannelManager.getServerKey();
+                                        lastFailServerKey = remoteServerChannelManager.getRemoteServerKey();
                                         failTimes++;
                                         if (failTimes >= 10 && remoteServerChannelManager.getChannelSize() == 0) {
-                                            remoteServerManager.setDefaultChannelManager(null);
+                                            providerManager.setDefaultRemoteServer(null);
                                             failTimes = 0;
                                         }
                                     }

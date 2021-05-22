@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2021-3-18 18:28:00
+ * @time 2021-5-6 17:28:50
  */
 public class SCExitVolleyballMessage extends CompressMessage {
 
@@ -96,6 +96,11 @@ public class SCExitVolleyballMessage extends CompressMessage {
     public SCExitVolleyballMessage setRoomId(int roomId) {
         this.roomId = roomId;
         return this;
+    }
+
+    @Override
+    public int messageType() {
+        return MESSAGE_TYPE_SC;
     }
 
     @Override
