@@ -3,7 +3,7 @@ package com.senpure.sport.football.service;
 
 
 import com.senpure.io.server.consumer.ProviderManager;
-import com.senpure.io.server.remoting.RemoteServerManager;
+
 import com.senpure.io.server.remoting.Response;
 import com.senpure.sport.data.protocol.message.CSPlayerMessage;
 import com.senpure.sport.data.protocol.message.SCPlayerMessage;

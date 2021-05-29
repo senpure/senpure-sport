@@ -84,7 +84,7 @@ public class ClientController implements Initializable {
     @Resource
     private ConsumerMessageHandlerContext handlerContext;
     @Resource
-    private MessageDecoderContext decoderContext;
+    private ConsumerMessageDecoderContext decoderContext;
     @Resource
     private TaskLoopGroup executors;
     private int position = 0;
