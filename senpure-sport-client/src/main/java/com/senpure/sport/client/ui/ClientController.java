@@ -342,7 +342,7 @@ public class ClientController implements Initializable {
                             lastLogTime = now;
                             canLog = true;
                         }
-                        if (providerManager.getDefaultRemoteServer() == null) {
+                        if (providerManager.getDefaultFrameSender() == null) {
                             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(properties.getConsumer().getRemoteName());
 
                             if (serviceInstances.size() == 0) {
@@ -379,12 +379,12 @@ public class ClientController implements Initializable {
                             provider.setDefaultWaitSendTimeout(properties.getConsumer().getMessageWaitSendTimeout());
 
                             provider.verifyWorkable();
-                            providerManager.setDefaultRemoteServer(provider);
+                            providerManager.setDefaultFrameSender(provider);
 
                         } else {
 
                             Provider remoteServerChannelManager =
-                                    providerManager.getDefaultRemoteServer();
+                                    providerManager.getDefaultFrameSender();
                             if (remoteServerChannelManager.isConnecting()) {
                                 return;
                             }
@@ -439,7 +439,7 @@ public class ClientController implements Initializable {
                                         lastFailServerKey = remoteServerChannelManager.getRemoteServerKey();
                                         failTimes++;
                                         if (failTimes >= 10 && remoteServerChannelManager.getChannelSize() == 0) {
-                                            providerManager.setDefaultRemoteServer(null);
+                                            providerManager.setDefaultFrameSender(null);
                                             failTimes = 0;
                                         }
                                     }

@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 获取运动员信息
  * 
  * @author senpure
- * @time 2021-5-6 17:28:50
+ * @time 2021-6-1 14:08:42
  */
 public class CSPlayerMessage extends CompressMessage {
 

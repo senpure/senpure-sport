@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
  * 运动员
  * 
  * @author senpure
- * @time 2021-5-6 17:28:50
+ * @time 2021-6-1 14:08:42
  */
 public class Player extends CompressBean {
     private long id;

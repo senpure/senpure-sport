@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
  * 足球房间聊天
  * 
  * @author senpure
- * @time 2021-5-6 17:28:50
+ * @time 2021-6-1 14:08:43
  */
 public class CSFootballChatMessage extends CompressMessage {
 

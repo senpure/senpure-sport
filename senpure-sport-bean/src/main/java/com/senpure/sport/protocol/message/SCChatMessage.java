@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 
 /**
  * @author senpure
- * @time 2021-5-6 17:28:50
+ * @time 2021-6-1 14:08:42
  */
 public class SCChatMessage extends CompressMessage {
 

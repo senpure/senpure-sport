@@ -17,7 +17,15 @@ message CS Player 1000105 {
 }
 
 message SC Player 1000106 {
-    Player player;                      //运动员
+    Player player;                        //运动员
+}
+
+//匹配游戏
+message CS MatchingRoom 1000107 {
+    Game game;
+}
+
+message SC MatchingRoom 1000108 {
 }
 
 

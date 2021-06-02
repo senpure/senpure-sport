@@ -56,6 +56,7 @@ public class FootballConfiguration {
         //这里是demo 直接使用数字,真实情况建议通过程序实现唯一
         //要求每个具体的实例不能重合
         logger.debug("选择服务实例 {}", dispatcherName);
+        logger.info("如果没有启动服务 {} 这里可能会等待较长的时间", dispatcherName);
         ServiceInstance serviceInstance = loadBalancerClient.choose(dispatcherName);
         logger.debug("选择服务实例 {}", serviceInstance);
         if (serviceInstance == null) {
